@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './LandingPage.css'
 
 function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -16,7 +15,7 @@ function LandingPage() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in')
+          entry.target.classList.add('animate-slide-in')
         }
       })
     }, observerOptions)
@@ -160,88 +159,120 @@ function LandingPage() {
   ]
 
   return (
-    <div className="landing-page">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0a1628] via-[#0f1f3d] to-[#1a2e52] text-white">
       {/* NAVIGATION */}
-      <nav className="nav">
-        <div className="nav-container">
+      <nav className="bg-[#0a1628]/95 backdrop-blur-md border-b border-white/5 sticky top-0 z-50 py-4">
+        <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-between gap-8">
           {/* Logo */}
-          <div className="logo">
-            <div className="logo-icon">UPTO<span className="logo-skills">SKILLS</span></div>
-            <div className="logo-subtitle">An Adobe Resume Experience</div>
+          <div className="flex flex-col gap-1 cursor-pointer">
+            <div className="text-2xl font-extrabold tracking-wide font-['Space_Grotesk']">
+              UPTO<span className="text-[#00d9ff]">SKILLS</span>
+            </div>
+            <div className="text-[0.65rem] text-gray-400 tracking-wider uppercase">
+              An Adobe Resume Experience
+            </div>
           </div>
 
-         
-
           {/* Auth Buttons */}
-          <div className="auth-buttons">
-            
-            <button className="login-btn">
+          <div className="hidden md:flex items-center gap-4">
+            <button className="flex items-center gap-2 px-6 py-3 border border-[#00d9ff] text-[#00d9ff] rounded-lg font-semibold transition-all duration-300 hover:bg-[#00d9ff]/10">
               <i className="fas fa-sign-in-alt"></i>
               Login
             </button>
-            <button className="enterprise-btn">Sign up</button>
+            <button className="px-6 py-3 bg-[#ff6b3d] text-white rounded-lg font-semibold transition-all duration-300 hover:bg-[#ff5722] hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(255,107,61,0.4)]">
+              Sign up
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          <button 
+            className="md:hidden bg-transparent border border-white/10 text-white text-2xl px-4 py-2 rounded-lg"
+            onClick={toggleMobileMenu}
+          >
             ☰
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="mobile-menu show">
-            <button>Learn & Earn</button>
-            <button>Jobs</button>
-            <button>Compete</button>
-            <button>Discover</button>
+          <div className="md:hidden flex flex-col gap-2 px-8 py-4 bg-[#0a1628]/98 border-t border-white/5">
+            <button className="bg-transparent border border-white/10 text-white px-4 py-4 rounded-lg font-medium transition-all duration-300 hover:bg-white/5 hover:border-[#00d9ff]">
+              Learn & Earn
+            </button>
+            <button className="bg-transparent border border-white/10 text-white px-4 py-4 rounded-lg font-medium transition-all duration-300 hover:bg-white/5 hover:border-[#00d9ff]">
+              Jobs
+            </button>
+            <button className="bg-transparent border border-white/10 text-white px-4 py-4 rounded-lg font-medium transition-all duration-300 hover:bg-white/5 hover:border-[#00d9ff]">
+              Compete
+            </button>
+            <button className="bg-transparent border border-white/10 text-white px-4 py-4 rounded-lg font-medium transition-all duration-300 hover:bg-white/5 hover:border-[#00d9ff]">
+              Discover
+            </button>
           </div>
         )}
       </nav>
 
       {/* HERO SECTION */}
-      <section className="hero-section">
-        <div className="hero-container">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              <span className="title-uptoSkills">UptoSkills AI</span>{' '}
-              <span className="title-resume">Resume Builder:</span>
+      <section className="relative px-8 pt-16 pb-8 min-h-[calc(100vh-100px)] flex flex-col overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-[20%] w-[500px] h-[500px] bg-[#00d9ff]/5 rounded-full blur-[100px]"></div>
+          <div className="absolute top-[20%] right-[20%] w-[500px] h-[500px] bg-[#ff6b3d]/5 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div className="relative z-10 max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-start">
+          {/* LEFT SIDE - Hero Content */}
+          <div className="flex flex-col gap-8 pt-8 order-2 lg:order-1">
+            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight font-['Space_Grotesk']">
+              <span className="bg-gradient-to-r from-[#ff6b3d] to-[#ffaa00] bg-clip-text text-transparent">
+                UptoSkills AI
+              </span>{' '}
+              <span className="bg-gradient-to-r from-[#00d9ff] to-[#00a8ff] bg-clip-text text-transparent">
+                Resume Builder:
+              </span>
               <br />
-              <span className="title-craft">Craft Your Perfect Resume in Minutes!</span>
+              <span className="text-white text-4xl">Craft Your Perfect Resume in Minutes!</span>
             </h1>
-            <h2 className="hero-subtitle">AI Resume Builder</h2>
-            <p className="hero-description">
+            
+            <h2 className="text-3xl font-bold text-[#00d9ff]">AI Resume Builder</h2>
+            
+            <p className="text-xl text-gray-300 font-normal">
               AI-Powered Content, Professional Templates, ATS-Friendly.
             </p>
             
-            <div className="hero-buttons">
-              <button className="cta-button-primary">
+            <div className="flex flex-wrap gap-4">
+              <button className="flex items-center gap-3 px-10 py-5 text-lg font-bold text-white bg-gradient-to-r from-[#ff6b3d] to-[#ff5722] rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(255,107,61,0.5)] shadow-[0_10px_30px_rgba(255,107,61,0.3)]">
                 <i className="fas fa-graduation-cap"></i>
                 Start Building for Free
               </button>
-              <button className="cta-button-secondary">
+              <button className="px-10 py-5 text-lg font-bold text-[#00d9ff] border-2 border-[#00d9ff] rounded-xl transition-all duration-300 hover:bg-[#00d9ff]/10 hover:-translate-y-1">
                 View Templates
               </button>
             </div>
           </div>
 
-          <div className="hero-right">
-            <div className="templates-preview-box">
-              <div className="preview-header">
-                <span className="preview-logo">UPTOSKILLS</span>
-                <span className="preview-title">Top Resume Templates</span>
+          {/* RIGHT SIDE - Templates Preview */}
+          <div className="flex flex-col gap-8 order-1 lg:order-2">
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 overflow-hidden">
+              <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
+                <span className="text-sm font-extrabold text-[#ff6b3d] tracking-widest">UPTOSKILLS</span>
+                <span className="text-sm font-semibold text-white">Top Resume Templates</span>
               </div>
-              <div className="templates-grid-preview">
+              
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                 {templates.slice(0, 6).map((template, index) => (
-                  <div key={index} className="template-mini">
-                    <div className="template-mini-header">
-                      <div className="template-mini-photo"></div>
-                      <div className="template-mini-name">{template.name}</div>
+                  <div 
+                    key={index}
+                    className="bg-white/[0.03] border border-white/5 rounded-xl p-4 transition-all duration-300 hover:bg-white/[0.06] hover:border-[#00d9ff] hover:-translate-y-1"
+                  >
+                    <div className="flex flex-col items-center gap-2 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-[#00d9ff] to-[#4c7fff] rounded-full border-2 border-white/20"></div>
+                      <div className="text-xs font-semibold text-white text-center">{template.name}</div>
                     </div>
-                    <div className="template-mini-lines">
-                      <div className="mini-line"></div>
-                      <div className="mini-line"></div>
-                      <div className="mini-line"></div>
+                    <div className="flex flex-col gap-2">
+                      <div className="h-1 bg-white/10 rounded-full w-full"></div>
+                      <div className="h-1 bg-white/10 rounded-full w-4/5"></div>
+                      <div className="h-1 bg-white/10 rounded-full w-3/5"></div>
                     </div>
                   </div>
                 ))}
@@ -251,46 +282,76 @@ function LandingPage() {
         </div>
 
         {/* Category Buttons */}
-        <div className="category-buttons">
+        <div className="relative z-10 flex flex-col md:flex-row justify-center gap-4 mt-12 px-8">
           <button 
-            className={`category-btn ${selectedCategory === 'students' ? 'active' : ''}`}
+            className={`flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold rounded-full transition-all duration-300 backdrop-blur-md ${
+              selectedCategory === 'students'
+                ? 'bg-gradient-to-r from-[#00d9ff] to-[#4c7fff] border-transparent shadow-[0_10px_30px_rgba(0,217,255,0.3)]'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-[#00d9ff] hover:-translate-y-0.5'
+            }`}
             onClick={() => setSelectedCategory('students')}
           >
-            <i className="fas fa-graduation-cap"></i>
+            <i className="fas fa-graduation-cap text-lg"></i>
             For Students
           </button>
           <button 
-            className={`category-btn ${selectedCategory === 'hr' ? 'active' : ''}`}
+            className={`flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold rounded-full transition-all duration-300 backdrop-blur-md ${
+              selectedCategory === 'hr'
+                ? 'bg-gradient-to-r from-[#00d9ff] to-[#4c7fff] border-transparent shadow-[0_10px_30px_rgba(0,217,255,0.3)]'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-[#00d9ff] hover:-translate-y-0.5'
+            }`}
             onClick={() => setSelectedCategory('hr')}
           >
-            <i className="fas fa-users"></i>
+            <i className="fas fa-users text-lg"></i>
             For HR Teams
           </button>
           <button 
-            className={`category-btn ${selectedCategory === 'faculty' ? 'active' : ''}`}
+            className={`flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold rounded-full transition-all duration-300 backdrop-blur-md ${
+              selectedCategory === 'faculty'
+                ? 'bg-gradient-to-r from-[#00d9ff] to-[#4c7fff] border-transparent shadow-[0_10px_30px_rgba(0,217,255,0.3)]'
+                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-[#00d9ff] hover:-translate-y-0.5'
+            }`}
             onClick={() => setSelectedCategory('faculty')}
           >
-            <i className="fas fa-chalkboard-teacher"></i>
+            <i className="fas fa-chalkboard-teacher text-lg"></i>
             For Faculty
           </button>
         </div>
       </section>
 
       {/* Trusted Companies Section */}
-      <section className="trusted-section">
-        <div className="trusted-container">
-          <h2>Trusted by job seekers who've landed at top companies</h2>
-          <p className="trusted-subtitle">Our users have secured positions at industry-leading companies such as</p>
-          <div className="companies-marquee">
-            <div className="companies-track">
+      <section className="py-20 px-8 bg-white/[0.02] overflow-hidden">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-extrabold mb-4 text-white">
+            Trusted by job seekers who've landed at top companies
+          </h2>
+          <p className="text-lg text-gray-400 mb-12">
+            Our users have secured positions at industry-leading companies such as
+          </p>
+          
+          <div className="relative py-8">
+            {/* Gradient Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0f1f3d] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0f1f3d] to-transparent z-10 pointer-events-none"></div>
+            
+            {/* Marquee */}
+            <div className="flex gap-16 animate-scroll hover:[animation-play-state:paused]">
               {companies.map((company, index) => (
-                <div key={index} className="company-logo" style={{ color: company.color }}>
+                <div 
+                  key={index}
+                  className="text-2xl font-extrabold opacity-70 transition-all duration-300 hover:opacity-100 hover:scale-110 cursor-pointer whitespace-nowrap flex-shrink-0"
+                  style={{ color: company.color }}
+                >
                   {company.name}
                 </div>
               ))}
               {/* Duplicate for seamless loop */}
               {companies.map((company, index) => (
-                <div key={`dup-${index}`} className="company-logo" style={{ color: company.color }}>
+                <div 
+                  key={`dup-${index}`}
+                  className="text-2xl font-extrabold opacity-70 transition-all duration-300 hover:opacity-100 hover:scale-110 cursor-pointer whitespace-nowrap flex-shrink-0"
+                  style={{ color: company.color }}
+                >
                   {company.name}
                 </div>
               ))}
@@ -300,29 +361,52 @@ function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="how-it-works-section">
-        <div className="how-it-works-container">
-          <h2>How <span className="highlight">It works</span></h2>
-          <p className="how-it-works-subtitle">Quickly upload, customize, and download your resume tailored to any job description in no time</p>
+      <section className="py-20 px-8">
+        <div className="max-w-[1400px] mx-auto">
+          <h2 className="text-5xl font-extrabold text-center mb-4 text-white">
+            How <span className="bg-gradient-to-r from-[#ff6b3d] to-[#00d9ff] bg-clip-text text-transparent">It works</span>
+          </h2>
+          <p className="text-center text-lg text-gray-400 mb-16 max-w-3xl mx-auto">
+            Quickly upload, customize, and download your resume tailored to any job description in no time
+          </p>
           
-          <div className="steps-container">
+          <div className="flex flex-col gap-8">
             {howItWorksSteps.map((step, index) => (
-              <div key={index} className={`step-card step-${index + 1}`}>
-                <div className="step-content">
-                  <div className="step-badge">
-                    <i className={`fas ${step.icon}`}></i>
-                    <span>{step.title}</span>
+              <div 
+                key={index}
+                className="step-card opacity-0 -translate-x-24 transition-all duration-700 grid lg:grid-cols-[1fr_300px] gap-8 p-10 rounded-3xl hover:translate-x-2"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="inline-flex items-center gap-3 bg-[#00d9ff]/10 px-6 py-3 rounded-full w-fit border border-[#00d9ff]/20">
+                    <i className={`fas ${step.icon} text-[#00d9ff] text-lg`}></i>
+                    <span className="text-[#00d9ff] font-bold text-sm tracking-widest">{step.title}</span>
                   </div>
-                  <h3>{step.heading.split(' ').map((word, i) => 
-                    ['create', 'import', 'analyze', 'score', 'customize', 'Quickly', 'Improve', 'instantly', 'one', 'click', 'winning', 'ready!'].includes(word) ? 
-                    <span key={i} className="highlight-word">{word} </span> : word + ' '
-                  )}</h3>
-                  <p>{step.description}</p>
-                  <button className={`action-btn btn-${step.buttonColor}`}>
+                  
+                  <h3 className="text-3xl font-bold text-white leading-snug">
+                    {step.heading.split(' ').map((word, i) => 
+                      ['create', 'import', 'analyze', 'score', 'customize', 'Quickly', 'Improve', 'instantly', 'one', 'click', 'winning', 'ready!'].includes(word) ? 
+                      <span key={i} className="text-[#ff6b3d]">{word} </span> : word + ' '
+                    )}
+                  </h3>
+                  
+                  <p className="text-gray-400 text-base leading-relaxed">{step.description}</p>
+                  
+                  <button 
+                    className={`mt-4 px-8 py-4 rounded-xl font-bold text-sm text-white w-fit transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)] ${
+                      step.buttonColor === 'blue' ? 'bg-gradient-to-r from-[#4c7fff] to-[#3d5af1]' :
+                      step.buttonColor === 'green' ? 'bg-gradient-to-r from-[#22c55e] to-[#16a34a]' :
+                      step.buttonColor === 'orange' ? 'bg-gradient-to-r from-[#ff6b3d] to-[#ff5722]' :
+                      'bg-gradient-to-r from-[#ec4899] to-[#db2777]'
+                    }`}
+                  >
                     {step.buttonText}
                   </button>
                 </div>
-                <div className="step-visual"></div>
+                
+                <div className="bg-white/[0.03] rounded-2xl min-h-[200px] flex items-center justify-center text-gray-400 text-sm">
+                  Visual Placeholder
+                </div>
               </div>
             ))}
           </div>
@@ -330,21 +414,33 @@ function LandingPage() {
       </section>
 
       {/* Resume Templates Section */}
-      <section className="templates-showcase-section">
-        <div className="templates-showcase-container">
-          <h2>Access Free <span className="highlight">Resume Templates</span></h2>
-          <p className="templates-showcase-subtitle">All the templates are ATS compliant and can be customized according to your style using our AI Resume Builder.</p>
+      <section className="py-20 px-8 bg-white/[0.02]">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-extrabold mb-4 text-white">
+            Access Free <span className="bg-gradient-to-r from-[#ff6b3d] to-[#00d9ff] bg-clip-text text-transparent">Resume Templates</span>
+          </h2>
+          <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
+            All the templates are ATS compliant and can be customized according to your style using our AI Resume Builder.
+          </p>
           
-          <div className="templates-preview">
-            <button className="nav-arrow left-arrow">
+          <div className="flex items-center gap-8 mt-12">
+            <button className="flex items-center justify-center w-12 h-12 bg-white/5 border border-white/10 text-white rounded-full transition-all duration-300 hover:bg-white/10 hover:border-[#00d9ff] hover:text-[#00d9ff]">
               <i className="fas fa-chevron-left"></i>
             </button>
-            <div className="templates-slider">
-              <div className="template-preview">Template 1</div>
-              <div className="template-preview">Template 2</div>
-              <div className="template-preview">Template 3</div>
+            
+            <div className="flex-1 grid md:grid-cols-3 gap-8">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-12 min-h-[400px] flex items-center justify-center text-gray-400 font-semibold transition-all duration-300 hover:bg-white/[0.08] hover:border-[#00d9ff] hover:-translate-y-2">
+                Template 1
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-12 min-h-[400px] flex items-center justify-center text-gray-400 font-semibold transition-all duration-300 hover:bg-white/[0.08] hover:border-[#00d9ff] hover:-translate-y-2">
+                Template 2
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-12 min-h-[400px] flex items-center justify-center text-gray-400 font-semibold transition-all duration-300 hover:bg-white/[0.08] hover:border-[#00d9ff] hover:-translate-y-2">
+                Template 3
+              </div>
             </div>
-            <button className="nav-arrow right-arrow">
+            
+            <button className="flex items-center justify-center w-12 h-12 bg-white/5 border border-white/10 text-white rounded-full transition-all duration-300 hover:bg-white/10 hover:border-[#00d9ff] hover:text-[#00d9ff]">
               <i className="fas fa-chevron-right"></i>
             </button>
           </div>
@@ -352,19 +448,26 @@ function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="features-section">
-        <div className="features-container">
-          <h2>Explore <span className="highlight">AI Resume Builder Features</span></h2>
-          <p className="features-subtitle">Dive into a powerful suite of career development tools and features designed to advance careers at all levels.</p>
+      <section className="py-20 px-8">
+        <div className="max-w-[1400px] mx-auto">
+          <h2 className="text-4xl font-extrabold text-center mb-4 text-white">
+            Explore <span className="bg-gradient-to-r from-[#ff6b3d] to-[#00d9ff] bg-clip-text text-transparent">AI Resume Builder Features</span>
+          </h2>
+          <p className="text-center text-lg text-gray-400 mb-16 max-w-3xl mx-auto">
+            Dive into a powerful suite of career development tools and features designed to advance careers at all levels.
+          </p>
           
-          <div className="features-grid">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="feature-card">
-                <div className="feature-icon">
-                  <i className={`fas ${feature.icon}`}></i>
+              <div 
+                key={index}
+                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.08] hover:border-[#00d9ff] hover:-translate-y-1"
+              >
+                <div className="w-15 h-15 bg-gradient-to-br from-[#00d9ff]/20 to-[#4c7fff]/20 rounded-xl flex items-center justify-center mb-6">
+                  <i className={`fas ${feature.icon} text-3xl text-[#00d9ff]`}></i>
                 </div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -372,47 +475,89 @@ function LandingPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-container">
+      <footer className="bg-[#0a1628]/95 border-t border-white/5 px-8 py-12 mt-auto">
+        <div className="max-w-[1400px] mx-auto grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="footer-logo">
-              <span className="footer-logo-text">UPTO<span className="footer-logo-skills">SKILLS</span></span>
+            <div className="flex items-center gap-2 text-2xl font-extrabold mb-4 font-['Space_Grotesk']">
+              <span className="text-[#ff6b3d]">UPTO<span className="text-[#00d9ff]">SKILLS</span></span>
             </div>
-            <p className="footer-desc">AI-powered resume builder for your dream job.</p>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              AI-powered resume builder for your dream job.
+            </p>
           </div>
 
           <div>
-            <h4>Product</h4>
-            <ul className="footer-links">
-              <li>Features</li>
-              <li>Pricing</li>
-              <li>Templates</li>
+            <h4 className="text-white text-lg font-bold mb-4">Product</h4>
+            <ul className="flex flex-col gap-3">
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Features
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Pricing
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Templates
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4>Company</h4>
-            <ul className="footer-links">
-              <li>About</li>
-              <li>Blog</li>
-              <li>Careers</li>
+            <h4 className="text-white text-lg font-bold mb-4">Company</h4>
+            <ul className="flex flex-col gap-3">
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                About
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Blog
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Careers
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4>Legal</h4>
-            <ul className="footer-links">
-              <li>Privacy</li>
-              <li>Terms</li>
-              <li>Contact</li>
+            <h4 className="text-white text-lg font-bold mb-4">Legal</h4>
+            <ul className="flex flex-col gap-3">
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Privacy
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Terms
+              </li>
+              <li className="text-gray-400 cursor-pointer transition-all duration-300 hover:text-[#00d9ff] hover:translate-x-1 text-sm">
+                Contact
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="footer-bottom">
+        <div className="text-center pt-8 border-t border-white/5 text-gray-400 text-sm">
           © {new Date().getFullYear()} UptoSkills. All rights reserved.
         </div>
       </footer>
+
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
+        }
+        
+        .animate-slide-in {
+          opacity: 1 !important;
+          transform: translateX(0) !important;
+        }
+      `}</style>
     </div>
   )
 }
