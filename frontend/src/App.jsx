@@ -1,21 +1,28 @@
-import { useState } from 'react'
-import LandingPage from './pages/LandingPage'
-import './App.css'
+import { useState } from "react";
+import LandingPage from "./pages/LandingPage";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
 
+import React from "react";
+import Admin from "./components/admin/adminDashboardPannel/Admin";
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
+  const [currentPage, setCurrentPage] = useState("home");
 
   const showPage = (pageId) => {
-    setCurrentPage(pageId)
-  }
+    setCurrentPage(pageId);
+  };
 
   return (
     <div className="app">
+      <Routes>
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+
       {/* HOME PAGE */}
-      {currentPage === 'home' && <LandingPage />}
+      {currentPage === "home" && <LandingPage />}
 
       {/* TEMPLATES PAGE */}
-      {currentPage === 'templates' && (
+      {currentPage === "templates" && (
         <div className="page active">
           <section className="templates-section">
             <div className="templates-container">
@@ -27,13 +34,16 @@ function App() {
       )}
 
       {/* ABOUT PAGE */}
-      {currentPage === 'about' && (
+      {currentPage === "about" && (
         <div className="page active">
           <section className="about-section">
             <div className="about-container">
               <div className="about-header">
                 <h1>About UptoSkills</h1>
-                <p>UptoSkills helps professionals build resumes that recruiters love using AI-driven optimization.</p>
+                <p>
+                  UptoSkills helps professionals build resumes that recruiters
+                  love using AI-driven optimization.
+                </p>
               </div>
 
               <div className="about-grid">
@@ -57,7 +67,7 @@ function App() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
