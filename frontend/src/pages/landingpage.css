@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 :root {
   --primary-dark: #0a1628;
@@ -14,17 +14,17 @@
   --card-border: rgba(255, 255, 255, 0.1);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 50%, var(--primary-blue) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary-navy) 50%,
+    var(--primary-blue) 100%
+  );
   color: var(--text-white);
   min-height: 100vh;
 }
@@ -68,7 +68,7 @@ body {
   font-weight: 800;
   color: var(--accent-orange);
   letter-spacing: 0.5px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .logo-skills {
@@ -227,15 +227,22 @@ body {
 }
 
 .hero-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 107, 61, 0.05) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(0, 217, 255, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 107, 61, 0.05) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -262,7 +269,7 @@ body {
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 0;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .title-uptoSkills {
@@ -411,7 +418,11 @@ body {
 .template-mini-photo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan) 0%,
+    var(--accent-blue) 100%
+  );
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
@@ -481,7 +492,11 @@ body {
 }
 
 .category-btn.active {
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan) 0%,
+    var(--accent-blue) 100%
+  );
   border-color: transparent;
   box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
 }
@@ -525,7 +540,7 @@ body {
 
 .companies-marquee::before,
 .companies-marquee::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -536,12 +551,20 @@ body {
 
 .companies-marquee::before {
   left: 0;
-  background: linear-gradient(to right, rgba(15, 31, 61, 1) 0%, rgba(15, 31, 61, 0) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(15, 31, 61, 1) 0%,
+    rgba(15, 31, 61, 0) 100%
+  );
 }
 
 .companies-marquee::after {
   right: 0;
-  background: linear-gradient(to left, rgba(15, 31, 61, 1) 0%, rgba(15, 31, 61, 0) 100%);
+  background: linear-gradient(
+    to left,
+    rgba(15, 31, 61, 1) 0%,
+    rgba(15, 31, 61, 0) 100%
+  );
 }
 
 .companies-track {
@@ -598,7 +621,11 @@ body {
 }
 
 .highlight {
-  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-cyan) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange) 0%,
+    var(--accent-cyan) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -890,7 +917,11 @@ body {
 .feature-icon {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(76, 127, 255, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 217, 255, 0.2) 0%,
+    rgba(76, 127, 255, 0.2) 100%
+  );
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -1005,7 +1036,11 @@ body {
 }
 
 .use-btn {
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-cyan) 0%,
+    var(--accent-blue) 100%
+  );
   color: white;
 }
 
@@ -1107,7 +1142,7 @@ body {
   font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .footer-logo-text {
