@@ -11,6 +11,7 @@ import {
   X,
   Plus,
   IndianRupee,
+  User,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -48,10 +49,10 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
       path: "/admin/analytics",
     },
     {
-      id: "settings",
-      icon: Settings,
-      label: "Settings",
-      path: "/admin/settings",
+      id: "user",
+      icon: User,
+      label: "User",
+      path: "/admin/user",
     },
   ];
 
