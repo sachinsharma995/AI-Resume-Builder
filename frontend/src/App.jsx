@@ -38,15 +38,15 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/Landingpage";
 
 import AdminLayout from "./components/admin/AdminLayout";
-import AdminHome from "./components/admin/AdminHome";
+
 import AdminDashboard from "./components/admin/AdminDashboard/AdminDashboard";
 import AdminCreateTemplate from "./components/admin/AdminCreateTemplates/AdminCreateTemplate";
 import AdminUsers from "./components/admin/AdminUser/AdminUsers";
-import Resume from "./components/admin/resume"; // 🔥 templates page
-import Templates from "./components/admin/AdminCreateTemplates/Templates";
-import TemplateDocs from "./components/admin/AdminCreateTemplates/TemplateDocs";
+import Resume from "./components/admin/resume";
 import AdminSubscription from "./components/admin/AdminSubscription/AdminSubscription";
 import AdminAcceptUser from "./components/admin/AdminAcceptUserTemplate/AdminAcceptUser";
+import AdminAnalytics from "./components/admin/AdminAnalytics/AdminAnalytics";
+import TemplateDocs from "./components/admin/AdminCreateTemplates/TemplateDocs";
 
 const App = () => {
   return (
@@ -56,15 +56,14 @@ const App = () => {
 
       {/* Admin routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminHome />} /> {/* /admin */}
-        <Route path="dashboard" element={<AdminDashboard />} />
-        {/* <Route path="create-templates" element={<AdminCreateTemplate />} /> */}
-        {/* <Route path="create-templates" element={<Templates />} /> */}
+        <Route index element={<AdminDashboard />} /> {/* /admin */}
         <Route path="create-templates" element={<TemplateDocs />} />
         <Route path="templates" element={<Resume />} />
-        <Route path="user" element={<AdminUsers head={"User Management"} />} />
+        <Route path="users" element={<AdminUsers />} /> {/* ✅ FIXED */}
+        <Route path="templates" element={<Resume />} />
         <Route path="subscription" element={<AdminSubscription />} />
         <Route path="/admin/template-requests" element={<AdminAcceptUser />} />
+        <Route path="/admin/analytics" element={<AdminAnalytics />} />
       </Route>
     </Routes>
   );

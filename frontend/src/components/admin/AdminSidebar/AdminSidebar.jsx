@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import {
   LayoutDashboard,
   FileText,
-  Settings,
-  LogOut,
   ChevronLeft,
   ChevronRight,
-  Home,
   Menu,
   X,
   Plus,
   IndianRupee,
   User,
   Drone,
+  BarChart,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -24,13 +22,13 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
   const location = useLocation();
 
   const menuItems = [
-    { id: "home", icon: Home, label: "Home", path: "/admin" },
     {
       id: "dashboard",
       icon: LayoutDashboard,
       label: "Dashboard",
-      path: "/admin/dashboard",
+      path: "/admin",
     },
+
     {
       id: "resumes",
       icon: FileText,
@@ -50,16 +48,22 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
       path: "/admin/subscription",
     },
     {
-      id: "user",
+      id: "users", // ✅ FIXED
       icon: User,
-      label: "User",
-      path: "/admin/user",
+      label: "Users",
+      path: "/admin/users", // ✅ FIXED
     },
     {
       id: "Accepttemplate",
       icon: Drone,
       label: "Accept User Template",
       path: "/admin/template-requests",
+    },
+    {
+      id: "Analysis",
+      icon: BarChart,
+      label: "Analytics",
+      path: "/admin/analytics",
     },
   ];
 
@@ -80,7 +84,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
         </button>
       </div>
 
-      {/* Overlay */}
+      {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
           onClick={() => setIsMobileOpen(false)}
@@ -101,8 +105,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
         transition={{ type: "spring", stiffness: 200 }}
       >
         {/* Header */}
-        <div className="h-16 flex items-center justify-center px-3 border-b border-slate-700">
-          {/* Collapse Button */}
+        <div className="h-16 flex items-center justify-between px-3 border-b border-slate-700">
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="hidden md:block p-1.5 hover:bg-slate-800 rounded-lg"
@@ -115,13 +118,14 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
         <nav className="flex-1 p-3 space-y-1">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const active = location.pathname === item.path;
+            const active = location.pathname.startsWith(item.path); // ✅ improved
 
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavigate(item.path)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
+                  transition-colors
                   ${
                     active
                       ? "bg-slate-800 text-white"
