@@ -231,6 +231,10 @@ function LandingPage() {
                 <i className="fas fa-graduation-cap"></i>
                 Start Building for Free
               </button>
+              <button onClick={() => navigate('/contact')} className="flex items-center gap-3 px-10 py-5 text-lg font-bold text-[#0077cc] bg-white border-2 border-[#0077cc] rounded-xl transition-all duration-300 hover:-translate-y-1 hover:bg-[#0077cc] hover:text-white shadow-[0_10px_25px_rgba(0,119,204,0.15)] hover:shadow-[0_15px_35px_rgba(0,119,204,0.25)]">
+                <i className="fas fa-envelope"></i>
+                Contact Us
+              </button>
             </div>
           </div>
 
@@ -340,7 +344,7 @@ function LandingPage() {
                     
                     <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 opacity-0 bg-[#1a2e52]/70 backdrop-blur-[2px] group-hover/card:opacity-100 rounded-2xl">
                       <button 
-                        onClick={() => navigate('/templates')} 
+                        onClick={() => navigate('/login')} 
                         className="px-6 py-2 text-sm font-bold text-white bg-gradient-to-r from-[#e65100] to-[#f4511e] rounded-lg"
                       >
                         Use Template
@@ -362,15 +366,6 @@ function LandingPage() {
               className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center text-[#0077cc] border border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-x-2 hover:bg-[#0077cc] hover:text-white"
             >
               <i className="text-sm fas fa-chevron-right"></i>
-            </button>
-          </div>
-
-          <div className="mt-8 text-center">
-            <button 
-              onClick={() => navigate('/templates')} 
-              className="text-[#0077cc] text-sm font-bold hover:text-[#e65100] pb-1 transition-all"
-            >
-              See All Templates →
             </button>
           </div>
         </div>

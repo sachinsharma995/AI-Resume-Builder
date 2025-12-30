@@ -8,6 +8,7 @@ import RegisterPage from './pages/Register'
 import ForgotPasswordPage from './pages/ForgotPassword'
 import TemplateEditor from './pages/TemplateEditor'
 import NotFound from './pages/NotFound'
+import Contact from './pages/Contact'
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/builder" element={<BuilderPage />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
