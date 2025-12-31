@@ -1,11 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
-function HelpCenter() {
-  const navigate = (path) => {
-    // Navigation handler for internal routing
-    console.log('Navigate to:', path);
-    // In a real React Router setup, use: useNavigate()(path)
-  };
+function Contact() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('guides');
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -430,7 +428,7 @@ function HelpCenter() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <button 
-              onClick={() => navigate('/contact')}
+              onClick={() => navigate('/help-center')}
               className="group px-8 py-4 bg-white text-[#0077cc] rounded-xl font-bold hover:bg-[#e65100] hover:text-white transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center gap-3"
             >
               <i className="fas fa-envelope"></i>
@@ -448,48 +446,7 @@ function HelpCenter() {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-6 lg:px-8 pt-20 pb-10 bg-white border-t border-gray-100">
-        <div className="max-w-[1400px] mx-auto grid md:grid-cols-4 gap-12 mb-16">
-          <div className="col-span-1">
-            <div className="w-44 h-10 bg-gradient-to-r from-[#0077cc] to-[#e65100] rounded-lg flex items-center justify-center font-black text-white mb-6">
-              UptoSkills
-            </div>
-            <p className="text-sm leading-relaxed text-gray-500">
-              Build professional, ATS-optimized resumes with our AI-powered platform.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-6">Resources</h4>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Resume Templates</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Resume Examples</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Cover Letter Builder</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Career Guides</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-6">Help Center</h4>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Getting Started</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">FAQs</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Troubleshooting</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Contact Support</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-gray-900 mb-6">Company</h4>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">About Us</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Careers</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Privacy Policy</li>
-              <li className="hover:text-[#0077cc] cursor-pointer transition-colors">Terms of Service</li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-[1400px] mx-auto pt-8 border-t border-gray-100 text-center text-gray-400 text-xs">
-          © {new Date().getFullYear()} UptoSkills. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
 
       <style jsx>{`
         @keyframes float {
@@ -569,4 +526,4 @@ function HelpCenter() {
   );
 }
 
-export default HelpCenter;
+export default Contact;

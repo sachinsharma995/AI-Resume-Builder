@@ -9,6 +9,7 @@ import ForgotPasswordPage from './pages/ForgotPassword'
 import TemplateEditor from './pages/TemplateEditor'
 import NotFound from './pages/NotFound'
 import Contact from './pages/Contact'
+import HelpCenter from './pages/HelpCenter'
 
 
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/builder" element={<BuilderPage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
