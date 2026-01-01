@@ -17,6 +17,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/templates" element={<TemplatesPage />} />
           <Route path="/templates/:id" element={<TemplateEditor />} />

@@ -6,6 +6,7 @@ import featureImage1 from '../assets/ai-assistant.png'
 import featureImage2 from '../assets/tailored-summary.png'
 import featureImage3 from '../assets/tailor-to-job.png'
 import featureImage4 from '../assets/resume-preview.png'
+import Footer from '../components/Footer'
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -224,6 +225,10 @@ function LandingPage() {
               <button onClick={() => navigate('/contact')} className="flex items-center gap-3 px-10 py-5 text-lg font-bold text-[#0077cc] bg-white border-2 border-[#0077cc] rounded-xl transition-all duration-300 hover:-translate-y-1 hover:bg-[#0077cc] hover:text-white shadow-[0_10px_25px_rgba(0,119,204,0.15)] hover:shadow-[0_15px_35px_rgba(0,119,204,0.25)]">
                 <i className="fas fa-envelope"></i>
                 Contact Us
+              </button>
+              <button onClick={() => navigate('/ats-checker')} className="flex items-center gap-3 px-8 py-4 text-md font-semibold text-white bg-slate-800 rounded-lg transition-all duration-300 hover:-translate-y-1">
+                <i className="fas fa-search"></i>
+                Resume Checker
               </button>
             </div>
           </div>
