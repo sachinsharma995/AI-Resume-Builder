@@ -236,6 +236,10 @@ function LandingPage() {
                 <i className="fas fa-envelope"></i>
                 Contact Us
               </button>
+              <button onClick={() => navigate('/ats-checker')} className="flex items-center gap-3 px-8 py-4 text-md font-semibold text-white bg-slate-800 rounded-lg transition-all duration-300 hover:-translate-y-1">
+                <i className="fas fa-search"></i>
+                Resume Checker
+              </button>
             </div>
           </div>
 

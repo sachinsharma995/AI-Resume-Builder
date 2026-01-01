@@ -39,6 +39,7 @@ import TemplateEditor from './pages/TemplateEditor'
 import NotFound from './pages/NotFound'
 import Contact from './pages/Contact'
 import HelpCenter from './pages/HelpCenter'
+import ATSChecker from './components/user/ATSChecker/ATSChecker'
 
 // Admin area
 import AdminLayout from './components/admin/AdminLayout'
@@ -65,6 +66,7 @@ function App() {
           <Route path="/builder" element={<BuilderPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/ats-checker" element={<ATSChecker />} />
 
           {/* Admin routes with layout */}
           <Route path="/admin" element={<AdminLayout />}>
