@@ -1,50 +1,16 @@
-# AI Resume Builder Project Timeline
+# React + Vite
 
----
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### **December 18, 2025**
-- Research AI functionality for resume building.
-- Explore and plan the user interface design.
-- Investigate backend architecture and requirements.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### **December 19, 2025**
-- Prepare technical documentation on AI implementation.
-- Create a document for the UI workflow and layout.
-- Draft backend design and specifications.
+## React Compiler
 
----
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### **December 20, 2025**
-- Begin integration of AI features into the resume builder.
-- Identify and list backend files needed for implementation.
-- Work on Figma designs for login and admin sections.
-- Establish frontend and backend project structure.
-- Set up MongoDB and configure connection strings.
+## Expanding the ESLint configuration
 
----
-### **December 22–24, 2025**
-- Work on frontend pages:
-  - Landing page
-  - User page
-  - Admin page
-  - Login/Register page
-
----
-### **December 23–24, 2025**
-- Work on frontend pages(updating):
-  - Landing page
-  - User page
-  - Admin page
-  - Login/Register page
-
----
-### **December 24–24, 2025**
-- Work on frontend pages(updating):
-  - Landing page
-  - User page
-  - Admin page
-  - Login/Register page
-
----
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
