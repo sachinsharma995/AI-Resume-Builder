@@ -27,11 +27,17 @@ export default function Login() {
     if (!validate()) return;
     setLoading(true);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const response = await axios.post(`${API_URL}/api/login`, {
-        email: emailtext,
-        password: passwordtext,
-      });
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const response = await axios.post(
+        `${API_URL}/api/auth/login`,
+        {
+          email: emailtext,
+          password: passwordtext,
+        },
+        { withCredentials: true } // Important if backend sets cookies
+      );
+
+      console.log("Login response:", response.data);
 
       const { token, userID } = response.data || {};
       if (token) {
@@ -136,12 +142,11 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-2 rounded-lg text-white text-sm font-medium transition mt-3
-                ${loading
+                className={`w-full py-2 rounded-lg text-white text-sm font-medium transition mt-3 ${
+                  loading
                     ? "bg-blue-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
-                  }
-              `}
+                }`}
               >
                 {loading ? "Signing in..." : "Sign In"}
               </button>

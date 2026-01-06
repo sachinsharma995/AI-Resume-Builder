@@ -20,7 +20,18 @@ import PrivacyPolicy from "./pages/Privacypolicy";
 import ResumeChecker from "./pages/ResumeChecker";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
-//import UserHome from "./pages/UserHome";
+
+//admin
+
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./components/admin/AdminDashboard/AdminDashboard";
+// import TemplateDocs from "./components/admin/AdminCreateTemplates/TemplateDocs";
+import Resume from "./components/admin/resume";
+import AdminUsers from "./components/admin/AdminUser/AdminUsers";
+import AdminSubscription from "./components/admin/AdminSubscription/AdminSubscription";
+import AdminAcceptUser from "./components/admin/AdminAcceptUserTemplate/AdminAcceptUser";
+import AdminAnalytics from "./components/admin/AdminAnalytics/AdminAnalytics";
+import AdminTemplates from "./components/admin/AdminCreateTemplates/Template";
 
 function App() {
   return (
@@ -44,6 +55,21 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/resume-checker" element={<ResumeChecker />} />
           <Route path="/terms" element={<Terms />} />          {/* <Route path="/userhome" element={<UserHome />} /> */}
+          <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="*" element={<NotFound />} />
+
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="create-templates" element={<AdminTemplates />} />
+            <Route path="templates" element={<Resume />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="subscription" element={<AdminSubscription />} />
+            <Route path="template-requests" element={<AdminAcceptUser />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
+          </Route>
+
+          {/* Fallback */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
@@ -52,4 +78,3 @@ function App() {
 }
 
 export default App;
-
