@@ -1,5 +1,11 @@
 import React from "react";
-import { TrendingUp, Percent, Cpu, UserMinus } from "lucide-react";
+import {
+  TrendingUp,
+  Percent,
+  Cpu,
+  UserMinus,
+} from "lucide-react";
+import Footer from "../../Footer";
 
 export default function AdminAnalytics() {
   const stats = [
@@ -102,10 +108,7 @@ export default function AdminAnalytics() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-14 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} AI Resume Builder · Analytics
-      </footer>
+      <Footer />
     </div>
   );
 }
