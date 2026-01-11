@@ -391,6 +391,11 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UpToSkillsImg from '../assets/UptoSkills.webp';
 import images, { getImage } from '../assets'
+import quick from"../assets/customize.png"
+import work2 from"../assets/analysis.png"
+import work1 from"../assets/goodResume.png"
+import work4 from"../assets/oneClick.png"
+import work5 from"../assets/win.png"
 import featureImage1 from '../assets/ai-assistant.png'
 import featureImage2 from '../assets/tailored-summary.png'
 import featureImage3 from '../assets/tailor-to-job.png'
@@ -518,27 +523,28 @@ function LandingPage() {
 
   const howItWorksSteps = [
     {
-      icon: "fa-file-alt",
+      image:work1,
       heading: "Easily create or import your resume",
       description: "Choose from professionally designed templates or upload your existing resume to improve its structure, formatting, and content for a more polished result.",
     },
     {
-      icon: "fa-clipboard-check",
+      image:work2,
       heading: "Check and analyze your resume score",
       description: "Get real-time ATS insights as you build your resume, or upload an existing one to analyze structure, keywords, and formatting.",
     },
     {
-      icon: "fa-microchip",
+     image:quick,
       heading: "Quickly customize your resume with AI",
       description: "Enter your experience details, and our AI generates clear, impactful bullet points that showcase your skills and achievements professionally.",
+      
     },
     {
-      icon: "fa-magic",
+      image:work4,
       heading: "Improve your resume instantly in one click",
       description: "Tailor your resume to any job listing in one click with instant, role-specific improvements that boost relevance and highlight key skills.",
     },
     {
-      icon: "fa-download",
+    image:work5,
       heading: "Your winning resume is ready!",
       description: "Download your job-ready resume in your preferred format, or create multiple tailored versions for different roles to boost success.",
     },
@@ -582,11 +588,17 @@ function LandingPage() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative px-8 py-20 overflow-hidden bg-white">
+      {/* <section className="relative px-8 py-20 overflow-hidden bg-white"> */}
+      {/* <section className="relative px-8 pt-8 pb-20 overflow-hidden bg-white"> */}
+      <section className="relative px-8 pt-0 pb-20 overflow-hidden bg-white">
+
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50"></div>
+        {/* <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center -mt-6"> */}
+        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center -mt-10">
 
-        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
+
+
 
           <div className="flex flex-col gap-8">
             <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight font-['Space_Grotesk']">
@@ -650,7 +662,57 @@ function LandingPage() {
       </section>
 
       {/* HOW IT WORKS */}
+
       <section className="px-8 py-24 bg-gray-50">
+  <div className="max-w-[1200px] mx-auto">
+
+    <div className="mb-20 text-center">
+      <h2 className="mb-4 text-4xl font-black md:text-5xl">
+        How <span className="text-[#e65100]">It Works</span>
+      </h2>
+      <p className="text-lg text-gray-500">
+        Your path to a professional resume in 5 simple steps.
+      </p>
+    </div>
+
+    <div className="space-y-24">
+      {howItWorksSteps.map((step, index) => (
+        <div
+          key={index}
+          className={`flex flex-col md:flex-row items-center gap-12 ${
+            index % 2 !== 0 ? "md:flex-row-reverse" : ""
+          }`}
+        >
+          {/* IMAGE BOX */}
+          <div className="relative w-full md:w-1/2 bg-white  shadow-xl rounded-3xl ">
+         <div className='w-full h-full overflow-hidden rounded-3xl aspect-video'>
+            <img
+              src={step.image}
+              alt={step.heading}
+              className="w-full h-full object-cover  transition-transform duration-500 "
+            />
+          </div>
+          </div>
+
+          {/* TEXT CONTENT */}
+          <div className="w-full md:w-1/2 space-y-6">
+            <span className="text-[#0077cc] font-black text-6xl opacity-10">
+              0{index + 1}
+            </span>
+            <h3 className="text-3xl font-bold text-[#1a2e52] leading-tight">
+              {step.heading}
+            </h3>
+            <p className="text-lg leading-relaxed text-gray-600">
+              {step.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+      {/* <section className="px-8 py-24 bg-gray-50">
         <div className="max-w-[1200px] mx-auto">
           <div className="mb-20 text-center">
             <h2 className="mb-4 text-4xl font-black md:text-5xl">
@@ -678,7 +740,7 @@ function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       {/* TEMPLATE SHOWCASE */}
