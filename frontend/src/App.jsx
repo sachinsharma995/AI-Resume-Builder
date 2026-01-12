@@ -13,7 +13,7 @@ import HelpCenter from "./pages/HelpCenter";
 import About from "./pages/About";
 import BlogPage from "./pages/Blogpage";
 import CareersPage from "./pages/Careerpage";
-import RequireAuth from "./components/RequireAuth";
+
 import ScrollToTop from "./components/ScrollToTop";
 import PrivacyPolicy from "./pages/Privacypolicy";
 import ResumeChecker from "./pages/ResumeChecker";
@@ -24,6 +24,7 @@ import NotFound from "./pages/NotFound";
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard/AdminDashboard";
+
 // import TemplateDocs from "./components/admin/AdminCreateTemplates/TemplateDocs";
 import Resume from "./components/admin/resume";
 import AdminUsers from "./components/admin/AdminUser/AdminUsers";
@@ -52,7 +53,7 @@ function App() {
           <Route path="/templates/:id" element={<TemplateEditor />} />
           <Route path="/builder" element={<BuilderPage />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/help-center" element={<HelpCenter />} />          
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/careers" element={<CareersPage />} />
@@ -67,6 +68,7 @@ function App() {
           {/* Admin routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
+
             <Route path="create-templates" element={<AdminTemplates />} />
             <Route path="templates" element={<Resume />} />
             <Route path="users" element={<AdminUsers />} />
