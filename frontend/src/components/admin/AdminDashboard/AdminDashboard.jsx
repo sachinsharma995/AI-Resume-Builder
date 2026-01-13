@@ -33,12 +33,6 @@ export default function AdminDashboard() {
   /* ------------------ DUMMY DATA ------------------ */
   const colors = ["#6366F1", "#22C55E", "#F59E0B", "#EC4899"];
 
-  // const subscriptionSplit = [
-  //   { name: "Free", value: 55 },
-  //   { name: "Basic", value: 25 },
-  //   { name: "Pro", value: 20 },
-  // ];
-
   const stats = [
     {
       title: "Total Users",
