@@ -170,7 +170,7 @@ function LandingPage() {
     return () => clearInterval(scrollInterval);
   }, []);
 
-  // Scroll to the free templates section when URL hash is present (e.g. /#free-templates)
+  // Scroll to the free templates section when URL hash is present 
   const location = useLocation();
   useEffect(() => {
     if (location.hash === "#free-templates") {
