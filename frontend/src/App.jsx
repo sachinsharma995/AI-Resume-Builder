@@ -16,7 +16,8 @@ import CareersPage from "./pages/Careerpage";
 import JobTrackerPro from "./pages/JobTracker (1)";
 import RequireAuth from "./components/RequireAuth";
 import ScrollToTop from "./components/ScrollToTop";
-import PrivacyPolicy from "./pages/Privacypolicy";
+// Removed unused import of PrivacyPolicy to avoid dev-server requesting a file that may be blocked by extensions
+// If you need a privacy policy page, add an explicit route and import it lazily.
 import ResumeChecker from "./pages/ResumeChecker";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
