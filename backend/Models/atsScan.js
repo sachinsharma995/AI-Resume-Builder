@@ -1,24 +1,45 @@
 import mongoose from "mongoose";
-import User from "./User";
-import Template from "./template";
-import ResumeProfile from "./resumeProfile";
 
 const atsScansSchema = new mongoose.Schema(
   {
-    userId: User.id,
-    resumeprofileId: ResumeProfile.id,
-    templateId: Template.id,
-    jobTitle: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    resumeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Resume",
+    },
+    filename: {
       type: String,
       required: true,
     },
-    jobDescription: {
+    originalName: {
       type: String,
       required: true,
+    },
+    filePath: {
+      type: String,
+      required: true,
+    },
+    fileSize: {
+      type: Number,
+    },
+    fileType: {
+      type: String,
+    },
+    jobTitle: {
+      type: String,
+    },
+    jobDescription: {
+      type: String,
     },
     overallScore: {
       type: Number,
       required: true,
+      min: 0,
+      max: 10,
     },
     sectionScores: [
       {
@@ -29,6 +50,11 @@ const atsScansSchema = new mongoose.Schema(
         score: {
           type: Number,
           required: true,
+        },
+        status: {
+          type: String,
+          enum: ["ok", "warn", "error"],
+          default: "ok",
         },
       },
     ],
@@ -48,9 +74,33 @@ const atsScansSchema = new mongoose.Schema(
         },
       },
     ],
+    suggestions: [
+      {
+        type: String,
+      },
+    ],
+    extractedText: {
+      type: String,
+    },
+    extractedData: {
+      email: String,
+      phone: String,
+      name: String,
+      skills: [String],
+      experience: [String],
+      education: [String],
+    },
+    passThreshold: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { timestamps }
+  { timestamps: true }
 );
+
+// Index for faster queries
+atsScansSchema.index({ userId: 1, createdAt: -1 });
+atsScansSchema.index({ overallScore: -1 });
 
 const AtsScans = mongoose.model("AtsScans", atsScansSchema);
 export default AtsScans;
