@@ -33,6 +33,7 @@ import AdminSubscription from "./components/admin/AdminSubscription/AdminSubscri
 import AdminAcceptUser from "./components/admin/AdminAcceptUserTemplate/AdminAcceptUser";
 import AdminAnalytics from "./components/admin/AdminAnalytics/AdminAnalytics";
 import AdminTemplates from "./components/admin/AdminCreateTemplates/Template";
+import ResumeEditor from "./components/admin/ResumeEditor/ResumeEditor";
 // User routes
 import UserRoutes from "./pages/UserRoutes";
 
@@ -72,6 +73,7 @@ function App() {
             <Route index element={<AdminDashboard />} />
 
             <Route path="create-templates" element={<AdminTemplates />} />
+            <Route path="resume-editor" element={<ResumeEditor />} />
             <Route path="templates" element={<Resume />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="subscription" element={<AdminSubscription />} />

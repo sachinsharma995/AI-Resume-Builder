@@ -28,7 +28,7 @@ const UserRoutes = () => {
             <Dashboard
               user={{ name: "Meghana" }}
               resumes={[]}
-              setActivePage={() => {}}
+              setActivePage={() => { }}
             />
           }
         />
