@@ -33,10 +33,10 @@ export const uploadAndAnalyzeResume = async (req, res) => {
     const userId = req.userId;
     const file = req.file;
 
-    // Parse resume
+    // Parse resume - pass file object directly
     const parseResult = await parseResume(file);
 
-    if (!parseResult?.text) {
+    if (!parseResult?.success || !parseResult?.text) {
       deleteFile(file.path);
       return res.status(400).json({
         success: false,

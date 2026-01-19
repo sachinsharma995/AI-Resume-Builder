@@ -44,14 +44,16 @@ export const parseDOCX = async (filePath) => {
 };
 
 /**
- * Parse resume file based on file type
+ * Parse resume file based on file object
  */
-export const parseResume = async (filePath, fileType) => {
+export const parseResume = async (file) => {
+  const filePath = file.path;
+  const fileType = file.mimetype;
+  
   if (fileType === "application/pdf") {
     return await parsePDF(filePath);
   } else if (
-    fileType ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    fileType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
     fileType === "application/msword"
   ) {
     return await parseDOCX(filePath);
@@ -98,26 +100,10 @@ export const extractResumeData = (text) => {
 
   // Extract skills keywords
   const skillKeywords = [
-    "JavaScript",
-    "Python",
-    "Java",
-    "React",
-    "Node.js",
-    "HTML",
-    "CSS",
-    "SQL",
-    "MongoDB",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-    "Git",
-    "Agile",
-    "Scrum",
-    "Leadership",
-    "Communication",
-    "Problem Solving",
-    "Teamwork",
-    "Project Management",
+    "JavaScript", "Python", "Java", "React", "Node.js", "HTML", "CSS", 
+    "SQL", "MongoDB", "AWS", "Docker", "Kubernetes", "Git", "Agile", 
+    "Scrum", "Leadership", "Communication", "Problem Solving", 
+    "Teamwork", "Project Management"
   ];
 
   skillKeywords.forEach((skill) => {
