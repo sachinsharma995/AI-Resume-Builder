@@ -31,15 +31,6 @@ import TemplatesPage from "../Templates/TemplatesDashboardPage";
 import "./ResumeBuilder.css";
 import UserNavbar from "../UserNavBar/UserNavBar";
 
-const sections = [
-  "personal",
-  "work",
-  "education",
-  "skills",
-  "projects",
-  "certs",
-];
-
 const ResumeBuilder = () => {
   /* -------------------- CORE STATE -------------------- */
   const [formData, setFormData] = useState({
@@ -52,7 +43,7 @@ const ResumeBuilder = () => {
     website: "",
     education: [
       {
-        id: Date.now(),
+        id: "edu-1",
         school: "",
         degree: "",
         gpa: "",
@@ -63,7 +54,7 @@ const ResumeBuilder = () => {
     ],
     experience: [
       {
-        id: Date.now(),
+        id: "exp-1",
         title: "",
         company: "",
         description: "",
@@ -74,7 +65,7 @@ const ResumeBuilder = () => {
     ],
     projects: [
       {
-        id: Date.now(),
+        id: "proj-1",
         name: "",
         description: "",
         technologies: "",
@@ -88,7 +79,7 @@ const ResumeBuilder = () => {
     skills: { technical: [], soft: [] },
     certifications: [
       {
-        id: Date.now(),
+        id: "cert-1",
         name: "",
         issuer: "",
         date: "",
@@ -96,9 +87,6 @@ const ResumeBuilder = () => {
       },
     ],
   });
-  const [templates, setTemplates] = useState([]);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
-
   const [resumeMode, setResumeMode] = useState(null);
   const [uploadedResume, setUploadedResume] = useState(null);
 
@@ -117,13 +105,6 @@ const ResumeBuilder = () => {
   const handleUseSummary = (text) => {
     setFormData((prev) => ({ ...prev, summary: text }));
   };
-
-  const handleSelectTemplate = (id) => {
-    setSelectedTemplate(id);
-    setActiveTab("builder");
-  };
-
-  const currentTemplate = templates?.find((t) => t.id === selectedTemplate);
 
   /*------------------- PREVIOUS & NEXT BUTTON ------------*/
   const tabs = [
@@ -166,7 +147,7 @@ const ResumeBuilder = () => {
         return <SkillsForm formData={formData} setFormData={setFormData} />;
       case "projects":
         return <ProjectsForm formData={formData} setFormData={setFormData} />;
-      case "certifications":
+      case "certs":
         return (
           <CertificationsForm formData={formData} setFormData={setFormData} />
         );
@@ -175,29 +156,12 @@ const ResumeBuilder = () => {
     }
   };
 
-  const currentIndex = sections.indexOf(activeSection);
-
-  const goNext = () => {
-    if (currentIndex < sections.length - 1) {
-      setActiveSection(sections[currentIndex + 1]);
-    }
-  };
-
-  const goBack = () => {
-    if (currentIndex > 0) {
-      setActiveSection(sections[currentIndex - 1]);
-    }
-  };
 
   /* -------------------- MAIN CONTENT -------------------- */
   const renderMainContent = () => {
     if (activeTab === "templates") {
       return (
-        <TemplatesPage
-          templates={templates}
-          selectedTemplate={selectedTemplate}
-          onSelectTemplate={handleSelectTemplate}
-        />
+        <TemplatesPage />
       );
     }
 
@@ -205,7 +169,6 @@ const ResumeBuilder = () => {
       return (
         <FullPreview
           formData={formData}
-          currentTemplate={currentTemplate}
           setActiveTab={setActiveTab}
         />
       );
@@ -280,7 +243,6 @@ const ResumeBuilder = () => {
           {!isPreviewHidden && (
             <LivePreview
               formData={formData}
-              currentTemplate={currentTemplate}
               isExpanded={isPreviewExpanded}
               onExpand={() => setIsPreviewExpanded(true)}
               onCollapse={() => setIsPreviewExpanded(false)}
@@ -332,7 +294,7 @@ const ResumeBuilder = () => {
   /* -------------------- BUILDER PAGE -------------------- */
   return (
     <div className="">
-      <UserNavbar />
+      <UserNavBar />
       {/* resume-builder-page */}
       <div className="p-2.5">
         {/* main-header */}
