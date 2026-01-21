@@ -6,6 +6,7 @@ import {
   FolderKanban,
   Award
 } from 'lucide-react';
+import { useRef } from 'react';
 
 /* ===== ICONS ===== */
 const ChevronLeft = () => (

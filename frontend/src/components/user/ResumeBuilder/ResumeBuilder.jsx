@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
 import ModeSelection from './ModeSelection';
+import UserNavBar from '../UserNavBar/UserNavBar';
 import ResumeUpload from './ResumeUpload';
 import FormTabs from './FormTabs';
 
@@ -21,7 +22,7 @@ import './ResumeBuilder.css';
 const sections = ['personal', 'work', 'education', 'skills', 'projects', 'certs'];
 
 
-const ResumeBuilder = ({ setActivePage = () => {} }) => {
+const ResumeBuilder = ({ setActivePage = () => { } }) => {
   /* -------------------- CORE STATE -------------------- */
   const [formData, setFormData] = useState({});
   const [templates] = useState([]);
@@ -83,17 +84,17 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
 
   const currentIndex = sections.indexOf(activeSection);
 
-const goNext = () => {
-  if (currentIndex < sections.length - 1) {
-    setActiveSection(sections[currentIndex + 1]);
-  }
-};
+  const goNext = () => {
+    if (currentIndex < sections.length - 1) {
+      setActiveSection(sections[currentIndex + 1]);
+    }
+  };
 
-const goBack = () => {
-  if (currentIndex > 0) {
-    setActiveSection(sections[currentIndex - 1]);
-  }
-};
+  const goBack = () => {
+    if (currentIndex > 0) {
+      setActiveSection(sections[currentIndex - 1]);
+    }
+  };
 
 
   /* -------------------- MAIN CONTENT -------------------- */
@@ -142,11 +143,11 @@ const goBack = () => {
               setActiveSection={setActiveSection}
             />
             <div className="form-content">{renderFormContent()}
- 
-  
+
+
             </div>
           </div>
-          
+
 
           {!isPreviewHidden && (
             <LivePreview
@@ -213,23 +214,6 @@ const goBack = () => {
 
         {renderMainContent()}
       </div>
-
-      <div className="main-tabs">
-        <button
-          className={activeTab === 'builder' ? 'active' : ''}
-          onClick={() => setActiveTab('builder')}
-        >
-          Builder
-        </button>
-        <button
-          className={activeTab === 'templates' ? 'active' : ''}
-          onClick={() => setActiveTab('templates')}
-        >
-          Templates
-        </button>
-      </div>
-
-      {renderMainContent()}
     </div>
   );
 };
