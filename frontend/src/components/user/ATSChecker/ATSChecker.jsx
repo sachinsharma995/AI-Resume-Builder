@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+// File: frontend/src/components/user/ATSChecker/ATSChecker.jsx
+
+import React, { useState, useRef, useEffect } from "react";
 
 // ATS Keywords Database
 const ATS_KEYWORDS = {
@@ -187,6 +189,152 @@ const generateSuggestions = (content, section, essentials, tailoring, lowerText)
   return suggestions.slice(0, 5);
 };
 
+// PDF Viewer Component using PDF.js
+function PDFViewer({ file }) {
+  const canvasRef = useRef(null);
+  const [numPages, setNumPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pdfDoc, setPdfDoc] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPDF = async () => {
+      try {
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const arrayBuffer = await file.arrayBuffer();
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+        
+        setPdfDoc(pdf);
+        setNumPages(pdf.numPages);
+        setLoading(false);
+        
+        renderPage(pdf, 1);
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+        setLoading(false);
+      }
+    };
+
+    loadPDF();
+  }, [file]);
+
+  const renderPage = async (pdf, pageNum) => {
+    const page = await pdf.getPage(pageNum);
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    
+    const containerWidth = canvas.parentElement.clientWidth;
+    const viewport = page.getViewport({ scale: 1 });
+    const scale = (containerWidth - 40) / viewport.width;
+    const scaledViewport = page.getViewport({ scale });
+
+    canvas.height = scaledViewport.height;
+    canvas.width = scaledViewport.width;
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: scaledViewport
+    };
+
+    await page.render(renderContext).promise;
+  };
+
+  const goToPage = async (pageNum) => {
+    if (pageNum >= 1 && pageNum <= numPages && pdfDoc) {
+      setCurrentPage(pageNum);
+      await renderPage(pdfDoc, pageNum);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <div className="animate-spin h-10 w-10 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading PDF...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full">
+      <canvas ref={canvasRef} className="w-full shadow-lg rounded-lg" />
+      
+      {numPages > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-3 py-1 bg-blue-600 text-white rounded disabled:bg-gray-300 text-sm"
+          >
+            Previous
+          </button>
+          <span className="text-sm text-slate-600">
+            Page {currentPage} of {numPages}
+          </span>
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === numPages}
+            className="px-3 py-1 bg-blue-600 text-white rounded disabled:bg-gray-300 text-sm"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// DOCX Viewer Component
+function DOCXViewer({ file }) {
+  const [htmlContent, setHtmlContent] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadDOCX = async () => {
+      try {
+        const mammoth = await import('mammoth');
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.convertToHtml({ arrayBuffer });
+        setHtmlContent(result.value);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading DOCX:', error);
+        setLoading(false);
+      }
+    };
+
+    loadDOCX();
+  }, [file]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <div className="animate-spin h-10 w-10 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading DOCX...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="w-full prose prose-sm max-w-none"
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+      style={{
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '14px',
+        lineHeight: '1.6'
+      }}
+    />
+  );
+}
+
 // ATSUpload Component
 function ATSUpload({ onFileUpload }) {
   const fileInputRef = useRef(null);
@@ -223,6 +371,7 @@ function ATSUpload({ onFileUpload }) {
 
       <div className="mt-4 text-xs text-slate-500">
         <p>Supported formats: PDF, DOCX, TXT</p>
+        <p className="mt-1 text-blue-600">📄 Visual preview for PDF & DOCX</p>
       </div>
     </div>
   );
@@ -234,96 +383,23 @@ export default function ATSChecker() {
   const [resumeText, setResumeText] = useState("");
   const [analysisResult, setAnalysisResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const extractTextFromPDF = async (file) => {
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      const bytes = new Uint8Array(arrayBuffer);
-      const decoder = new TextDecoder('utf-8');
-      let fullText = decoder.decode(bytes);
-      
-      // Extract text between BT (Begin Text) and ET (End Text) operators
-      const textBlocks = [];
-      const btPattern = /BT(.*?)ET/gs;
-      let match;
-      
-      while ((match = btPattern.exec(fullText)) !== null) {
-        const block = match[1];
-        
-        // Extract text from within parentheses or angle brackets
-        const textPattern = /\((.*?)\)|<(.*?)>/g;
-        let textMatch;
-        
-        while ((textMatch = textPattern.exec(block)) !== null) {
-          const text = textMatch[1] || textMatch[2];
-          if (text && text.trim()) {
-            // Decode common PDF escape sequences
-            const decoded = text
-              .replace(/\\n/g, '\n')
-              .replace(/\\r/g, '\r')
-              .replace(/\\t/g, '\t')
-              .replace(/\\\(/g, '(')
-              .replace(/\\\)/g, ')')
-              .replace(/\\\\/g, '\\');
-            
-            textBlocks.push(decoded);
-          }
-        }
-      }
-      
-      if (textBlocks.length === 0) {
-        // Fallback: try to extract any printable ASCII text
-        let simpleText = '';
-        for (let i = 0; i < bytes.length; i++) {
-          const char = String.fromCharCode(bytes[i]);
-          if (char.match(/[\x20-\x7E\n\r\t]/)) {
-            simpleText += char;
-          } else if (simpleText.length > 0 && !simpleText.endsWith(' ')) {
-            simpleText += ' ';
-          }
-        }
-        
-        // Clean up the simple extraction
-        simpleText = simpleText
-          .replace(/[^\x20-\x7E\n\r\t]/g, ' ')
-          .replace(/\s+/g, ' ')
-          .split(/[\/\(\)\[\]<>]/)
-          .filter(part => {
-            const trimmed = part.trim();
-            return trimmed.length > 3 && /[a-zA-Z]/.test(trimmed);
-          })
-          .join(' ')
-          .trim();
-        
-        if (simpleText.length > 100) {
-          return simpleText;
-        }
-      }
-      
-      // Join extracted text blocks
-      let extractedText = textBlocks.join(' ');
-      
-      // Clean up spacing and formatting
-      extractedText = extractedText
-        .replace(/\s+/g, ' ')
-        .replace(/([a-z])([A-Z])/g, '$1\n$2')
-        .replace(/([.!?])\s+/g, '$1\n')
-        .replace(/\n\s*\n/g, '\n\n')
-        .trim();
-      
-      return extractedText.length > 100 ? extractedText : null;
-      
-    } catch (error) {
-      console.error('PDF extraction error:', error);
-      return null;
+  useEffect(() => {
+    if (!document.querySelector('script[src*="pdf.min.js"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      script.async = true;
+      document.body.appendChild(script);
     }
-  };
+  }, []);
 
   const handleFileUpload = async (file) => {
     console.log("File uploaded:", file.name, file.type);
     setUploadedFile(file);
     setLoading(true);
     setAnalysisResult(null);
+    setError(null);
     
     try {
       let extractedText = "";
@@ -331,60 +407,74 @@ export default function ATSChecker() {
       if (file.type === "text/plain") {
         extractedText = await file.text();
         console.log("TXT file extracted, length:", extractedText.length);
-      } else if (file.type === "application/pdf") {
-        const pdfText = await extractTextFromPDF(file);
-        if (pdfText && pdfText.length > 100) {
-          extractedText = pdfText;
-          console.log("PDF extracted successfully, length:", extractedText.length);
-        } else {
-          extractedText = `⚠️ PDF Text Extraction Issue\n\n` +
-            `We couldn't extract readable text from this PDF file.\n\n` +
-            `To get accurate ATS analysis, please:\n\n` +
-            `1. Open your PDF resume\n` +
-            `2. Select all text (Ctrl+A or Cmd+A)\n` +
-            `3. Copy the text\n` +
-            `4. Paste into a new text file\n` +
-            `5. Save as .TXT format\n` +
-            `6. Upload the .TXT file here\n\n` +
-            `This ensures accurate keyword matching and ATS scoring.`;
-        }
-      } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
-        extractedText = `📄 DOCX File Uploaded\n\n` +
-          `File: ${file.name}\n\n` +
-          `For accurate ATS analysis, please convert to TXT:\n\n` +
-          `1. Open your DOCX file\n` +
-          `2. Select all text (Ctrl+A or Cmd+A)\n` +
-          `3. Copy and paste into Notepad or TextEdit\n` +
-          `4. Save as .TXT file\n` +
-          `5. Upload the .TXT file\n\n` +
-          `This provides the most accurate keyword analysis.`;
-      } else {
-        extractedText = `❌ Unsupported File Type\n\n` +
-          `File: ${file.name}\n` +
-          `Type: ${file.type}\n\n` +
-          `Please upload one of these formats:\n` +
-          `• .TXT (recommended for best results)\n` +
-          `• .PDF\n` +
-          `• .DOCX`;
+        setResumeText(extractedText);
+        
+        setTimeout(() => {
+          const analysis = analyzeResumeATS(extractedText);
+          console.log("Analysis result:", analysis);
+          setAnalysisResult(analysis);
+          setLoading(false);
+        }, 500);
+        return;
       }
       
-      setResumeText(
-        extractedText && extractedText.trim().length > 0
-          ? extractedText
-          : `📄 ${file.name}\n\nWe couldn't extract readable text from this file.\n\nFor best preview and ATS accuracy:\n• Convert resume to .TXT\n• Upload the TXT file`
-      );
+      if (file.type === "application/pdf" || 
+          file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        
+        const formData = new FormData();
+        formData.append('resume', file);
+        
+        try {
+          const response = await fetch('http://localhost:5000/api/resumes/upload', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          });
+          
+          console.log('Backend response status:', response.status);
+          
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Backend data:', data);
+            
+            if (data.success && data.data) {
+              extractedText = data.data.extractedText || '';
+              
+              console.log("Extracted text length:", extractedText.length);
+              
+              setAnalysisResult({
+                overallScore: data.data.overallScore,
+                contentScore: 0,
+                sectionScore: 0,
+                essentialsScore: 0,
+                tailoringScore: 0,
+                matchedKeywords: data.data.matchedKeywords || [],
+                missingKeywords: data.data.missingKeywords || [],
+                suggestions: data.data.suggestions || []
+              });
+              
+              setLoading(false);
+              return;
+            }
+          } else if (response.status === 401) {
+            throw new Error("AUTHENTICATION_REQUIRED");
+          }
+        } catch (apiError) {
+          console.error("Backend API error:", apiError);
+          
+          if (apiError.message === "AUTHENTICATION_REQUIRED") {
+            setError("Please log in to analyze PDF/DOCX files");
+            setLoading(false);
+            return;
+          }
+        }
+      }
       
-      // Perform ATS analysis with a slight delay
-      setTimeout(() => {
-        const analysis = analyzeResumeATS(extractedText);
-        console.log("Analysis result:", analysis);
-        setAnalysisResult(analysis);
-        setLoading(false);
-      }, 800);
+      setLoading(false);
       
     } catch (error) {
       console.error("Error processing file:", error);
-      setResumeText("❌ Error processing file. Please try again or use a .TXT file.");
+      setError(error.message || "Error processing file");
       setLoading(false);
     }
   };
@@ -401,20 +491,10 @@ export default function ATSChecker() {
     return { bg: "bg-red-100", text: "text-red-700", label: "Needs Work" };
   };
 
-  const getConstraintStatus = (score, maxScore) => {
-    const percentage = score * 10; // score is already out of 10
-    if (percentage >= 75) return { ok: true };
-    if (percentage >= 50) return { warn: true };
-    return { error: true };
-  };
-
   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER */}
       <div className="w-full p-4 max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold text-slate-800">
-          ATS Checker
-        </h1>
+        <h1 className="text-2xl font-bold text-slate-800">ATS Checker</h1>
         <p className="text-slate-500 mt-1 text-sm">
           Optimize your resume for applicant tracking systems.
         </p>
@@ -423,11 +503,10 @@ export default function ATSChecker() {
       <div className="bg-white min-h-screen">
         <div className="flex flex-col lg:flex-row min-h-full w-full max-w-7xl mx-auto p-4 gap-6">
 
-          {/* LEFT: DOCUMENT PREVIEW */}
-          <div className="w-full lg:w-2/3 bg-slate-200 rounded-xl p-4 lg:p-8 overflow-y-auto flex flex-col items-center border border-slate-300">
-            <div className="w-full max-w-2xl flex justify-between items-center mb-4 px-2">
+          <div className="w-full lg:w-2/3 bg-slate-50 rounded-xl p-4 lg:p-8 overflow-y-auto flex flex-col items-center border border-slate-200">
+            <div className="w-full max-w-3xl flex justify-between items-center mb-4 px-2">
               <h3 className="text-sm font-semibold text-slate-600">
-                {uploadedFile ? "Your Resume" : "Document Preview"}
+                {uploadedFile ? "Resume Preview" : "Document Preview"}
               </h3>
               {uploadedFile && (
                 <span className="text-xs text-slate-500">{uploadedFile.name}</span>
@@ -435,22 +514,24 @@ export default function ATSChecker() {
             </div>
 
             {uploadedFile ? (
-              <div className="resume-page bg-white w-full max-w-2xl p-8 lg:p-12 text-slate-800 text-sm leading-relaxed relative overflow-auto max-h-[800px] shadow-lg">
-                {loading ? (
-                  <div className="flex items-center justify-center py-20">
-                    <div className="text-center">
-                      <div className="animate-spin h-10 w-10 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-                      <p className="text-slate-600">Analyzing resume...</p>
-                    </div>
+              <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg min-h-[600px]">
+                {uploadedFile.type === "application/pdf" ? (
+                  <PDFViewer file={uploadedFile} />
+                ) : uploadedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
+                  <DOCXViewer file={uploadedFile} />
+                ) : uploadedFile.type === "text/plain" ? (
+                  <div className="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed p-4">
+                    {resumeText}
                   </div>
                 ) : (
-                  <div className="whitespace-pre-line break-words font-sans" style={{ lineHeight: '1.6' }}>
-                    {resumeText || `📄 ${uploadedFile.name}\n\nPreview unavailable`}
+                  <div className="text-center py-10 text-slate-500">
+                    <p>Unable to preview this file type</p>
+                    <p className="text-xs mt-2">Supported: PDF, DOCX, TXT</p>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="resume-page bg-white w-full max-w-2xl p-8 lg:p-12 text-slate-800 text-sm leading-relaxed relative">
+              <div className="resume-page bg-white w-full max-w-2xl p-8 lg:p-12 text-slate-800 text-sm leading-relaxed relative shadow-lg rounded-lg">
                 <div className="border-b border-slate-200 pb-6 mb-6">
                   <h1 className="text-3xl font-bold mb-2">Alex Morgan</h1>
                   <p className="text-slate-500 flex gap-4 text-xs">
@@ -467,9 +548,7 @@ export default function ATSChecker() {
 
                 <Section title="Experience">
                   <ul className="list-disc ml-4 space-y-1">
-                    <li>
-                      Led SaaS redesign resulting in 25% increase in retention.
-                    </li>
+                    <li>Led SaaS redesign resulting in 25% increase in retention.</li>
                     <li>Managed 4 junior designers.</li>
                     <li>Built design systems with React & Tailwind.</li>
                   </ul>
@@ -483,10 +562,7 @@ export default function ATSChecker() {
                   <div className="flex flex-wrap gap-2">
                     {["Figma", "Adobe CC", "HTML/CSS", "User Research", "Agile"].map(
                       (skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-1 bg-slate-100 rounded text-xs"
-                        >
+                        <span key={skill} className="px-2 py-1 bg-slate-100 rounded text-xs">
                           {skill}
                         </span>
                       )
@@ -497,13 +573,9 @@ export default function ATSChecker() {
             )}
           </div>
 
-          {/* RIGHT: CONTROLS */}
-          <div className="w-full lg:w-1/3 flex flex-col gap-6 max-w-7xl mx-auto p-0 lg:p-0">
-
-            {/* UPLOAD */}
+          <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <ATSUpload onFileUpload={handleFileUpload} />
 
-            {/* ANALYSIS */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex-1">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-semibold text-lg">Analysis Results</h2>
@@ -516,7 +588,6 @@ export default function ATSChecker() {
 
               {analysisResult ? (
                 <>
-                  {/* SCORE */}
                   <div className="flex items-center gap-4 mb-8 bg-slate-50 p-4 rounded-lg border">
                     <div className="relative w-20 h-20 flex items-center justify-center">
                       <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
@@ -538,9 +609,7 @@ export default function ATSChecker() {
                     </div>
 
                     <div>
-                      <p className="text-sm uppercase text-slate-500 font-semibold">
-                        ATS Score
-                      </p>
+                      <p className="text-sm uppercase text-slate-500 font-semibold">ATS Score</p>
                       <p className="text-2xl font-bold">
                         {analysisResult.overallScore} <span className="text-base text-slate-400">/ 10</span>
                       </p>
@@ -551,12 +620,6 @@ export default function ATSChecker() {
                     </div>
                   </div>
 
-                  <Constraint {...getConstraintStatus(analysisResult.contentScore, 10)} title={`Content Quality: ${analysisResult.contentScore}/10`} />
-                  <Constraint {...getConstraintStatus(analysisResult.sectionScore, 10)} title={`Section Structure: ${analysisResult.sectionScore}/10`} />
-                  <Constraint {...getConstraintStatus(analysisResult.essentialsScore, 10)} title={`ATS Essentials: ${analysisResult.essentialsScore}/10`} />
-                  <Constraint {...getConstraintStatus(analysisResult.tailoringScore, 10)} title={`Keyword Optimization: ${analysisResult.tailoringScore}/10`} />
-
-                  {/* Keywords Section */}
                   {analysisResult.matchedKeywords.length > 0 && (
                     <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
                       <h4 className="text-xs font-semibold text-green-800 mb-2">
@@ -587,7 +650,6 @@ export default function ATSChecker() {
                     </div>
                   )}
 
-                  {/* Suggestions */}
                   {analysisResult.suggestions.length > 0 && (
                     <div className="mt-6">
                       <h4 className="text-sm font-semibold text-slate-700 mb-3">💡 Suggestions</h4>
@@ -627,8 +689,6 @@ export default function ATSChecker() {
   );
 }
 
-/* ---------- SMALL COMPONENTS ---------- */
-
 function Section({ title, children }) {
   return (
     <section className="mb-6">
@@ -637,19 +697,5 @@ function Section({ title, children }) {
       </h2>
       <div className="text-slate-600 text-xs">{children}</div>
     </section>
-  );
-}
-
-function Constraint({ title, ok, warn, error }) {
-  const bg = ok
-    ? "bg-green-50 border-green-100"
-    : warn
-    ? "bg-amber-50 border-amber-100"
-    : "bg-red-50 border-red-100";
-
-  return (
-    <div className={`p-3 rounded-lg border ${bg} mb-2`}>
-      <p className="text-sm font-medium text-slate-800">{title}</p>
-    </div>
   );
 }
