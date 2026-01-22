@@ -663,9 +663,7 @@ export default function ATSChecker() {
                     </div>
                   )}
 
-                  <button className="w-full mt-6 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors">
-                    Download Detailed Report
-                  </button>
+                 
                 </>
               ) : loading ? (
                 <div className="text-center py-8">
