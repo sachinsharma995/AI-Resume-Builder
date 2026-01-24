@@ -1,6 +1,7 @@
 // File: frontend/src/components/user/ATSChecker/ATSChecker.jsx
 
 import React, { useState, useRef, useEffect } from "react";
+import UserNavbar from "../UserNavBar/UserNavBar";
 
 // ATS Keywords Database
 const ATS_KEYWORDS = {
@@ -234,6 +235,10 @@ function PDFViewer({ file }) {
     canvas.height = scaledViewport.height;
     canvas.width = scaledViewport.width;
 
+    // Clear the canvas and reset transformations to fix inversion issue
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
     const renderContext = {
       canvasContext: context,
       viewport: scaledViewport
@@ -370,8 +375,7 @@ function ATSUpload({ onFileUpload }) {
       />
 
       <div className="mt-4 text-xs text-slate-500">
-        <p>Supported formats: PDF, DOCX, TXT</p>
-        <p className="mt-1 text-blue-600">📄 Visual preview for PDF & DOCX</p>
+        
       </div>
     </div>
   );
@@ -493,6 +497,9 @@ export default function ATSChecker() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Add Navbar */}
+      <UserNavbar />
+      
       <div className="w-full p-4 max-w-7xl mx-auto">
         <h1 className="text-2xl font-bold text-slate-800">ATS Checker</h1>
         <p className="text-slate-500 mt-1 text-sm">
@@ -514,7 +521,7 @@ export default function ATSChecker() {
             </div>
 
             {uploadedFile ? (
-              <div className="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg min-h-[600px]">
+              <div className=" w-full max-w-3xl p-2 rounded-lg  min-h-[600px]">
                 {uploadedFile.type === "application/pdf" ? (
                   <PDFViewer file={uploadedFile} />
                 ) : uploadedFile.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ? (
@@ -525,50 +532,17 @@ export default function ATSChecker() {
                   </div>
                 ) : (
                   <div className="text-center py-10 text-slate-500">
-                    <p>Unable to preview this file type</p>
-                    <p className="text-xs mt-2">Supported: PDF, DOCX, TXT</p>
+                    
                   </div>
                 )}
               </div>
             ) : (
-              <div className="resume-page bg-white w-full max-w-2xl p-8 lg:p-12 text-slate-800 text-sm leading-relaxed relative shadow-lg rounded-lg">
-                <div className="border-b border-slate-200 pb-6 mb-6">
-                  <h1 className="text-3xl font-bold mb-2">Alex Morgan</h1>
-                  <p className="text-slate-500 flex gap-4 text-xs">
-                    <span>San Francisco, CA</span> •
-                    <span>alex.morgan@example.com</span> •
-                    <span>(555) 123-4567</span>
-                  </p>
-                </div>
-
-                <Section title="Professional Summary">
-                  Senior Product Designer with 6+ years of experience in building
-                  user-centric digital products. Improved engagement by 40%.
-                </Section>
-
-                <Section title="Experience">
-                  <ul className="list-disc ml-4 space-y-1">
-                    <li>Led SaaS redesign resulting in 25% increase in retention.</li>
-                    <li>Managed 4 junior designers.</li>
-                    <li>Built design systems with React & Tailwind.</li>
-                  </ul>
-                </Section>
-
-                <Section title="Education">
-                  Bachelor of Fine Arts, Interaction Design — 2017
-                </Section>
-
-                <Section title="Skills">
-                  <div className="flex flex-wrap gap-2">
-                    {["Figma", "Adobe CC", "HTML/CSS", "User Research", "Agile"].map(
-                      (skill) => (
-                        <span key={skill} className="px-2 py-1 bg-slate-100 rounded text-xs">
-                          {skill}
-                        </span>
-                      )
-                    )}
-                  </div>
-                </Section>
+              <div className="w-full max-w-2xl flex items-center justify-center">
+                <img 
+                  src="https://cdn.prod.website-files.com/62f3a8c764f6eb23f4252b13/67b8236ee93071ba897c079c_Basic%20professional%20resume-1.png" 
+                  alt="Sample Resume Preview" 
+                  className="w-full h-auto shadow-lg rounded-lg"
+                />
               </div>
             )}
           </div>
