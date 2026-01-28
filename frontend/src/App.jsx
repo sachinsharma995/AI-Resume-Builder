@@ -82,6 +82,7 @@ function App() {
           <Route path="/growths" element={<GrowthInsightsPage />}/>
           <Route path="/cover-letter" element={<AICoverLetterPage  />}/>
           <Route path="/cv" element={<CVFormattingPage  />}/>
+          
 
           {/* USER ROUTES */}
           <Route path="/user/*" element={<UserRoutes />} />
