@@ -42,12 +42,6 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
     },
     { id: "users", icon: User, label: "Users", path: "/admin/users" },
     {
-      id: "accept",
-      icon: Drone,
-      label: "Accept User Template",
-      path: "/admin/template-requests",
-    },
-    {
       id: "analytics",
       icon: BarChart,
       label: "Analytics",
@@ -119,10 +113,9 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }) {
                   onClick={() => handleNavigate(item.path)}
                   className={`w-full flex items-center rounded-xl transition-all
                     ${isCollapsed ? "justify-center px-0" : "gap-3 px-4"} py-3
-                    ${
-                      active
-                        ? "bg-blue-50 text-blue-600 font-semibold"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                    ${active
+                      ? "bg-blue-50 text-blue-600 font-semibold"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                     }`}
                 >
                   <Icon size={22} />
