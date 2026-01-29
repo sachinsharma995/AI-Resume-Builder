@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UpToSkillsImg from '../assets/UptoSkills.webp';
-import Footer from "../components/Footer";
+import Footer from "./Footer"
 
 function HelpCenter() {
     const navigate = useNavigate();
@@ -221,10 +221,10 @@ function HelpCenter() {
         <div className="min-h-screen bg-white font-['Outfit']">
 
             {/* NAVIGATION */}
-            <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+            <nav className="sticky top-0 z-50 border-b border-gray-100 shadow-sm bg-white/80 backdrop-blur-xl">
                 <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
-                        <div onClick={() => navigate('/')} className="cursor-pointer transition-transform hover:scale-105">
+                        <div onClick={() => navigate('/')} className="transition-transform cursor-pointer hover:scale-105">
                             <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="cursor-pointer">
                                 <img src={UpToSkillsImg} alt="UpToSkills Logo" className="w-[150px]" />
                             </div>
@@ -238,18 +238,18 @@ function HelpCenter() {
             {/* HERO SECTION */}
             <section className="relative pt-20 pb-32 overflow-hidden">
                 <div className="absolute inset-0 -z-10">
-                    <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-100 to-cyan-50 rounded-full blur-3xl opacity-40 animate-float"></div>
-                    <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-orange-100 to-pink-50 rounded-full blur-3xl opacity-40 animate-float-delayed"></div>
-                    <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-gradient-to-br from-purple-100 to-indigo-50 rounded-full blur-3xl opacity-40 animate-float-slow"></div>
+                    <div className="absolute rounded-full top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-100 to-cyan-50 blur-3xl opacity-40 animate-float"></div>
+                    <div className="absolute rounded-full top-40 right-20 w-80 h-80 bg-gradient-to-br from-orange-100 to-pink-50 blur-3xl opacity-40 animate-float-delayed"></div>
+                    <div className="absolute rounded-full bottom-20 left-1/3 w-72 h-72 bg-gradient-to-br from-purple-100 to-indigo-50 blur-3xl opacity-40 animate-float-slow"></div>
                 </div>
 
                 <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-                    <div className="text-center max-w-4xl mx-auto">
-                        <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-full border border-gray-100 shadow-sm animate-fade-in-up">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 border border-gray-100 rounded-full shadow-sm bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 animate-fade-in-up">
                             <div className="relative">
                                 <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse-slow"></div>
                             </div>
-                            <span className="text-sm font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">
+                            <span className="text-sm font-bold text-transparent bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text">
                                 Expert Guidance • Step-by-Step Tutorials • 24/7 Support
                             </span>
                         </div>
@@ -260,14 +260,14 @@ function HelpCenter() {
                             </span>
                         </h1>
 
-                        <p className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        <p className="max-w-3xl mx-auto mb-8 text-xl leading-relaxed text-gray-600 lg:text-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                             Master the art of resume building with our comprehensive guides, tutorials, and expert advice
                         </p>
 
                         {/* Search Bar */}
                         <div className="max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                             <div className="relative">
-                                <i className="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                <i className="absolute text-gray-400 -translate-y-1/2 fas fa-search left-5 top-1/2"></i>
                                 <input
                                     type="text"
                                     placeholder="Search for help..."
@@ -282,7 +282,7 @@ function HelpCenter() {
             </section>
 
             {/* TAB NAVIGATION */}
-            <section className="sticky top-20 z-40 bg-white/95 backdrop-blur-xl border-b border-gray-100 py-4 px-6 lg:px-8">
+            <section className="sticky z-40 px-6 py-4 border-b border-gray-100 top-20 bg-white/95 backdrop-blur-xl lg:px-8">
                 <div className="max-w-[1400px] mx-auto">
                     <div className="flex flex-wrap justify-center gap-3">
                         {Object.entries(tabLabels).map(([key, label]) => (
@@ -303,12 +303,12 @@ function HelpCenter() {
             </section>
 
             {/* ARTICLES GRID */}
-            <section className="py-20 px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+            <section className="px-6 py-20 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-gray-50">
                 <div className="max-w-[1400px] mx-auto min-h-[700px] transition-all duration-300">
 
 
                     {filteredArticles.length > 0 ? (
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                             {filteredArticles.map((article, index) => (
                                 <div
                                     key={article.id}
@@ -317,7 +317,7 @@ function HelpCenter() {
                                     style={{ animationDelay: `${index * 0.05}s` }}
                                 >
                                     {/* Article Header */}
-                                    <div className="relative p-6 bg-gradient-to-br from-gray-50 to-white border-b-2 border-gray-100">
+                                    <div className="relative p-6 border-b-2 border-gray-100 bg-gradient-to-br from-gray-50 to-white">
                                         <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0077cc] to-[#e65100] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 mb-4">
                                             <i className={`fas ${article.icon} text-2xl text-white`}></i>
                                         </div>
@@ -332,19 +332,19 @@ function HelpCenter() {
 
                                     {/* Article Description */}
                                     <div className="p-6">
-                                        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                        <p className="mb-4 text-sm leading-relaxed text-gray-600">
                                             {article.description}
                                         </p>
 
                                         {/* Expanded Content */}
                                         {expandedArticle === article.id && (
-                                            <div className="mt-4 pt-4 border-t border-gray-100 animate-fade-in">
-                                                <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                                            <div className="pt-4 mt-4 border-t border-gray-100 animate-fade-in">
+                                                <p className="mb-4 text-sm leading-relaxed text-gray-700">
                                                     {article.content}
                                                 </p>
                                                 <button className="group inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#0077cc] to-[#0056b3] hover:from-[#e65100] hover:to-[#f4511e] text-white text-sm font-bold rounded-lg transition-all duration-300 hover:shadow-lg">
                                                     <span>Learn More</span>
-                                                    <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                                                    <i className="transition-transform duration-300 fas fa-arrow-right group-hover:translate-x-1"></i>
                                                 </button>
                                             </div>
                                         )}
@@ -353,9 +353,9 @@ function HelpCenter() {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-16">
-                            <i className="fas fa-search text-6xl text-gray-300 mb-4"></i>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-2">No results found</h3>
+                        <div className="py-16 text-center">
+                            <i className="mb-4 text-6xl text-gray-300 fas fa-search"></i>
+                            <h3 className="mb-2 text-2xl font-bold text-gray-900">No results found</h3>
                             <p className="text-gray-600">Try adjusting your search query</p>
                         </div>
                     )}
@@ -363,10 +363,10 @@ function HelpCenter() {
             </section>
 
             {/* FAQ SECTION */}
-            <section className="py-20 px-6 lg:px-8 bg-white">
+            <section className="px-6 py-20 bg-white lg:px-8">
                 <div className="max-w-[1000px] mx-auto">
-                    <div className="text-center mb-16 animate-fade-in-up">
-                        <h2 className="text-4xl lg:text-5xl font-black mb-4">
+                    <div className="mb-16 text-center animate-fade-in-up">
+                        <h2 className="mb-4 text-4xl font-black lg:text-5xl">
                             <span className="bg-gradient-to-r from-[#0077cc] to-[#e65100] bg-clip-text text-transparent">Frequently Asked</span> Questions
                         </h2>
                         <p className="text-lg text-gray-600">
@@ -383,9 +383,9 @@ function HelpCenter() {
                             >
                                 <button
                                     onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
-                                    className="w-full px-6 lg:px-8 py-6 flex items-start justify-between gap-4 hover:bg-gradient-to-r hover:from-blue-50 hover:to-orange-50 transition-all duration-300"
+                                    className="flex items-start justify-between w-full gap-4 px-6 py-6 transition-all duration-300 lg:px-8 hover:bg-gradient-to-r hover:from-blue-50 hover:to-orange-50"
                                 >
-                                    <div className="text-left flex-1">
+                                    <div className="flex-1 text-left">
                                         <span className="inline-block px-3 py-1 bg-blue-100 text-[#0077cc] text-xs font-bold rounded-full mb-2">
                                             {faq.category || 'FAQ'}
                                         </span>
@@ -395,13 +395,13 @@ function HelpCenter() {
                                     </div>
                                     <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[#0077cc] to-[#e65100] flex items-center justify-center text-white transition-all duration-300 ${expandedFAQ === faq.id ? 'rotate-180' : ''
                                         }`}>
-                                        <i className="fas fa-chevron-down text-sm"></i>
+                                        <i className="text-sm fas fa-chevron-down"></i>
                                     </div>
                                 </button>
 
                                 {expandedFAQ === faq.id && (
-                                    <div className="px-6 lg:px-8 pb-6 bg-gradient-to-r from-gray-50 to-white border-t-2 border-gray-100 animate-fade-in">
-                                        <p className="text-gray-700 leading-relaxed">
+                                    <div className="px-6 pb-6 border-t-2 border-gray-100 lg:px-8 bg-gradient-to-r from-gray-50 to-white animate-fade-in">
+                                        <p className="leading-relaxed text-gray-700">
                                             {faq.answer}
                                         </p>
                                     </div>
@@ -415,14 +415,14 @@ function HelpCenter() {
             {/* CTA SECTION */}
             <section className="py-20 px-6 lg:px-8 bg-gradient-to-r from-[#0077cc] via-[#0056b3] to-[#1a2e52]">
                 <div className="max-w-[1000px] mx-auto text-center">
-                    <h2 className="text-4xl lg:text-5xl font-black text-white mb-6 animate-fade-in-up">
+                    <h2 className="mb-6 text-4xl font-black text-white lg:text-5xl animate-fade-in-up">
                         Still Need Help?
                     </h2>
-                    <p className="text-xl text-white/90 max-w-2xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <p className="max-w-2xl mx-auto mb-10 text-xl text-white/90 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                         Our expert team is here to help you create the perfect resume and land your dream job
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    <div className="flex flex-col justify-center gap-4 sm:flex-row animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                         <button
                             onClick={() => navigate('/Contact')}
                             className="group px-8 py-4 bg-white text-[#0077cc] rounded-xl font-bold hover:bg-[#e65100] hover:text-white transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center gap-3"
@@ -441,6 +441,7 @@ function HelpCenter() {
                 </div>
             </section>
 
+            <Footer />
 
             <style jsx>{`
         @keyframes float {
