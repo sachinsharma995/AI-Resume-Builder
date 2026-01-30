@@ -8,7 +8,16 @@ import {
   Shield,
   TrendingUp,
   Activity,
-  Zap
+  Zap,
+  UserCheck,
+  Tag,
+  Type,
+  Award,
+  LayoutTemplate,
+  Briefcase,
+  Palette,
+  Search,
+  ClipboardCheck
 } from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
@@ -122,65 +131,24 @@ const ATSCheckerFeature = () => {
         </div>
       </section>
 
-      {/* WHAT IS ATS */}
       <section ref={whatRef} className="px-6 py-20 bg-white">
-        <div
-          className={`max-w-5xl mx-auto transition-all duration-700 ${
-            whatVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="mb-6 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
-            What is an ATS Resume Checker?
-          </h2>
-
-          <div className="mb-12 space-y-6 text-lg leading-relaxed text-gray-600 max-w-none">
-            <p>
-              An ATS resume checker is a tool that scans your resume to see how
-              well it matches job requirements and how likely it is to pass an
-              Applicant Tracking System (ATS). These systems are used by 99% of
-              Fortune 500 companies and a growing number of small to medium
-              businesses to filter resumes before they reach human recruiters.
-            </p>
-
-            <p>
-              Our ATS checker analyzes your resume against industry standards
-              and provides a detailed score based on formatting, keywords, and
-              structure. The higher your score, the better your chances of
-              getting past the ATS and landing an interview.
-            </p>
-
+        <div className={`max-w-5xl mx-auto transition-all duration-700 ${whatVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <h2 className="mb-6 text-4xl font-black text-center text-[#1a2e52] font-jakarta">Is Your Resume Bot-Readable?</h2>
+          <div className="mb-12 space-y-6 text-lg text-gray-600">
+            <p>An ATS (Applicant Tracking System) is a database that filters resumes based on technical parsability. If your layout is too complex, the recruiter will never see your name.</p>
+            <p>Our checker acts as a "pre-scan" to identify technical roadblocks like unreadable tables or non-standard fonts that cause 75% of resumes to be discarded automatically.</p>
             <div className="p-6 my-8 border-l-4 border-[#0077cc] bg-[#f0f7ff] rounded-2xl shadow-sm">
-              <h3 className="mb-4 text-xl font-bold text-[#1a2e52]">
-                Our ATS Resume Checker scans for:
-              </h3>
-
+              <h3 className="mb-4 text-xl font-bold text-[#1a2e52]">Technical Compliance Audit:</h3>
               <ul className="space-y-4">
                 {[
-                  {
-                    title: "Standard ATS resume format:",
-                    desc: "Ensures your resume uses ATS-friendly formatting",
-                  },
-                  {
-                    title: "Measurable results:",
-                    desc: "Checks for quantifiable achievements and metrics",
-                  },
-                  {
-                    title: "Relevant keywords:",
-                    desc: "Identifies missing industry-specific keywords",
-                  },
-                  {
-                    title: "Personalization:",
-                    desc: "Evaluates how well your resume is tailored to the role",
-                  },
+                  { title: "Parse-Ready Layout:", desc: "Validates that your contact info and headers are extractable." },
+                  { title: "System Compatibility:", desc: "Tests your file against modern tracking algorithms." },
+                  { title: "Standard Date Formats:", desc: "Ensures your work history timeline is chronologically clear to AI." },
+                  { title: "Safe File Structure:", desc: "Verifies that no hidden graphics are blocking text extraction." },
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle
-                      size={20}
-                      className="flex-shrink-0 mt-1 text-[#0077cc]"
-                    />
-                    <span className="text-gray-700">
-                      <strong className="text-[#1a2e52]">{item.title}</strong> {item.desc}
-                    </span>
+                    <CheckCircle size={20} className="mt-1 text-[#0077cc]" />
+                    <span className="text-gray-700"><strong>{item.title}</strong> {item.desc}</span>
                   </li>
                 ))}
               </ul>
@@ -248,44 +216,48 @@ const ATSCheckerFeature = () => {
       </section>
 
       {/* WHAT OUR CHECKER LOOKS FOR */}
-      <section ref={looksRef} className="px-6 py-20 bg-white">
-        <div
-          className={`max-w-6xl mx-auto transition-all duration-700 ${
-            looksVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="mb-16 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
-            What Our Free ATS Resume Checker Looks For
-          </h2>
+<section ref={looksRef} className="px-6 py-20 bg-white">
+  <div
+    className={`max-w-6xl mx-auto transition-all duration-700 ${
+      looksVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+    }`}
+  >
+    <h2 className="mb-16 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
+      What Our Free ATS Resume Checker Looks For
+    </h2>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: "📄", title: "Personalization", desc: "Checks if your resume is tailored to the specific job you're applying for" },
-              { icon: "📊", title: "Targeted keywords", desc: "Scans for job-specific keywords that ATS systems prioritize" },
-              { icon: "📈", title: "Spelling and grammar", desc: "Identifies typos and grammatical errors that could hurt your score" },
-              { icon: "✅", title: "Hard and soft skills", desc: "Evaluates if you've included both technical and interpersonal skills" },
-              { icon: "📐", title: "Strong formatting", desc: "Ensures your resume structure is ATS-compatible and easy to parse" },
-              { icon: "🎯", title: "Job title optimization", desc: "Checks if your job titles align with industry standards" },
-              { icon: "📝", title: "Resume design", desc: "Verifies your design choices don't interfere with ATS readability" },
-              { icon: "🔍", title: "Detail depth", desc: "Assesses if you've provided enough detail about your experience" },
-              { icon: "⚡", title: "Completeness", desc: "Ensures all critical resume sections are present and complete" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="p-8 text-center transition-all duration-300 border border-gray-100 bg-white rounded-2xl hover:border-[#0077cc]/30 hover:shadow-lg"
-              >
-                <div className="mb-4 text-5xl">
-                  {item.icon}
-                </div>
-                <h3 className="mb-2 text-lg font-bold text-[#1a2e52]">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-gray-500">{item.desc}</p>
-              </div>
-            ))}
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {[
+        { icon: <UserCheck size={32} />, title: "Personalization", desc: "Checks if your resume is tailored to the specific job you're applying for" },
+        { icon: <Tag size={32} />, title: "Targeted keywords", desc: "Scans for job-specific keywords that ATS systems prioritize" },
+        { icon: <Type size={32} />, title: "Spelling and grammar", desc: "Identifies typos and grammatical errors that could hurt your score" },
+        { icon: <Award size={32} />, title: "Hard and soft skills", desc: "Evaluates if you've included both technical and interpersonal skills" },
+        { icon: <LayoutTemplate size={32} />, title: "Strong formatting", desc: "Ensures your resume structure is ATS-compatible and easy to parse" },
+        { icon: <Briefcase size={32} />, title: "Job title optimization", desc: "Checks if your job titles align with industry standards" },
+        { icon: <Palette size={32} />, title: "Resume design", desc: "Verifies your design choices don't interfere with ATS readability" },
+        { icon: <Search size={32} />, title: "Detail depth", desc: "Assesses if you've provided enough detail about your experience" },
+        { icon: <ClipboardCheck size={32} />, title: "Completeness", desc: "Ensures all critical resume sections are present and complete" },
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="group p-8 text-center transition-all duration-300 border border-gray-100 bg-white rounded-[2rem] hover:border-[#0077cc]/30 hover:shadow-xl hover:-translate-y-1"
+        >
+          {/* The Blue Icon Effect Container */}
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-[#0077cc] transition-all duration-300 group-hover:bg-[#0077cc] group-hover:text-white">
+            {item.icon}
           </div>
+          
+          <h3 className="mb-2 text-lg font-bold text-[#1a2e52]">
+            {item.title}
+          </h3>
+          <p className="text-sm leading-relaxed text-gray-500">
+            {item.desc}
+          </p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* HOW IT WORKS */}
       <section ref={howRef} className="px-6 py-14 bg-gray-50/50">

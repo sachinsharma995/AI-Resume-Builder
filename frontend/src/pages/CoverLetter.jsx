@@ -1,5 +1,4 @@
 import React from 'react';
-import NavBar from "../components/NavBar";
 import { 
   Sparkles, 
   FileCheck, 
@@ -28,8 +27,6 @@ const SimpleCoverLetterPage = () => {
 
     <div className="min-h-screen bg-white font-['Outfit'] text-[#1a2e52] selection:bg-blue-100 overflow-x-hidden">
       
-      <NavBar />
-
       {/* --- 1. HERO SECTION --- */}
       <section className="relative px-8 pt-16 pb-20 overflow-hidden bg-white">
         {/* Brand Decorative Blurs */}

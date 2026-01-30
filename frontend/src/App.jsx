@@ -22,6 +22,7 @@ import ScoreChecker from "./pages/ScoreChecker";
 import ResumeHubPage from "./pages/ResumeHub";
 import GrowthInsightsPage from "./pages/GrowthInsights";
 import AICoverLetterPage from "./pages/CoverLetter";
+import CoverLetterExamples from "./pages/CoverLetterExamples";
 import CVFormattingPage from "./pages/CV";
 import WritingCoverLetter from "./pages/WritingCoverLetter"
 
@@ -47,12 +48,24 @@ import AdminTemplates from "./components/admin/AdminCreateTemplates/Template";
 import ResumeEditor from "./components/admin/ResumeEditor/ResumeEditor";
 // User routes
 import UserRoutes from "./pages/UserRoutes";
+import ATSCheckerPage from "./pages/ATSChecker";
+import AIBuilderPage from "./pages/AIBuilder";
+import AIContentEnhancementPage from "./pages/AIContentEnhance";
+import ScoreChecker from "./pages/ScoreChecker";
+import ResumeHubPage from "./pages/ResumeHub";
+import GrowthInsightsPage from "./pages/GrowthInsights";
+import AICoverLetterPage from "./pages/CoverLetter";
+import CVFormattingPage from "./pages/CV";
+import TemplatesFeature from "./pages/TemplatesFeature";
+import ResumeExample from "./pages/ResumeExample";
+import CoverLetterTemplates from "./pages/CoverLetterTemplates";
+import ResumeGuide from "./pages/ResumeGuide";
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col min-h-screen">
         <Routes>
           {/* ================= PUBLIC ROUTES ================= */}
           <Route path="/" element={<Home />} />
@@ -69,6 +82,12 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/ats-checker" element={<ATSCheckerPage />}/>
+          <Route path="/AI-builder" element={<AIBuilderPage />}/>
+          <Route path="/content-enhance" element={<AIContentEnhancementPage />}/>
+          <Route path="/score-checker" element={<ScoreChecker />}/>
+          <Route path="/resume-hub" element={<ResumeHubPage />}/>
+          <Route path="/growths" element={<GrowthInsightsPage />}/>
           <Route path="/careers" element={<CareersPage />} />
 
           <Route path="/resume-checker" element={<ResumeChecker />} />
@@ -76,14 +95,14 @@ function App() {
           <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/ats-checker" element={<ATSCheckerPage />} />
           <Route path="/TemplatesFeature" element={<TemplatesFeature />} />
-          <Route path="/AI-builder" element={<AIBuilderPage />} />
-          <Route path="/content-enhance" element={<AIContentEnhancementPage />} />
-          <Route path="/score-checker" element={<ScoreChecker />} />
-          <Route path="/resume-hub" element={<ResumeHubPage />} />
-          <Route path="/growths" element={<GrowthInsightsPage />} />
-          <Route path="/cover-letter" element={<AICoverLetterPage />} />
-          <Route path="/cv" element={<CVFormattingPage />} />
-          <Route path="/WritingCoverLetter" element={<WritingCoverLetter />} />
+          <Route path="/AI-builder" element={<AIBuilderPage />}/>
+          <Route path="/content-enhance" element={<AIContentEnhancementPage />}/>
+          <Route path="/score-checker" element={<ScoreChecker />}/>
+          <Route path="/resume-hub" element={<ResumeHubPage />}/>
+          <Route path="/growths" element={<GrowthInsightsPage />}/>
+          <Route path="/cover-letter" element={<AICoverLetterPage  />}/>
+          <Route path="/cover-letter-examples" element={<CoverLetterExamples />} />
+          <Route path="/cv" element={<CVFormattingPage  />}/>
 
           {/* ================= USER DASHBOARD ROUTES ================= */}
           <Route path="/user/*" element={<RequireAuth><UserRoutes /></RequireAuth>} />

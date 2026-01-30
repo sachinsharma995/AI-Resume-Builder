@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import NavBar from "../components/NavBar";
 import UpToSkillsImg from "../assets/UptoSkills.webp";
 import featureImage1 from "../assets/ai-assistant.png";
 import featureImage2 from "../assets/tailored-summary.png";
@@ -12,23 +11,13 @@ import work2 from "../assets/analysis.png";
 import work1 from "../assets/goodResume.png";
 import work4 from "../assets/oneClick.png";
 import work5 from "../assets/win.png";
-import template1 from "../assets/template_thumnail/JessicaClaire1.png";
-import template2 from "../assets/template_thumnail/JessicaClaire2.png";
-import template3 from "../assets/template_thumnail/JessicaClaire3.png";
-import template4 from "../assets/template_thumnail/JessicaClaire4.png";
-import template5 from "../assets/template_thumnail/JessicaClaire5.png";
-import template6 from "../assets/template_thumnail/JessicaClaire6.png";
-
-import Footer from "./Footer";
+import Footer from "./Footer"
 import {
   ArrowRight,
   BarChart3,
   Edit3,
   FileSearch,
   Layout,
-  Mail,
-  Palette,
-  PenTool,
   Zap,
   Layers,
   Menu,
@@ -38,7 +27,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Activity,
-  CheckCircle,
 } from "lucide-react";
 
 function LandingPage() {
@@ -100,42 +88,42 @@ function LandingPage() {
       name: "Atlantic Blue",
       category: "modern",
       desc: "Modern and professional design",
-      image: template1,
+      image: `${base}templates/chronological.png`,
     },
     {
       id: 2,
       name: "Classic",
       category: "traditional",
       desc: "Traditional and timeless layout",
-      image: template2,
+      image: `${base}templates/functional.png`,
     },
     {
       id: 3,
       name: "Corporate",
       category: "traditional",
       desc: "Professional corporate style",
-      image: template3,
+      image: `${base}templates/creative.png`,
     },
     {
       id: 4,
       name: "Modern Pro",
       category: "modern",
       desc: "Sleek and contemporary design",
-      image: template4,
+      image: `${base}templates/modern.png`,
     },
     {
       id: 5,
       name: "Executive",
       category: "executive",
       desc: "Perfect for senior positions",
-      image: template5,
+      image: `${base}templates/minimalist.png`,
     },
     {
       id: 6,
       name: "Creative Edge",
       category: "creative",
       desc: "Stand out with creative flair",
-      image: template6,
+      image: `${base}templates/executive.png`,
     },
   ];
 
@@ -148,9 +136,7 @@ function LandingPage() {
   }, [templates.length]);
 
   const handleTemplateClick = (templateId) => {
-    const isAuthenticated = false;
-
-    if (isAuthenticated) {
+    if (isLoggedIn) {
       navigate(`/templates/${templateId}`);
     } else {
       navigate("/login");
@@ -180,10 +166,19 @@ function LandingPage() {
     return () => clearInterval(scrollInterval);
   }, []);
 
-  // Scroll to the free templates section when URL hash is present
+  // Scroll to the free templates section when URL hash is present (e.g. /#free-templates)
   const location = useLocation();
   useEffect(() => {
-    if (location.hash === "#free-templates") {
+    // Handle State Navigation (From Back to Home button)
+    if (location.state?.scrollTo === 'features') {
+      const el = document.getElementById("features");
+      if (el) {
+        el.scrollIntoView({ behavior: "auto" });
+        window.history.replaceState({}, document.title);
+      }
+    } 
+    // Handle Hash Navigation (Existing logic for #free-templates)
+    else if (location.hash === "#free-templates") {
       const el = document.getElementById("free-templates");
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
@@ -275,25 +270,205 @@ function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#1a2e52] font-['Segoe UI']">
+    <div className="min-h-screen flex flex-col bg-white text-[#1a2e52] font-['Outfit']">
+      {/* NAVIGATION */}
+      <nav className="fixed top-0 z-50 w-full py-4 border-b border-gray-100 select-none bg-white/95 backdrop-blur-md">
+        <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-between z-50">
+          <div
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="cursor-pointer"
+          >
+            <img
+              src={UpToSkillsImg}
+              alt="UpToSkills Logo"
+              className="w-[150px]"
+            />
+          </div>
 
-      <NavBar />
+          <div className={`${mobileMenuOpen ? "hidden" : ""}`}>
+            <ul className="flex items-center hidden gap-8 md:flex">
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/about">About</Link>
+              </li>
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/#free-templates">Templates</Link>
+              </li>
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to={`${isLoggedIn ? "/user/resume-builder" : "/login"}`}>
+                  Builder
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/pricing">Pricing</Link>
+              </li>
+              {isLoggedIn && (
+                <li className="cursor-pointer hover:text-orange-600">
+                  <Link to="/user/dashboard">Dashboard</Link>
+                </li>
+              )}
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/blog">Blog</Link>
+              </li>
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/help-center">Help</Link>
+              </li>
+              <li className="cursor-pointer hover:text-orange-600">
+                <Link to="/contact">Contact</Link>
+              </li>
+            </ul>
+          </div>
+
+          {!isLoggedIn && (
+            <div className="items-center hidden gap-6 md:flex">
+              <button
+                onClick={() => navigate("/login")}
+                className="flex items-center gap-3 px-6 py-2.5 border-2 border-[#0077cc] text-[#0077cc] rounded-xl font-bold transition-all duration-300 hover:bg-[#0077cc] hover:text-white hover:shadow-lg hover:shadow-blue-100 hover:-translate-y-1 active:scale-95"
+              >
+                <LogIn size={20} />
+                <span>Login</span>
+              </button>
+
+              <button
+                onClick={() => navigate("/register")}
+                className="flex items-center gap-3 px-6 py-2.5 bg-[#e65100] text-white rounded-xl font-bold transition-all duration-300 border-2 border-transparent hover:bg-[#ff6d00] hover:shadow-xl hover:shadow-orange-200 hover:-translate-y-1 active:scale-95"
+              >
+                <UserPlus size={20} />
+                <span>Sign up</span>
+              </button>
+            </div>
+          )}
+
+          {isLoggedIn && (
+            <div className="items-center hidden gap-6 md:flex">
+              <button
+                onClick={() => {
+                  navigate("/login");
+                  localStorage.removeItem("token");
+                }}
+                className="flex items-center gap-3 px-6 py-2.5 bg-[#e65100] text-white rounded-xl font-bold transition-all duration-300 border-2 border-transparent hover:bg-[#ff6d00] hover:shadow-xl hover:shadow-orange-200 hover:-translate-y-1 active:scale-95"
+              >
+                <LogOut size={20} />
+                <span>logout</span>
+              </button>
+            </div>
+          )}
+
+          <button className="text-2xl md:hidden" onClick={toggleMobileMenu}>
+            <Menu size={28} />
+          </button>
+        </div>
+        <div
+          className={`absolute top-19 right-0 w-full bg-white z-40 overflow-hidden
+                      transition-all duration-800 ease-in-out
+                      transform
+                      ${
+                        mobileMenuOpen
+                          ? "max-h-[500px] translate-y-0 opacity-100 pointer-events-auto"
+                          : "max-h-0 -translate-y-4 opacity-0 pointer-events-none"
+                      }
+                      md:hidden
+                    `}
+        >
+          <div
+            onClick={() => {
+              navigate("/");
+              toggleMobileMenu();
+            }}
+            className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+          >
+            Home
+          </div>
+          <div
+            onClick={() => {
+              navigate("/about");
+              toggleMobileMenu();
+            }}
+            className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+          >
+            About us
+          </div>
+          <div
+            onClick={() => {
+              navigate("/pricing");
+              toggleMobileMenu();
+            }}
+            className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+          >
+            Pricing
+          </div>
+          <div
+            onClick={() => {
+              navigate("/contact");
+              toggleMobileMenu();
+            }}
+            className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+          >
+            Contact
+          </div>
+          {isLoggedIn && (
+            <>
+              <div
+                onClick={() => {
+                  navigate("/user/dashboard");
+                  toggleMobileMenu();
+                }}
+                className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+              >
+                Dashboard
+              </div>
+              <div
+                onClick={() => {
+                  toggleMobileMenu();
+                  localStorage.removeItem("token");
+                  navigate("/login");
+                }}
+                className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+              >
+                logout
+              </div>
+            </>
+          )}
+          {!isLoggedIn && (
+            <>
+              <div
+                onClick={() => {
+                  navigate("/login");
+                  toggleMobileMenu();
+                }}
+                className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+              >
+                Login
+              </div>
+              <div
+                onClick={() => {
+                  navigate("/register");
+                  toggleMobileMenu();
+                }}
+                className="text-center p-3 border-b-[1px] border-solid border-black-500 active:bg-orange-500 active:text-white"
+              >
+                Sign up
+              </div>
+            </>
+          )}
+        </div>
+      </nav>
 
       {/*  OVERLAY */}
       <div
         onClick={toggleMobileMenu}
-        className={`w-full h-full absolute top-0 left-0 z-30 bg-black/20 ${mobileMenuOpen ? "" : "hidden"
-          }`}
+        className={`w-full h-full absolute top-0 left-0 z-30 bg-black/20 ${
+          mobileMenuOpen ? "" : "hidden"
+        }`}
       ></div>
 
       {/* HERO SECTION */}
-      <section className="relative px-8 bg-white ml-5 mt-[120px] sm:mt-10 md:mt-6 lg:mt-0">
+      <section className="relative px-8 bg-white ml-5 min-h-screen flex items-center pt-[120px] lg:pt-0">
         <div className="absolute top-0 right-0 w-1/3 h-1/4 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/4 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50"></div>
 
         <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div className="flex flex-col gap-8">
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight font-jakarta select-none">
+            <h1 className="text-5xl font-bold leading-tight select-none lg:text-6xl font-jakarta">
               <span className="bg-gradient-to-r from-[#e65100] to-[#ff8f00] bg-clip-text text-transparent">
                 UptoSkills AI
               </span>{" "}
@@ -340,19 +515,21 @@ function LandingPage() {
               {templates.map((template, idx) => (
                 <div
                   key={idx}
-                  className={`absolute inset-0 transition-all duration-700 ease-out flex items-center justify-center select-none ${idx === currentTemplateIndex
-                    ? "opacity-100 scale-100"
-                    : "opacity-0 scale-95"
-                    }`}
+                  className={`absolute inset-0 transition-all duration-700 ease-out flex items-center justify-center select-none ${
+                    idx === currentTemplateIndex
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95"
+                  }`}
                 >
                   <img
                     src={template.image}
                     alt={template.name}
-                    className={`object-contain ${template.name === "Tailored Summary" ||
+                    className={`object-contain ${
+                      template.name === "Tailored Summary" ||
                       template.name === "Tailor to Job"
-                      ? "w-[70%] h-[70%]"
-                      : "w-full h-full"
-                      }`}
+                        ? "w-[70%] h-[70%]"
+                        : "w-full h-full"
+                    }`}
                     onError={(e) => {
                       e.target.style.display = "none";
                     }}
@@ -380,22 +557,23 @@ function LandingPage() {
             {howItWorksSteps.map((step, index) => (
               <div
                 key={index}
-                className={`flex flex-col md:flex-row items-center gap-12 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""
-                  }`}
+                className={`flex flex-col md:flex-row items-center gap-12 ${
+                  index % 2 !== 0 ? "md:flex-row-reverse" : ""
+                }`}
               >
                 {/* IMAGE BOX */}
-                <div className="relative w-full md:w-1/2 bg-white  shadow-xl rounded-3xl ">
+                <div className="relative w-full bg-white shadow-xl md:w-1/2 rounded-3xl ">
                   <div className="w-full h-full overflow-hidden rounded-3xl aspect-video">
                     <img
                       src={step.image}
                       alt={step.heading}
-                      className="w-full h-full object-cover  transition-transform duration-500 "
+                      className="object-cover w-full h-full transition-transform duration-500 "
                     />
                   </div>
                 </div>
 
                 {/* TEXT CONTENT */}
-                <div className="w-full md:w-1/2 space-y-6">
+                <div className="w-full space-y-6 md:w-1/2">
                   <span className="text-[#0077cc] font-black text-6xl opacity-10">
                     0{index + 1}
                   </span>
@@ -459,7 +637,7 @@ function LandingPage() {
                     <img
                       src={t.image}
                       alt={t.name}
-                      className="object-contain object-top w-full h-full transition-transform duration-500"
+                      className="object-cover object-top w-full h-full transition-transform duration-500"
                     />
 
                     {/* ATS Badge */}
@@ -473,7 +651,7 @@ function LandingPage() {
 
                   {/* Bottom Text */}
                   <div className="p-4 text-center">
-                    <h4 className="text-sm font-bold mb-1 text-[#1a2e52] group-hover/card:text-[#0077cc] transition-colors">
+                    <h4 className="text-sm font-bold mt-7 mb-1 text-[#1a2e52] group-hover/card:text-[#0077cc] transition-colors">
                       {t.name}
                     </h4>
                     <p className="text-xs text-gray-500">{t.desc}</p>
@@ -494,10 +672,7 @@ function LandingPage() {
 
       {/* FEATURES GRID */}
 
-      <section
-        id="features"
-        className="relative px-8 py-24 overflow-hidden bg-white select-none"
-      >
+      <section id="features" className="relative px-8 py-24 overflow-hidden bg-white select-none">
         {/* Soft Background Decorative Blurs - Switched to light pastels */}
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-orange-50/50 rounded-full blur-[120px] pointer-events-none" />
@@ -523,6 +698,7 @@ function LandingPage() {
                 className="relative p-8 transition-all duration-500 bg-white/40 backdrop-blur-md border border-gray-100 group rounded-3xl
                      hover:bg-white hover:-translate-y-3 hover:border-blue-200 hover:shadow-[0_20px_40px_rgba(0,119,204,0.1)]"
               >
+
                 {/* Icon Section with Glass Effect */}
                 <div className="relative inline-flex items-center justify-center p-4 mb-8 transition-all duration-500 rounded-2xl bg-blue-50 border border-blue-100 group-hover:scale-110 group-hover:bg-[#0077cc] group-hover:shadow-[0_10px_20px_rgba(0,119,204,0.3)] group-hover:rotate-6">
                   <div className="transition-colors duration-500 text-[#0077cc] group-hover:text-white">
