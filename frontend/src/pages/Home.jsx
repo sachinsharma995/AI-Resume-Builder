@@ -7,11 +7,11 @@ import featureImage1 from "../assets/ai-assistant.png";
 import featureImage2 from "../assets/tailored-summary.png";
 import featureImage3 from "../assets/tailor-to-job.png";
 import featureImage4 from "../assets/resume-preview.png";
-import quick from "../assets/customize.png";
-import work2 from "../assets/analysis.png";
-import work1 from "../assets/goodResume.png";
-import work4 from "../assets/oneClick.png";
-import work5 from "../assets/win.png";
+import quick from "../assets/customize1.png";
+import work2 from "../assets/analysis3.png";
+import work1 from "../assets/goodResume2.png";
+import work4 from "../assets/oneClick1.png";
+import work5 from "../assets/win4.png";
 import Footer from "./Footer";
 import {
   ArrowRight,
@@ -381,15 +381,14 @@ function LandingPage() {
                 }`}
               >
                 {/* IMAGE BOX */}
-                <div className="relative w-full md:w-1/2 bg-white  shadow-xl rounded-3xl ">
-                  <div className="w-full h-full overflow-hidden rounded-3xl aspect-video">
+
+
                     <img
                       src={step.image}
                       alt={step.heading}
-                      className="w-full h-full object-cover  transition-transform duration-500 "
+                      className="w-1/2 h-full object-contain rounded-3xl transition-transform duration-500 "
                     />
-                  </div>
-                </div>
+
 
                 {/* TEXT CONTENT */}
                 <div className="w-full md:w-1/2 space-y-6">

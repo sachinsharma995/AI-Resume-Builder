@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
-import ATSChecker from "../assets/ATSChecker.jpeg";
+import ATSChecker from "../assets/ATSChecker1.png";
 
 // ✅ Small helper for scroll animations
 const useInView = (threshold = 0.15) => {
@@ -71,9 +71,8 @@ const ATSCheckerFeature = () => {
 
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div
-              className={`transition-all duration-700 ${
-                heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
+              className={`transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
             >
               <div className="inline-block px-4 py-2 bg-blue-50 text-[#0077cc] rounded-full text-sm font-bold mb-6">
                 Free ATS Resume Checker
@@ -105,18 +104,15 @@ const ATSCheckerFeature = () => {
             </div>
 
             <div
-              className={`relative transition-all duration-700 ${
-                heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
+              className={`relative transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
             >
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-blue-50 blur-3xl" />
-                <img
-                  src={ATSChecker}
-                  alt="ATS Score Analysis"
-                  className="relative z-10 w-full shadow-xl rounded-3xl"
-                />
-              </div>
+              <img
+                src={ATSChecker}
+                alt="ATS Score Analysis"
+                className="w-full h-auto object-contain drop-shadow-2xl"
+              />
+
             </div>
           </div>
         </div>
@@ -125,9 +121,8 @@ const ATSCheckerFeature = () => {
       {/* WHAT IS ATS */}
       <section ref={whatRef} className="px-6 py-20 bg-white">
         <div
-          className={`max-w-5xl mx-auto transition-all duration-700 ${
-            whatVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`max-w-5xl mx-auto transition-all duration-700 ${whatVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <h2 className="mb-6 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
             What is an ATS Resume Checker?
@@ -192,9 +187,8 @@ const ATSCheckerFeature = () => {
       {/* WHY USE ATS CHECKER */}
       <section ref={whyRef} className="px-6 py-20 bg-gray-50/50">
         <div
-          className={`max-w-6xl mx-auto transition-all duration-700 ${
-            whyVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`max-w-6xl mx-auto transition-all duration-700 ${whyVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <h2 className="mb-4 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
             Why Use an <span className="text-[#e65100]">ATS Resume Checker?</span>
@@ -250,9 +244,8 @@ const ATSCheckerFeature = () => {
       {/* WHAT OUR CHECKER LOOKS FOR */}
       <section ref={looksRef} className="px-6 py-20 bg-white">
         <div
-          className={`max-w-6xl mx-auto transition-all duration-700 ${
-            looksVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`max-w-6xl mx-auto transition-all duration-700 ${looksVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <h2 className="mb-16 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
             What Our Free ATS Resume Checker Looks For
@@ -290,9 +283,8 @@ const ATSCheckerFeature = () => {
       {/* HOW IT WORKS */}
       <section ref={howRef} className="px-6 py-14 bg-gray-50/50">
         <div
-          className={`max-w-5xl mx-auto transition-all duration-700 ${
-            howVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`max-w-5xl mx-auto transition-all duration-700 ${howVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <h2 className="mb-4 text-4xl font-black text-center text-[#1a2e52] font-jakarta">
             How Our <span className="text-[#0077cc]">ATS Resume Scanner</span> Works
@@ -342,11 +334,10 @@ const ATSCheckerFeature = () => {
       >
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-60"></div>
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-60"></div>
-        
+
         <div
-          className={`relative z-10 max-w-4xl mx-auto text-center transition-all duration-1000 ease-out ${
-            ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`relative z-10 max-w-4xl mx-auto text-center transition-all duration-1000 ease-out ${ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
         >
           <h2 className="mb-6 text-4xl font-black md:text-6xl text-[#1a2e52] tracking-tight font-jakarta">
             Ready to Check Your <span className="text-[#0077cc]">ATS Score?</span>
@@ -367,7 +358,7 @@ const ATSCheckerFeature = () => {
               className="relative z-10 transition-transform duration-300 group-hover:translate-x-2"
             />
           </button>
-          
+
           <div className="mt-8 flex items-center justify-center gap-2 text-sm font-bold text-[#0077cc] opacity-60">
             <Activity size={16} />
             <span>Real-time AI Analysis</span>

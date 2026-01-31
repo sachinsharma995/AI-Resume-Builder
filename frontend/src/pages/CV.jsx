@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import Footer from "./Footer"
 import { useNavigate } from "react-router-dom";
-import CV from "../assets/CV.png";
+import CV from "../assets/CV1.png";
 
 const CVFormattingPage = () => {
     const navigate = useNavigate();
@@ -33,14 +33,14 @@ const CVFormattingPage = () => {
       <NavBar />
 
       {/* --- 1. HERO SECTION --- */}
-      <section className="relative px-8 pt-16 pb-20 overflow-hidden bg-white">
+      <section className="relative px-8 pt-8 pb-12 overflow-hidden bg-white">
         {/* Brand Decorative Blurs */}
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50" />
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50" />
         
         <div className="relative z-10 mx-auto max-w-7xl">
           {/* Back To Home Button */}
-          <div className="mb-10">
+          <div className="mb-8">
             <button
               onClick={handleBackHome}
               className="group inline-flex items-center gap-2 text-sm font-bold text-[#0077cc] transition-all duration-200"
@@ -84,11 +84,10 @@ const CVFormattingPage = () => {
                     </div>
                 </div>
 
-                <div className="relative p-2 bg-white border border-gray-100 rounded-[2.5rem] shadow-2xl">
-                    <div className="overflow-hidden rounded-[2rem] bg-slate-50">
+
                         <img src={CV} alt="Professional CV Structure" className="w-full h-auto" />
-                    </div>
-                </div>
+              
+
             </div>
           </div>
         </div>

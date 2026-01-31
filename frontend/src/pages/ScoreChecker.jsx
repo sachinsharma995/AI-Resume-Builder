@@ -14,7 +14,7 @@ import {
   FileText,
 } from "lucide-react";
 import Footer from "./Footer";
-import score from "../assets/score.png"; 
+import score from "../assets/score1.png"; 
 
 const ScoreChecker = () => {
   const navigate = useNavigate();
@@ -36,11 +36,11 @@ const ScoreChecker = () => {
       <NavBar />
 
       {/* --- HERO SECTION: THEME ALIGNED --- */}
-      <section className="relative pb-16 overflow-hidden pt-28">
+      <section className="relative pb-16 overflow-hidden pt-20">
   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-orange-50/50 to-transparent -z-10" />
 
   <div className="px-8 mx-auto max-w-7xl">
-    <div className="flex flex-col items-center gap-16 lg:flex-row lg:text-left">
+    <div className="flex flex-col items-center lg:flex-row lg:text-left">
       <div className="flex-1 text-center lg:text-left">
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white border border-orange-100 rounded-full shadow-sm">
           <Activity size={14} className="text-[#e65100]" />
@@ -59,13 +59,10 @@ const ScoreChecker = () => {
       </div>
 
       {/* Main Image Fixed - Badge Active */}
-      <div className="relative flex-1 w-full max-w-[550px] lg:max-w-[500px]">
-          <div className="absolute rounded-full opacity-40 -inset-10 bg-gradient-to-tr from-orange-500/20 to-blue-500/20 blur-3xl" />
-          <div className="relative overflow-hidden bg-white border-2 shadow-2xl rounded-[40px] border-orange-50 p-2.5">
+      <div className="relative flex-1 w-full ">
               <div className="overflow-hidden rounded-[32px]">
-                  <img src={score} alt="Score" className="w-full h-auto" />
+                  <img src={score} alt="Score" className="w-full h-auto object-contain" />
               </div>
-          </div>
           {/* Floating Badge stays animated */}
           <div className="absolute hidden p-4 bg-white border border-blue-100 shadow-xl -bottom-6 -right-6 rounded-2xl md:block animate-bounce" style={{ animationDuration: '4s' }}>
             <div className="flex items-center gap-3">
