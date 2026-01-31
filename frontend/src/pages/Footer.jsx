@@ -113,7 +113,7 @@ function Footer() {
             <ul className="space-y-4">
               <li className={linkStyle}><Link to="/cover-letter-examples">Cover Letter Examples</Link></li>
               <li className={linkStyle}><Link to="/cover-letter-templates">Cover Letter Templates</Link></li>
-              <li className={linkStyle}><Link to="/blog">Writing A Cover Letter</Link></li>
+              <li className={linkStyle}><Link to="/WritingCoverLetter">Writing A Cover Letter</Link></li>
             </ul>
           </div>
 
