@@ -411,7 +411,7 @@ const LivePreview = ({
             <div className="flex items-center gap-2 text-sm font-semibold">
               <FileText size={16} />{" "}
               <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 text-left">
-                <span className="text-xs md:text-sm">Live Preview</span>{" "}
+                <span className="font-normal text-xs md:text-sm">Live Preview</span>{" "}
                 {currentTemplate?.name && (
                   <span className="text-slate-500 font-normal text-xs md:text-sm">
                     - {currentTemplate.name}
@@ -465,14 +465,16 @@ const LivePreview = ({
         className="flex items-center justify-between px-4 py-3 border-b"
         onClick={clamp}
       >
-        <h3 className="flex items-center gap-2 font-semibold md:text-sm text-xs">
-          <FileText size={16} /> Live Preview{" "}
+        <div className="flex items-center gap-2 font-semibold md:text-sm text-xs select-none">
+          <FileText size={16} /> 
+          <span className="font-medium">Live Preview</span>
+          {" "}
           {currentTemplate?.name && (
             <span className="text-slate-500 font-normal">
               - {currentTemplate.name}
             </span>
           )}
-        </h3>
+        </div>
         <button
           onClick={(e) => {
             e.stopPropagation();

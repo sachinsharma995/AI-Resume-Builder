@@ -26,14 +26,12 @@ import ProjectsForm from "./forms/ProjectsForm";
 import CertificationsForm from "./forms/CertificationsForm";
 
 import LivePreview from "../Preview/LivePreview";
-import FullPreview from "../Preview/FullPreview";
 import TemplatesPage from "../Templates/TemplatesDashboardPage";
 import { TEMPLATES } from "../Templates/TemplateRegistry";
 
 import { getCompletionStatus } from "./completion";
 
 import UserNavbar from "../UserNavBar/UserNavBar";
-import "./ResumeBuilder.css";
 
 const ResumeBuilder = ({ setActivePage = () => {} }) => {
   /* -------------------- CORE STATE -------------------- */
@@ -203,24 +201,20 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
       );
     }
 
-    if (activeTab === "preview") {
-      return <FullPreview formData={formData} setActiveTab={setActiveTab} />;
-    }
-
     return (
       <>
         {/* Alert Banner */}
         <div
-          className={`flex items-center w-full gap-3 p-4 border rounded-lg mb-5 ${completion?.isComplete ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-200"} md:text-base text-sm md:flex-row flex-col`}
+          className={`flex items-center w-full gap-3 p-4 border rounded-lg mb-5 ${completion?.isComplete ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-200"} md:text-base text-sm md:flex-row flex-col select-none`}
         >
           {!completion.isComplete && (
             <>
               {/* Alert content */}
-              <AlertTriangle className="md:block hidden" size={20} />
+              <AlertTriangle className="text-amber-800 md:block hidden" size={30} />
               <div className="flex flex-col md:w-auto w-full">
-                <strong className="block font-semibold text-amber-800 mb-0.5 md:text-sm text-xs">
+                <div className="block font-medium text-amber-800 mb-0.5 md:text-sm text-xs">
                   Complete Your Resume
-                </strong>
+                </div>
                 <p className="text-yellow-700 m-0 md:text-md text-xs">
                   Add the following information to enable export functionality:
                 </p>
@@ -299,7 +293,7 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
                   goLeft();
                 }}
                 disabled={currentIdx === 0}
-                className="flex gap-1 items-center text-sm bg-slate-100 px-4 py-2 rounded-lg select-none disabled:opacity-40 disabled:cursor-not-allowed transition"
+                className="flex gap-1 items-center text-sm bg-slate-100 px-4 py-2 rounded-lg select-none disabled:opacity-40 disabled:cursor-not-allowed transition select-none"
               >
                 <ArrowLeft size={18} />
                 <span>Previous</span>
@@ -315,7 +309,7 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
                   goRight();
                 }}
                 disabled={currentIdx === tabs.length - 1}
-                className="flex gap-1 items-center text-sm bg-black text-white px-4 py-2 rounded-lg select-none disabled:opacity-40 disabled:cursor-not-allowed transition"
+                className="flex gap-1 items-center text-sm bg-black text-white px-4 py-2 rounded-lg select-none disabled:opacity-40 disabled:cursor-not-allowed transition select-none"
               >
                 <span>Next</span>
                 <ArrowRight size={18} />
@@ -344,25 +338,25 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
     <>
       <UserNavbar />
       {/* resume-builder-page */}
-      <div className="p-2.5 overflow-hidden">
+      <div className="p-2.5 overflow-hidden font-sans tracking-[0.01em]">
         {/* main-header */}
         <div className="flex flex-row gap-4 mb-5 p-2 justify-between items-center">
-          <h1 className="font-['Outfit'] text-2xl">Create Resume</h1>
+          <h1 className="font-['Outfit'] text-2xl select-none">Create Resume</h1>
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-2">
             {/* upload-btn &  export-btn */}
             <button
               onClick={() => navigate("/user/cv")}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-800 font-medium shadow-sm hover:bg-gray-50 hover:shadow-md transition-all hidden md:flex"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-800 font-medium shadow-sm hover:bg-gray-50 hover:shadow-md transition-all select-none hidden md:flex"
             >
               <PenTool size={18} />
               CV Designer
             </button>
-            <button className="flex gap-2 text-white cursor-pointer bg-black border-0 rounded-lg text-sm transition-all duration-200 hover:bg-black/50 hover:to-indigo-800 py-2 px-5 md:py-2.5 md:px-5">
+            <button className="flex gap-2 text-white cursor-pointer bg-black border-0 rounded-lg text-sm transition-all duration-200 select-none hover:bg-black/50 hover:to-indigo-800 py-2 px-5 md:py-2.5 md:px-5">
               <Upload size={18} />
               <span className="hidden md:inline">Upload</span>
             </button>
             <button
-              className="flex gap-2 text-white cursor-pointer bg-indigo-600 border-0 rounded-lg select-none text-sm transition-all duration-200 hover:bg-indigo-700 hover:to-indigo-800 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-gray-100 py-2 px-5 md:py-2.5 md:px-5"
+              className="flex gap-2 text-white cursor-pointer bg-indigo-600 border-0 rounded-lg select-none text-sm transition-all duration-200 select-none hover:bg-indigo-700 hover:to-indigo-800 disabled:opacity-30 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-gray-100 py-2 px-5 md:py-2.5 md:px-5"
               disabled={!completion.isComplete}
             >
               <Download size={18} />
@@ -373,13 +367,13 @@ const ResumeBuilder = ({ setActivePage = () => {} }) => {
         {/* main-tabs */}
         <div className="flex gap-1 bg-gray-100 rounded-lg md:p-1.5 py-2 px-3 mb-4 w-fit mx-auto md:mx-0">
           <button
-            className={`mr-1 rounded-lg md:py-1 py-2.5 md:px-2.5 px-4 ${activeTab === "builder" ? "bg-white text-slate-900 shadow-sm" : ""}`}
+            className={`mr-1 rounded-lg md:py-1 py-2.5 md:px-2.5 px-4 ${activeTab === "builder" ? "bg-white text-slate-900 shadow-sm" : ""} select-none`}
             onClick={() => setActiveTab("builder")}
           >
             Builder
           </button>
           <button
-            className={`py-1 px-2.5 rounded-lg ${activeTab === "templates" ? "bg-white text-slate-900 shadow-sm" : ""}`}
+            className={`py-1 px-2.5 rounded-lg ${activeTab === "templates" ? "bg-white text-slate-900 shadow-sm" : ""} select-none`}
             onClick={() => setActiveTab("templates")}
           >
             Templates
