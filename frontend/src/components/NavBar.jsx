@@ -107,7 +107,7 @@ export default function NavBar() {
   return (
     <>
       {/* Desktop & Mobile NavBar */}
-      <nav className="fixed top-0 left-0 w-full z-[9999] py-2 sm:py-3 md:py-4 bg-white/95 backdrop-blur-md border-b border-gray-100 select-none">
+      <nav className="fixed top-0 left-0 w-full z-30 py-2 sm:py-3 md:py-4 bg-white/95 backdrop-blur-md border-b border-gray-100 select-none">
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 md:px-6 flex items-center justify-between">
           {/* Mobile Menu Toggle - Now on LEFT */}
           <button
