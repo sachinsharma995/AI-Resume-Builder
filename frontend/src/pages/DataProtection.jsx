@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
 
-export default function PrivacyPolicy() {
+export default function DataProtection() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   

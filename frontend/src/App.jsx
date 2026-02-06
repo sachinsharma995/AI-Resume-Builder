@@ -25,10 +25,9 @@ import AICoverLetterPage from "./pages/CoverLetter";
 import CoverLetterExamples from "./pages/CoverLetterExamples";
 import CVFormattingPage from "./pages/CV";
 import WritingCoverLetter from "./pages/WritingCoverLetter"
-
 import ScrollToTop from "./components/ScrollToTop";
 import RequireAuth from "./components/RequireAuth";
-import PrivacyPolicy from "./pages/Privacypolicy";
+import DataProtection from "./pages/DataProtection";
 import ResumeChecker from "./pages/ResumeChecker";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
@@ -85,7 +84,7 @@ function App() {
           <Route path="/resume-examples" element={<ResumeExamplesPage />}/>
           <Route path="/how-to-write-a-resume" element={<ResumeGuide />} />
           <Route path="/cover-letter-templates" element={<CoverLetterTemplates />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<DataProtection />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/resume-checker" element={<ResumeChecker />} />
           <Route path="/terms" element={<Terms />} />

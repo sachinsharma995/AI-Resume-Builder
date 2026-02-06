@@ -1,12 +1,13 @@
-import React, { useState, useMemo } from "react";
-import { Check, Eye } from "lucide-react";
+import React, { useState, useMemo, useEffect } from "react";
+import { Check, Eye, Loader2 } from "lucide-react";
 
 import mergeWithSampleData, {
   hasAnyUserData,
 } from "../../../utils/Datahelpers";
 import CVTemplates from "./Cvtemplates";
+import { getAllTemplateStatuses } from "../../../utils/templateVisibility";
 
-const templates = [
+const allTemplates = [
   { id: "professional", name: "Professional", category: "Traditional" },
   { id: "modern", name: "Modern Blue", category: "Contemporary" },
   { id: "creative", name: "Creative", category: "Creative" },
@@ -20,6 +21,8 @@ const templates = [
 const TemplatesGallery = ({ selectedTemplate, onSelectTemplate, formData }) => {
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [templateStatuses, setTemplateStatuses] = useState({});
+  const [isLoadingStatuses, setIsLoadingStatuses] = useState(true);
 
   const categories = [
     "All",
@@ -29,13 +32,34 @@ const TemplatesGallery = ({ selectedTemplate, onSelectTemplate, formData }) => {
     "Academic",
   ];
 
+  // Fetch template visibility statuses on mount
+  useEffect(() => {
+    const fetchStatuses = async () => {
+      try {
+        setIsLoadingStatuses(true);
+        const statuses = await getAllTemplateStatuses();
+        setTemplateStatuses(statuses);
+      } catch (error) {
+        console.error("Error fetching template statuses:", error);
+      } finally {
+        setIsLoadingStatuses(false);
+      }
+    };
+    fetchStatuses();
+  }, []);
+
   const displayData = useMemo(() => mergeWithSampleData(formData), [formData]);
   const showingUserData = useMemo(() => hasAnyUserData(formData), [formData]);
 
+  // Filter out disabled templates
+  const enabledTemplates = useMemo(() => {
+    return allTemplates.filter((t) => templateStatuses[t.id] !== false);
+  }, [templateStatuses]);
+
   const filteredTemplates =
     selectedCategory === "All"
-      ? templates
-      : templates.filter((t) => t.category === selectedCategory);
+      ? enabledTemplates
+      : enabledTemplates.filter((t) => t.category === selectedCategory);
 
   const PreviewModal = ({ template }) => {
     const TemplateComponent = CVTemplates[template.id];
@@ -122,106 +146,116 @@ const TemplatesGallery = ({ selectedTemplate, onSelectTemplate, formData }) => {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
-              selectedCategory === category
-                ? "bg-slate-900 text-white shadow"
-                : "bg-white border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-            }`}
+            className={`px-5 py-2 rounded-full text-sm font-semibold transition ${selectedCategory === category
+              ? "bg-slate-900 text-white shadow"
+              : "bg-white border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+              }`}
           >
             {category}
           </button>
         ))}
       </div>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {filteredTemplates.map((template) => {
-          const isSelected = selectedTemplate === template.id;
-          const TemplateComponent = CVTemplates[template.id];
+      {/* Loading State */}
+      {isLoadingStatuses ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mb-4" />
+          <p className="text-slate-600">Loading templates...</p>
+        </div>
+      ) : filteredTemplates.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <p className="text-slate-600 text-lg">No templates available in this category.</p>
+          <p className="text-slate-500 text-sm mt-2">Please try a different category or check back later.</p>
+        </div>
+      ) : (
+        /* Cards Grid */
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {filteredTemplates.map((template) => {
+            const isSelected = selectedTemplate === template.id;
+            const TemplateComponent = CVTemplates[template.id];
 
-          return (
-            <div
-              key={template.id}
-              className={`group relative rounded-2xl overflow-hidden bg-white transition-all cursor-pointer ${
-                isSelected
+            return (
+              <div
+                key={template.id}
+                className={`group relative rounded-2xl overflow-hidden bg-white transition-all cursor-pointer ${isSelected
                   ? "ring-2 ring-blue-600 shadow-2xl scale-[1.02]"
                   : "border border-slate-200 hover:shadow-xl hover:-translate-y-1"
-              }`}
-              onClick={() => setPreviewTemplate(template)}
-            >
-              {/* Preview */}
-              <div className="relative h-[460px] overflow-hidden bg-white">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    transform: "scale(0.38)",
-                    transformOrigin: "top left",
-                    width: 794,
-                  }}
-                >
-                  {TemplateComponent && (
-                    <TemplateComponent formData={displayData} />
+                  }`}
+                onClick={() => setPreviewTemplate(template)}
+              >
+                {/* Preview */}
+                <div className="relative h-[460px] overflow-hidden bg-white">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      transform: "scale(0.38)",
+                      transformOrigin: "top left",
+                      width: 794,
+                    }}
+                  >
+                    {TemplateComponent && (
+                      <TemplateComponent formData={displayData} />
+                    )}
+                  </div>
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition" />
+
+                  {/* Hover actions */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewTemplate(template);
+                      }}
+                      className="flex items-center gap-2 px-5 py-2 rounded-lg bg-white shadow text-sm font-bold hover:bg-slate-100 transition"
+                    >
+                      <Eye size={16} />
+                      Preview
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectTemplate(template.id);
+                      }}
+                      className="flex items-center gap-2 px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 transition"
+                    >
+                      Use
+                    </button>
+                  </div>
+
+                  {/* Selected badge */}
+                  {isSelected && (
+                    <div className="absolute top-3 right-3 bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
+                      <Check size={14} />
+                      Selected
+                    </div>
                   )}
                 </div>
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition" />
-
-                {/* Hover actions */}
-                <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setPreviewTemplate(template);
-                    }}
-                    className="flex items-center gap-2 px-5 py-2 rounded-lg bg-white shadow text-sm font-bold hover:bg-slate-100 transition"
-                  >
-                    <Eye size={16} />
-                    Preview
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectTemplate(template.id);
-                    }}
-                    className="flex items-center gap-2 px-5 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold hover:bg-blue-700 transition"
-                  >
-                    Use
-                  </button>
-                </div>
-
-                {/* Selected badge */}
-                {isSelected && (
-                  <div className="absolute top-3 right-3 bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
-                    <Check size={14} />
-                    Selected
+                {/* Bottom bar */}
+                <div className="px-4 py-3 border-t flex items-center justify-between bg-white">
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900">
+                      {template.name}
+                    </h3>
+                    <p className="text-xs text-slate-500">{template.category}</p>
                   </div>
-                )}
-              </div>
 
-              {/* Bottom bar */}
-              <div className="px-4 py-3 border-t flex items-center justify-between bg-white">
-                <div>
-                  <h3 className="font-bold text-sm text-slate-900">
-                    {template.name}
-                  </h3>
-                  <p className="text-xs text-slate-500">{template.category}</p>
-                </div>
-
-                <span
-                  className={`text-xs font-bold px-3 py-1 rounded-full ${
-                    isSelected
+                  <span
+                    className={`text-xs font-bold px-3 py-1 rounded-full ${isSelected
                       ? "bg-green-100 text-green-700"
                       : "bg-slate-100 text-slate-600"
-                  }`}
-                >
-                  {isSelected ? "Active" : "Template"}
-                </span>
+                      }`}
+                  >
+                    {isSelected ? "Active" : "Template"}
+                  </span>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       {previewTemplate && <PreviewModal template={previewTemplate} />}
     </div>

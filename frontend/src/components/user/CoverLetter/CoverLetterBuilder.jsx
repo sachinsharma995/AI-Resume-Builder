@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AlertTriangle,
   ArrowLeft,
@@ -41,24 +41,24 @@ const CoverLetterBuilder = ({ onSidebarToggle }) => {
     phone: '',
     address: '',
     linkedin: '',
-    
+
     // Recipient Information
     recipientName: '',
     recipientTitle: '',
     companyName: '',
     companyAddress: '',
-    
+
     // Job Details
     jobTitle: '',
     jobReference: '',
     whereFound: '',
-    
+
     // Letter Content
     openingParagraph: '',
     bodyParagraph1: '',
     bodyParagraph2: '',
     closingParagraph: '',
-    
+
     // Closing
     salutation: 'Sincerely',
     customSalutation: '',
@@ -89,7 +89,7 @@ const CoverLetterBuilder = ({ onSidebarToggle }) => {
 
   /* -------------------- NAVIGATION -------------------- */
   const currentIdx = tabs.findIndex((tab) => tab.id === activeSection);
-  
+
   const goLeft = () => {
     if (currentIdx > 0) {
       setActiveSection(tabs[currentIdx - 1].id);
@@ -189,9 +189,21 @@ const CoverLetterBuilder = ({ onSidebarToggle }) => {
           </div>
         </div>
 
+        {/* Mobile Preview - Shows above form */}
+        <div className="w-full overflow-y-hidden flex justify-center md:hidden block mt-4">
+          <CoverLetterPreview
+            formData={formData}
+            selectedTemplate={selectedTemplate}
+            isExpanded={isPreviewExpanded}
+            onExpand={() => setIsPreviewExpanded(true)}
+            onCollapse={() => setIsPreviewExpanded(false)}
+            onMinimize={() => setIsPreviewHidden(true)}
+          />
+        </div>
+
         {/* BUILDER + PREVIEW */}
         <div
-          className={`grid grid-cols-[32%_68%] gap-14 p-1.5 ml-2 mr-2 ${isPreviewExpanded ? "grid-cols-[0_100%]" : ""}`}
+          className={`grid gap-14 p-1.5 ml-2 mr-2 grid-cols-1 md:grid-cols-[32%_68%] ${isPreviewExpanded ? "md:grid-cols-[0_100%]" : ""}`}
         >
           {/* builder-section */}
           <div className="bg-white rounded-xl h-full overflow-y-auto pl-0.5 overflow-hidden flex-1">
@@ -200,38 +212,41 @@ const CoverLetterBuilder = ({ onSidebarToggle }) => {
               setActiveSection={setActiveSection}
             />
             {/* form-content */}
-            <div className="w-full h-[55%] mt-5 overflow-auto no-scrollbar">{renderFormContent()}</div>
+            <div className="mt-5 px-2">{renderFormContent()}</div>
             {/* Previous & Next */}
-            <div className="w-full flex items-center justify-between mt-10">
-              <button
-                onClick={goLeft}
-                disabled={currentIdx === 0}
-                className="flex gap-1 items-center text-sm bg-slate-100 px-4 py-2 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition"
-              >
-                <ArrowLeft size={18} />
-                <span>Previous</span>
-              </button>
+            <div className={`flex items-center mt-6 mb-4 px-2 ${currentIdx === 0 ? 'justify-end' : 'justify-between'}`}>
+              {currentIdx > 0 && (
+                <button
+                  onClick={goLeft}
+                  className="flex gap-1 items-center text-sm bg-slate-100 px-4 py-2 rounded-lg transition hover:bg-slate-200"
+                >
+                  <ArrowLeft size={18} />
+                  <span>Previous</span>
+                </button>
+              )}
               <button
                 onClick={goRight}
-                disabled={currentIdx === tabs.length - 1}
-                className="flex gap-1 items-center text-sm bg-black text-white px-4 py-2 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition"
+                className="flex gap-1 items-center text-sm bg-blue-600 text-white px-4 py-2 rounded-lg transition hover:bg-blue-700"
               >
-                <span>Next</span>
+                <span>{currentIdx === tabs.length - 1 ? 'Finish' : 'Next'}</span>
                 <ArrowRight size={18} />
               </button>
             </div>
           </div>
 
-          {!isPreviewHidden && (
-            <CoverLetterPreview
-              formData={formData}
-              selectedTemplate={selectedTemplate}
-              isExpanded={isPreviewExpanded}
-              onExpand={() => setIsPreviewExpanded(true)}
-              onCollapse={() => setIsPreviewExpanded(false)}
-              onMinimize={() => setIsPreviewHidden(true)}
-            />
-          )}
+          {/* Desktop Preview - Hidden on mobile */}
+          <div className="md:block hidden">
+            {!isPreviewHidden && (
+              <CoverLetterPreview
+                formData={formData}
+                selectedTemplate={selectedTemplate}
+                isExpanded={isPreviewExpanded}
+                onExpand={() => setIsPreviewExpanded(true)}
+                onCollapse={() => setIsPreviewExpanded(false)}
+                onMinimize={() => setIsPreviewHidden(true)}
+              />
+            )}
+          </div>
         </div>
         <div className="w-full h-4"></div>
       </>

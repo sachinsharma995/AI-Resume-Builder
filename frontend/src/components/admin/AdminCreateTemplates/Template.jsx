@@ -1,5 +1,5 @@
 import React from "react";
-import { Filter, Plus, Eye, X, Power, PowerOff } from "lucide-react";
+import { Filter, Plus, Eye, X, Power, PowerOff, Loader2 } from "lucide-react";
 import { TEMPLATES } from "../../user/Templates/TemplateRegistry";
 import { CvTemplates } from "../../user/Templates/CvTemplates";
 import {
@@ -8,6 +8,18 @@ import {
 } from "../../../utils/templateVisibility";
 import TemplateTypeSwitch from "./TemplateTypeSwitch";
 import axiosInstance from "../../../api/axios";
+
+// User-side CV templates (from Templatesgallery.jsx - these are shown to users in CV Builder)
+const UserCvTemplates = [
+  { id: "professional", name: "Professional", category: "Traditional", description: "Classic professional CV template", thumbnail: "/templates/functional.png" },
+  { id: "modern", name: "Modern Blue", category: "Contemporary", description: "Modern design with blue accents", thumbnail: "/templates/modern.png" },
+  { id: "creative", name: "Creative", category: "Creative", description: "Creative and unique layout", thumbnail: "/templates/creative.png" },
+  { id: "minimal", name: "Minimal", category: "Contemporary", description: "Clean and minimal design", thumbnail: "/templates/minimalist.png" },
+  { id: "executive", name: "Executive", category: "Traditional", description: "Executive style template", thumbnail: "/templates/executive.png" },
+  { id: "academic", name: "Academic", category: "Academic", description: "Perfect for academic CVs", thumbnail: "/templates/chronological.png" },
+  { id: "twoColumn", name: "Two Column", category: "Academic", description: "Two column layout", thumbnail: "/templates/functional.png" },
+  { id: "simple", name: "Simple", category: "Traditional", description: "Simple and straightforward", thumbnail: "/templates/minimalist.png" },
+];
 
 export default function AdminTemplates() {
   const [type, setType] = React.useState("resume");
@@ -18,44 +30,77 @@ export default function AdminTemplates() {
   const [pendingTemplates, setPendingTemplates] = React.useState([]);
   const [approvedTemplates, setApprovedTemplates] = React.useState({});
   const [statuses, setStatuses] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [togglingId, setTogglingId] = React.useState(null);
 
   const refreshData = async (currentType = type) => {
     try {
-      setStatuses(getAllTemplateStatuses());
+      setIsLoading(true);
+      // Fetch statuses from backend API
+      const fetchedStatuses = await getAllTemplateStatuses();
+      setStatuses(fetchedStatuses);
 
-      const SOURCE = currentType === "resume" ? TEMPLATES : CvTemplates;
+      if (currentType === "resume") {
+        // Resume templates
+        const SOURCE = TEMPLATES;
+        const modern = SOURCE.filter((t) =>
+          ["modern", "Modern", "Modern Templates"].includes(t.category),
+        );
+        const creative = SOURCE.filter((t) =>
+          ["creative", "Creative", "Creative Templates"].includes(t.category),
+        );
+        const professional = SOURCE.filter((t) =>
+          ["professional", "Professional", "Professional Templates"].includes(
+            t.category,
+          ),
+        );
 
-      const modern = SOURCE.filter((t) =>
-        ["modern", "Modern", "Modern Templates"].includes(t.category),
-      );
-      const creative = SOURCE.filter((t) =>
-        ["creative", "Creative", "Creative Templates"].includes(t.category),
-      );
-      const professional = SOURCE.filter((t) =>
-        ["professional", "Professional", "Professional Templates"].includes(
-          t.category,
-        ),
-      );
+        const mapToAdminFormat = (list) =>
+          list.map((tpl) => ({
+            _id: tpl.id,
+            name: tpl.name,
+            used: 0,
+            previewText: tpl.description,
+            image: tpl.thumbnail,
+            isStatic: false,
+          }));
 
-      const mapToAdminFormat = (list) =>
-        list.map((tpl) => ({
-          _id: tpl.id,
-          name: tpl.name,
-          used: 0,
-          previewText: tpl.description,
-          image: tpl.thumbnail,
-          isStatic: false,
-        }));
+        setApprovedTemplates({
+          "Modern Templates": mapToAdminFormat(modern),
+          "Creative Templates": mapToAdminFormat(creative),
+          "Professional Templates": mapToAdminFormat(professional),
+        });
+      } else {
+        // CV templates - include BOTH CvTemplates and UserCvTemplates
+        const mapCvTemplatesToAdminFormat = (list) =>
+          list.map((tpl) => ({
+            _id: tpl.id,
+            name: tpl.name,
+            used: 0,
+            previewText: tpl.description,
+            image: tpl.thumbnail || null,
+            isStatic: false,
+          }));
 
-      setApprovedTemplates({
-        "Modern Templates": mapToAdminFormat(modern),
-        "Creative Templates": mapToAdminFormat(creative),
-        "Professional Templates": mapToAdminFormat(professional),
-      });
+        // User-side CV templates (Traditional, Contemporary, Creative, Academic)
+        const traditional = UserCvTemplates.filter((t) => t.category === "Traditional");
+        const contemporary = UserCvTemplates.filter((t) => t.category === "Contemporary");
+        const creative = UserCvTemplates.filter((t) => t.category === "Creative");
+        const academic = UserCvTemplates.filter((t) => t.category === "Academic");
+
+        setApprovedTemplates({
+          "Traditional Templates": mapCvTemplatesToAdminFormat(traditional),
+          "Contemporary Templates": mapCvTemplatesToAdminFormat(contemporary),
+          "Creative Templates": mapCvTemplatesToAdminFormat(creative),
+          "Academic Templates": mapCvTemplatesToAdminFormat(academic),
+        });
+      }
 
       setPendingTemplates([]);
     } catch (err) {
       console.error("Failed to fetch templates", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,9 +108,17 @@ export default function AdminTemplates() {
     refreshData(type);
   }, [type]);
 
-  const handleToggleStatus = (id) => {
-    const newStatus = toggleTemplateStatus(id);
-    setStatuses((prev) => ({ ...prev, [id]: newStatus }));
+  const handleToggleStatus = async (id) => {
+    try {
+      setTogglingId(id);
+      const newStatus = await toggleTemplateStatus(id, type);
+      setStatuses((prev) => ({ ...prev, [id]: newStatus }));
+    } catch (error) {
+      console.error("Failed to toggle template status:", error);
+      alert("Failed to update template status. Please try again.");
+    } finally {
+      setTogglingId(null);
+    }
   };
 
   const handlePreview = (imageUrl) => {
@@ -177,19 +230,17 @@ export default function AdminTemplates() {
                     return (
                       <div
                         key={index}
-                        className={`bg-white border rounded-xl p-3 transition relative ${
-                          active
-                            ? "border-slate-200 hover:shadow-lg"
-                            : "border-slate-100 opacity-75 grayscale-[0.5]"
-                        }`}
+                        className={`bg-white border rounded-xl p-3 transition relative ${active
+                          ? "border-slate-200 hover:shadow-lg"
+                          : "border-slate-100 opacity-75 grayscale-[0.5]"
+                          }`}
                       >
                         {/* Status Badge */}
                         <div
-                          className={`absolute top-5 right-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ${
-                            active
-                              ? "bg-emerald-100 text-emerald-700 border-emerald-200"
-                              : "bg-slate-100 text-slate-500 border-slate-200"
-                          }`}
+                          className={`absolute top-5 right-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ${active
+                            ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                            : "bg-slate-100 text-slate-500 border-slate-200"
+                            }`}
                         >
                           {active ? "Active" : "Inactive"}
                         </div>
@@ -197,13 +248,22 @@ export default function AdminTemplates() {
                         {/* Preview */}
                         <div
                           className="relative w-full aspect-[210/297] bg-slate-100 rounded-lg overflow-hidden cursor-pointer"
-                          onClick={() => handlePreview(tpl.image)}
+                          onClick={() => tpl.image && handlePreview(tpl.image)}
                         >
-                          <img
-                            src={tpl.image}
-                            alt={tpl.name}
-                            className="w-full h-full object-cover"
-                          />
+                          {tpl.image ? (
+                            <img
+                              src={tpl.image}
+                              alt={tpl.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
+                              <div className="text-center">
+                                <div className="text-4xl font-bold text-slate-300 mb-2">{tpl.name.charAt(0)}</div>
+                                <div className="text-xs text-slate-400">{tpl.name}</div>
+                              </div>
+                            </div>
+                          )}
                           <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
                             <Eye
                               className="text-white drop-shadow-md"
@@ -243,18 +303,20 @@ export default function AdminTemplates() {
                           </button>
                           <button
                             onClick={() => handleToggleStatus(tpl._id)}
-                            className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${
-                              active
-                                ? "bg-red-50 text-red-600 hover:bg-red-100"
-                                : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
-                            }`}
+                            disabled={togglingId === tpl._id}
+                            className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${active
+                              ? "bg-red-50 text-red-600 hover:bg-red-100"
+                              : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
+                              } ${togglingId === tpl._id ? "opacity-50 cursor-not-allowed" : ""}`}
                           >
-                            {active ? (
+                            {togglingId === tpl._id ? (
+                              <Loader2 size={14} className="animate-spin" />
+                            ) : active ? (
                               <PowerOff size={14} />
                             ) : (
                               <Power size={14} />
                             )}
-                            {active ? "Disable" : "Enable"}
+                            {togglingId === tpl._id ? "Updating..." : active ? "Disable" : "Enable"}
                           </button>
                         </div>
                       </div>

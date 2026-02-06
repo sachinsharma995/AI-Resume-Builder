@@ -14,7 +14,7 @@ export default function UserNavbar() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200 md:z-50">
+    <header className="fixed top-0 left-0 right-0 flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200 z-50">
       {/* Logo */}
       <img
         src={UptoSkillsLogo}

@@ -1,20 +1,57 @@
+import axiosInstance from "../api/axios";
 
-const STORAGE_KEY = 'template_visibility_settings';
-
-export const getTemplateStatus = (id) => {
-    const settings = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    // Default to true if not set
-    return settings[id] !== false;
+// Get template visibility status from backend
+export const getTemplateStatus = async (id) => {
+    try {
+        const response = await axiosInstance.get("/api/template-settings");
+        const settings = response.data;
+        // If not in settings, default to true (enabled)
+        return settings[id] !== false;
+    } catch (error) {
+        console.error("Error fetching template status:", error);
+        return true; // Default to enabled on error
+    }
 };
 
-export const toggleTemplateStatus = (id) => {
-    const settings = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    const currentStatus = settings[id] !== false;
-    settings[id] = !currentStatus;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    return !currentStatus; // Return new status
+// Toggle template status via backend API
+export const toggleTemplateStatus = async (id, templateType = "cv") => {
+    try {
+        const response = await axiosInstance.post("/api/template-settings/toggle", {
+            templateId: id,
+            templateType,
+        });
+        return response.data.isEnabled;
+    } catch (error) {
+        console.error("Error toggling template status:", error);
+        throw error;
+    }
 };
 
-export const getAllTemplateStatuses = () => {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+// Get all template statuses from backend
+export const getAllTemplateStatuses = async () => {
+    try {
+        const response = await axiosInstance.get("/api/template-settings");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all template statuses:", error);
+        return {}; // Return empty object on error
+    }
+};
+
+// Get only enabled template IDs from backend
+export const getEnabledTemplateIds = async (type = "cv") => {
+    try {
+        const response = await axiosInstance.get(`/api/template-settings/enabled?type=${type}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching enabled templates:", error);
+        return []; // Return empty array on error
+    }
+};
+
+// Check if a template is enabled (for filtering)
+export const isTemplateEnabled = async (id) => {
+    const statuses = await getAllTemplateStatuses();
+    // If the template is not in the settings, it's enabled by default
+    return statuses[id] !== false;
 };
