@@ -50,7 +50,7 @@ const UserRoutes = () => {
 
 
 
-        
+
 
       </Route>
     </Routes>
