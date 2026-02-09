@@ -10,9 +10,16 @@ import {
   Shield,
   ArrowLeft,
   CheckCircle2,
+  BarChart3,
+  Lightbulb,
+  SearchCheck,
+  Layers,
+  FileEdit,
+  Rocket,
 } from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
+import AiBuilder from "../assets/AiBuilder.png";
 
 // ✅ Scroll animation hook
 const useInView = (threshold = 0.15) => {
@@ -63,7 +70,7 @@ const AIBuilderFeature = () => {
       {/* HERO */}
       <section
         ref={heroRef}
-        className="relative px-6 pt-10 pb-20 overflow-hidden bg-white"
+        className="relative px-6 pb-12 overflow-hidden bg-white"
       >
         {/* Brand Theme Blurs */}
         <div className="absolute rounded-full -top-24 -left-24 w-72 h-72 bg-blue-50 blur-3xl opacity-60" />
@@ -78,7 +85,7 @@ const AIBuilderFeature = () => {
             <div className="mb-10">
               <button
                 onClick={handleBackHome}
-                className="group inline-flex items-center gap-2 text-sm font-bold text-[#0077cc] transition-all duration-200 hover:text-[#1a2e52]"
+                className="group inline-flex items-center gap-2 pt-20 text-sm font-bold text-[#0077cc] transition-all duration-200 hover:text-[#1a2e52]"
               >
                 <ArrowLeft
                   size={16}
@@ -88,7 +95,7 @@ const AIBuilderFeature = () => {
               </button>
             </div>
 
-            <div className="inline-block px-4 py-2 bg-blue-50 text-[#0077cc] rounded-full text-sm font-bold mb-6">
+            <div className="inline-block px-4  py-2 bg-blue-50 text-[#0077cc] rounded-full text-sm font-bold mb-6">
               AI-Powered Resume Builder
             </div>
 
@@ -120,41 +127,23 @@ const AIBuilderFeature = () => {
             </button>
           </div>
 
-          <div
-            className={`relative transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-          >
-            <div className="p-8 bg-white border border-gray-100 shadow-2xl rounded-[2.5rem]">
-              <div className="mb-6">
-                <div className="mb-2 text-xs font-black tracking-widest text-gray-400 uppercase">Before AI:</div>
-                <div className="p-4 font-medium text-gray-500 rounded-xl bg-gray-50">
-                  "Managed team projects"
-                </div>
-              </div>
+            <div
+              className={`relative transition-all duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              <img
+                src={AiBuilder}
+                alt="ATS Score Analysis"
+                className="w-full h-auto object-contain drop-shadow-2xl"
+              />
 
-              <div className="flex justify-center mb-6">
-                <div className="p-3 rounded-full bg-blue-50">
-                   <Sparkles size={32} className="text-[#0077cc]" />
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-2 text-xs font-black text-[#0077cc] uppercase tracking-widest">
-                  After AI Enhancement:
-                </div>
-                <div className="p-4 text-[#1a2e52] border border-blue-100 rounded-xl bg-[#f0f7ff] font-bold leading-relaxed">
-                  "Led cross-functional team of 8 members to deliver 5 high-impact projects,
-                  resulting in <span className="text-[#0077cc]">30% efficiency improvement</span> and $200K cost savings"
-                </div>
-              </div>
             </div>
-          </div>
 
         </div>
       </section>
 
       {/* WHAT IS AI BUILDER */}
-      <section ref={whatRef} className="px-6 py-20 bg-white">
+      <section ref={whatRef} className="px-6 py-12 bg-white">
         <div
           className={`max-w-5xl mx-auto transition-all duration-700 ${whatVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
@@ -180,7 +169,7 @@ const AIBuilderFeature = () => {
       </section>
 
       {/* WHY USE AI BUILDER */}
-      <section ref={whyRef} className="px-6 py-20 bg-gray-50/50">
+      <section ref={whyRef} className="px-6 py-12 bg-gray-50/50">
         <div
           className={`max-w-6xl mx-auto transition-all duration-700 ${whyVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
@@ -233,7 +222,7 @@ const AIBuilderFeature = () => {
       </section>
 
       {/* WHAT AI DOES */}
-      <section ref={whatAiRef} className="px-6 py-20 bg-white">
+      <section ref={whatAiRef} className="px-6 py-12 bg-white">
         <div
           className={`max-w-6xl mx-auto transition-all duration-700 ${whatAiVisible
             ? "opacity-100 translate-y-0"
@@ -244,34 +233,34 @@ const AIBuilderFeature = () => {
             What Our AI Resume Builder Does
           </h2>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: "✨", title: "Content Enhancement", desc: "Transforms basic descriptions into achievement-focused bullet points" },
-              { icon: "🎯", title: "Keyword Optimization", desc: "Identifies and adds relevant keywords to pass ATS filters" },
-              { icon: "📊", title: "Achievement Quantification", desc: "Helps you add metrics and numbers to demonstrate impact" },
-              { icon: "💡", title: "Smart Suggestions", desc: "Provides real-time suggestions based on your industry" },
-              { icon: "🔍", title: "Grammar & Clarity", desc: "Ensures your resume is error-free and easy to read" },
-              { icon: "🎨", title: "Format Optimization", desc: "Applies professional formatting for AI readability" },
-              { icon: "📝", title: "Section Guidance", desc: "Recommends which sections to include based on experience" },
-              { icon: "⚡", title: "Action Verb Selection", desc: "Suggests powerful verbs to make experience stand out" },
-              { icon: "🚀", title: "Impact Maximization", desc: "Helps you highlight impressive achievements first" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="p-8 text-center transition-all duration-300 border border-gray-100 bg-white rounded-2xl hover:border-[#0077cc]/30 hover:shadow-lg"
-              >
-                <div className="mb-4 text-4xl transition-transform duration-300 group-hover:scale-110">
-                  {item.icon}
-                </div>
-                <h3 className="mb-2 text-lg font-bold text-[#1a2e52]">
-                  {item.title}
-                </h3>
-                <p className="text-xs leading-relaxed text-gray-500">{item.desc}</p>
-              </div>
-            ))}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {[
+        { icon: <Sparkles size={32} />, title: "Content Enhancement", desc: "Transforms basic descriptions into achievement-focused bullet points" },
+        { icon: <Target size={32} />, title: "Keyword Optimization", desc: "Identifies and adds relevant keywords to pass ATS filters" },
+        { icon: <BarChart3 size={32} />, title: "Achievement Quantification", desc: "Helps you add metrics and numbers to demonstrate impact" },
+        { icon: <Lightbulb size={32} />, title: "Smart Suggestions", desc: "Provides real-time suggestions based on your industry" },
+        { icon: <SearchCheck size={32} />, title: "Grammar & Clarity", desc: "Ensures your resume is error-free and easy to read" },
+        { icon: <Layers size={32} />, title: "Format Optimization", desc: "Applies professional formatting for AI readability" },
+        { icon: <FileEdit size={32} />, title: "Section Guidance", desc: "Recommends which sections to include based on experience" },
+        { icon: <Zap size={32} />, title: "Action Verb Selection", desc: "Suggests powerful verbs to make experience stand out" },
+        { icon: <Rocket size={32} />, title: "Impact Maximization", desc: "Helps you highlight impressive achievements first" },
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="group p-8 text-center transition-all duration-300 border border-gray-100 bg-white rounded-[2rem] hover:border-[#0077cc]/30 hover:shadow-xl hover:-translate-y-1"
+        >
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-[#0077cc] transition-all duration-300 group-hover:bg-[#0077cc] group-hover:text-white">
+            {item.icon}
           </div>
+          <h3 className="mb-2 text-lg font-bold text-[#1a2e52]">
+            {item.title}
+          </h3>
+          <p className="text-sm leading-relaxed text-gray-500">{item.desc}</p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* HOW IT WORKS */}
       <section ref={howRef} className="px-6 py-14 bg-gray-50/50">

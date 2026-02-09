@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import Footer from "./Footer";
-
-import { TEMPLATES } from "../components/user/Templates/TemplateRegistry";
-import { getTemplateStatus } from "../utils/templateVisibility";
+import Footer from "./Footer"
 
 function TemplatesPage() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [hoveredTemplate, setHoveredTemplate] = useState(null);
+  const base = import.meta.env.BASE_URL || "/";
 
-  const activeTemplates = TEMPLATES.filter(t => getTemplateStatus(t.id));
-
-  const templates = activeTemplates.map(t => ({
-    id: t.id,
-    name: t.name,
-    category: t.category.toLowerCase(), // Ensure lowercase matching
-    image: t.thumbnail
-  }));
+  const templates = [
+    { id: 1, name: "Atlantic Blue", category: "modern", image: `${base}templates/chronological.png` },
+    { id: 2, name: "Classic", category: "traditional", image: `${base}templates/functional.png` },
+    { id: 3, name: "Corporate", category: "traditional", image: `${base}templates/creative.png` },
+    { id: 4, name: "Modern Pro", category: "modern", image: `${base}templates/modern.png` },
+    { id: 5, name: "Executive", category: "executive", image: `${base}templates/minimalist.png` },
+    { id: 6, name: "Creative Edge", category: "creative", image: `${base}templates/executive.png` },
+  ];
 
   const categories = [
     { id: "all", label: "All Templates" },
-    { id: "professional", label: "Professional" },
+    { id: "traditional", label: "Traditional" },
     { id: "modern", label: "Modern" },
     { id: "creative", label: "Creative" },
+    { id: "executive", label: "Executive" },
   ];
 
   const filteredTemplates =
@@ -42,11 +41,11 @@ function TemplatesPage() {
 
       {/* MAIN CONTENT */}
       <section className="px-8 py-12">
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl">
           {/* HEADER */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">Choose Your Template</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Select a professionally designed template to get started</p>
+          <div className="mb-12 text-center">
+            <h1 className="mb-4 text-5xl font-bold text-gray-900">Choose Your Template</h1>
+            <p className="max-w-2xl mx-auto text-lg text-gray-600">Select a professionally designed template to get started</p>
           </div>
 
           {/* CATEGORY FILTER */}
@@ -55,8 +54,9 @@ function TemplatesPage() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 ${selectedCategory === cat.id ? "bg-blue-600 text-white shadow-md" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                className={`px-6 py-2.5 rounded-lg font-semibold transition-all duration-300 ${
+                  selectedCategory === cat.id ? "bg-blue-600 text-white shadow-md" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
               >
                 {cat.label}
               </button>
@@ -64,24 +64,25 @@ function TemplatesPage() {
           </div>
 
           {/* TEMPLATES GRID */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredTemplates.map((template) => (
               <div
                 key={template.id}
                 onMouseEnter={() => setHoveredTemplate(template.id)}
                 onMouseLeave={() => setHoveredTemplate(null)}
                 onClick={() => handleCreateResume(template)}
-                className="group relative cursor-pointer"
+                className="relative cursor-pointer group"
               >
                 <div
-                  className={`bg-white rounded-xl shadow-lg border-2 overflow-hidden transition-all duration-300 ${hoveredTemplate === template.id ? "border-blue-600 shadow-2xl -translate-y-2" : "border-gray-200"
-                    }`}
+                  className={`bg-white rounded-xl shadow-lg border-2 overflow-hidden transition-all duration-300 ${
+                    hoveredTemplate === template.id ? "border-blue-600 shadow-2xl -translate-y-2" : "border-gray-200"
+                  }`}
                 >
                   <div className="relative h-[400px] bg-gray-50 overflow-hidden">
                     <img
                       src={template.image}
                       alt={template.name}
-                      className="w-full h-full object-cover object-top"
+                      className="object-cover object-top w-full h-full"
                       loading="lazy"
                       onError={(e) => {
                         e.target.style.display = "none";
@@ -112,7 +113,7 @@ function TemplatesPage() {
                   </div>
 
                   <div className="p-4 bg-white border-t border-gray-200">
-                    <h3 className="text-lg font-bold text-gray-900 text-center">{template.name}</h3>
+                    <h3 className="text-lg font-bold text-center text-gray-900">{template.name}</h3>
                   </div>
                 </div>
               </div>

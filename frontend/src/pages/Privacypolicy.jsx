@@ -91,25 +91,24 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="min-h-screen text-gray-900 bg-white select-none">
-      
       <NavBar />
 
       {/* Section to display privacy policy page title and subtitle */}
 
-      <section className="text-center bg-gradient-to-b from-blue-50 via-white to-white py-20 pb-10">
-        <div className="max-w-4xl px-6 mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm text-green-700 bg-green-200 rounded-full">
-            <i className="fa-solid fa-shield-halved"></i>
+      <section className="text-center bg-gradient-to-b from-blue-50 via-white to-white py-16 pb-8 md:py-20 md:pb-10">
+        <div className="max-w-4xl px-4 mx-auto sm:px-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6 text-xs md:text-sm text-green-700 bg-green-200 rounded-full">
+            <i className="fa-solid fa-shield-halved text-sm md:text-base"></i>
             <span>Data Protection</span>
           </div>
 
-          <div className="relative mb-6">
-            <h1 className="text-5xl font-extrabold md:text-6xl">
+          <div className="relative mb-4 md:mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold px-4">
               Privacy Policy
             </h1>
           </div>
 
-          <p className="max-w-2xl mx-auto text-lg text-gray-600">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600 px-4">
             Learn how UpToSkills - AI Resume Builder protects your personal
             information and respects your privacy.
           </p>
@@ -118,24 +117,34 @@ export default function PrivacyPolicy() {
 
       {/* Section to display privacy policy cards, icons, badges, title and content */}
 
-      <section className="max-w-6xl px-6 pt-10 pb-4 mx-auto space-y-10">
+      <section className="max-w-6xl px-4 sm:px-6 pt-6 md:pt-10 pb-4 mx-auto space-y-6 md:space-y-10">
         {policys.map((policy, index) => (
           <div
             key={index}
-            className="p-12 transition-all duration-300 bg-white/40 backdrop-blur-xl border border-white/60 shadow-xl rounded-3xl hover:shadow-2xl hover:shadow-green-300/50 hover:bg-white/50 hover:border-white/80 hover:-translate-y-1"
+            className="p-6 sm:p-8 md:p-10 lg:p-12 transition-all duration-300 bg-white/40 backdrop-blur-xl border border-white/60 shadow-xl rounded-2xl md:rounded-3xl hover:shadow-2xl hover:shadow-green-300/50 hover:bg-white/50 hover:border-white/80 hover:-translate-y-1"
           >
-            <div className="flex items-center gap-6 mb-6">
-              <div className="flex items-center justify-center w-16 h-16 font-bold text-orange-700 bg-gradient-to-br from-orange-100/80 to-orange-200/60 backdrop-blur-sm rounded-xl text-2xl shadow-lg">
+            {/* Mobile: Stacked Layout, Desktop: Horizontal Layout */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
+              {/* Badge - Hidden on mobile, visible on sm and above */}
+              <div className="hidden sm:flex items-center justify-center w-14 h-14 md:w-16 md:h-16 font-bold text-orange-700 bg-gradient-to-br from-orange-100/80 to-orange-200/60 backdrop-blur-sm rounded-lg md:rounded-xl text-xl md:text-2xl shadow-lg flex-shrink-0">
                 {index + 1}
               </div>
-              <i
-                className={`fa-solid ${policy.icon} text-orange-600 text-3xl drop-shadow-lg`}
-              ></i>
-              <h2 className="text-4xl font-semibold text-gray-900 drop-shadow-sm">
-                {policy.title}
-              </h2>
+              
+              {/* Icon and Title Container */}
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-6 flex-1">
+                <i
+                  className={`fa-solid ${policy.icon} text-orange-600 text-2xl sm:text-2xl md:text-3xl drop-shadow-lg flex-shrink-0`}
+                ></i>
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-900 drop-shadow-sm">
+                  {policy.title}
+                </h2>
+              </div>
             </div>
-            <p className="text-xl leading-relaxed text-gray-700">{policy.content}</p>
+            
+            {/* Content */}
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-700 pl-0 sm:pl-20 md:pl-24">
+              {policy.content}
+            </p>
           </div>
         ))}
       </section>

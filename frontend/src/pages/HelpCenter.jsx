@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UpToSkillsImg from '../assets/UptoSkills.webp';
-import NavBar from "../components/NavBar";
+import NavBar from '../components/NavBar';
 import Footer from "./Footer";
 
 function HelpCenter() {
     const navigate = useNavigate();
+
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedFAQ, setExpandedFAQ] = useState(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -32,11 +33,10 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Create Your First Resume</h2>
                         <p className="text-blue-700">Building a professional foundation using guided AI workflows.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         The UptoSkills AI Resume Builder simplifies the transition from a blank page to a polished career document. Our guided process ensures no critical information is overlooked.
                     </p>
-
                     <div className="space-y-8">
                         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                             <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
@@ -108,7 +108,7 @@ function HelpCenter() {
                     <div className="mt-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg p-8 text-center">
                         <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
                         <p className="text-blue-100 mb-6">Create your professional resume with our AI-powered builder today.</p>
-                        <button 
+                        <button
                             onClick={() => navigate('/register')}
                             className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 hover:scale-105 transition-all transform"
                         >
@@ -123,7 +123,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Choosing the Right Template</h2>
                         <p className="text-blue-700">Aligning your visual presentation with industry standards.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Templates are more than aesthetic choices; they dictate how information is processed by both humans and machines (ATS).
                     </p>
@@ -194,7 +194,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">AI Content Generation</h2>
                         <p className="text-blue-700">Leveraging Large Language Models to articulate your value proposition.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Our AI engine is trained on thousands of high-performing resumes to help you draft impactful content in seconds.
                     </p>
@@ -235,7 +235,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Understanding Resume Sections</h2>
                         <p className="text-blue-700">Structuring your document for maximum information retention.</p>
                     </div>
-                    
+
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-8">
                         <p className="text-yellow-800 font-medium">
                             <i className="fas fa-clock mr-2"></i>
@@ -298,7 +298,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">AI Content Suggestions</h2>
                         <p className="text-blue-700">Refining your language for professional impact and clarity.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         The AI Suggestions tool acts as a real-time editor, transforming passive descriptions into active, result-oriented statements.
                     </p>
@@ -332,7 +332,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Template Selection Guide</h2>
                         <p className="text-blue-700">Industry-specific design recommendations.</p>
                     </div>
-                    
+
                     <div className="space-y-6">
                         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                             <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
@@ -364,7 +364,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">PDF Export Options</h2>
                         <p className="text-blue-700">The industry standard for document submission.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Always export as a PDF unless specifically asked otherwise. PDF preserves your layout, fonts, and spacing exactly as you intended.
                     </p>
@@ -386,7 +386,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">AI Keyword Optimization</h2>
                         <p className="text-blue-700">Bridging the gap between your resume and the Job Description (JD).</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Most modern companies use software to filter candidates based on keywords. If your resume lacks the specific terms found in the job posting, it may never reach a human recruiter.
                     </p>
@@ -425,7 +425,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Smart Formatting</h2>
                         <p className="text-blue-700">Automated visual perfection without manual adjustment.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Manual formatting in Word can be frustrating. Our Smart Formatting engine handles the heavy lifting.
                     </p>
@@ -461,7 +461,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Content Enhancement</h2>
                         <p className="text-blue-700">Upgrading existing drafts for role-specific relevance.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         If you already have a resume, use the Enhancement feature to modernize it. This tool focuses on:
                     </p>
@@ -497,7 +497,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Understanding ATS Systems</h2>
                         <p className="text-blue-700">Navigating the digital gatekeepers of the hiring process.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         An Applicant Tracking System (ATS) is a database that sorts candidates. To pass, your resume must be "machine-readable."
                     </p>
@@ -536,7 +536,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Improving Your ATS Score</h2>
                         <p className="text-blue-700">Technical strategies to ensure your resume ranks at the top.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         A high ATS score is achieved through a combination of Structural Integrity and Keyword Density.
                     </p>
@@ -563,7 +563,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Job Description Matching</h2>
                         <p className="text-blue-700">Customizing your application for every role.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Applying with a generic resume is a common mistake. Use our JD Matcher to tailor your document.
                     </p>
@@ -597,7 +597,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Testing ATS Compatibility</h2>
                         <p className="text-blue-700">The final check before submission.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Before you hit "Apply," perform a final audit.
                     </p>
@@ -670,7 +670,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Font and Typography</h2>
                         <p className="text-blue-700">The science of readable resumes.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Typography influences how long a recruiter will stay on your page.
                     </p>
@@ -722,7 +722,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Word Document Export</h2>
                         <p className="text-blue-700">Flexibility for recruiters and manual edits.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Some external recruiters prefer Word (.docx) files so they can remove your contact details before sending the resume to their clients.
                     </p>
@@ -739,7 +739,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Online Resume Sharing</h2>
                         <p className="text-blue-700">Generating a professional digital footprint.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         UptoSkills allows you to create a Live Link for your resume.
                     </p>
@@ -768,7 +768,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Managing Multiple Versions</h2>
                         <p className="text-blue-700">Efficiency in high-volume job searching.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Do not overwrite your resume for every job. Use our Duplicate feature to create:
                     </p>
@@ -797,7 +797,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Account Setup</h2>
                         <p className="text-blue-700">Centralizing your career assets.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Complete your profile to unlock personalized AI suggestions. Linking your LinkedIn profile allows the AI to automatically suggest missing certifications or skills based on your peer group.
                     </p>
@@ -805,7 +805,7 @@ function HelpCenter() {
                     <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg p-8 text-center">
                         <h3 className="text-2xl font-bold mb-4">Get Started Today</h3>
                         <p className="text-blue-100 mb-6">Set up your account and start building professional resumes.</p>
-                        <button 
+                        <button
                             onClick={() => navigate('/register')}
                             className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 hover:scale-105 transition-all transform"
                         >
@@ -845,7 +845,7 @@ function HelpCenter() {
                         <h2 className="text-2xl font-bold text-blue-900 mb-2">Billing Management</h2>
                         <p className="text-blue-700">Secure and transparent payment handling.</p>
                     </div>
-                    
+
                     <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                         Access your invoices and manage subscription renewals through the Billing Dashboard. We support all major credit cards, PayPal, and regional payment methods. You can cancel at any time with one click.
                     </p>
@@ -911,7 +911,7 @@ function HelpCenter() {
                     </div>
                 </div>
             </div>
-            
+
             <div className="grid gap-4">
                 {collection.Guides.map((guide) => (
                     <div
@@ -977,6 +977,10 @@ function HelpCenter() {
                 { id: "keyword-matching", title: "Job Description Matching", desc: "Match your resume to specific job postings" },
                 { id: "ats-testing", title: "Testing ATS Compatibility", desc: "Test how well your resume performs with ATS" }
             ]
+
+
+
+
         },
         {
             id: "templates-design",
@@ -1024,6 +1028,7 @@ function HelpCenter() {
             id: 1,
             question: "How does the AI resume builder work?",
             answer: "Our AI analyzes your input and generates professional resume content tailored to your industry and role. It suggests improvements, optimizes keywords, and ensures ATS compatibility while maintaining a human touch."
+
         },
         {
             id: 2,
@@ -1061,7 +1066,7 @@ function HelpCenter() {
     ];
 
     const getAllGuides = () => {
-        return collections.flatMap(collection => 
+        return collections.flatMap(collection =>
             collection.Guides.map(Guides => ({
                 ...Guides,
                 collectionTitle: collection.title,
@@ -1070,18 +1075,17 @@ function HelpCenter() {
         );
     };
 
-    const filteredResults = searchQuery.trim() 
+    const filteredResults = searchQuery.trim()
         ? getAllGuides().filter(Guides =>
             Guides.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             Guides.desc.toLowerCase().includes(searchQuery.toLowerCase())
-          )
+        )
         : [];
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-
+            {/* Navigation */}
             <NavBar />
-
             {/* Hero Section */}
             <div className="bg-gradient-to-br from-blue-600 via-indigo-700 to-blue-800 text-white relative overflow-hidden" onMouseMove={handleMouseMove}>
                 {/* Minimal 3D Background */}
@@ -1109,7 +1113,7 @@ function HelpCenter() {
                     <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
                         Get help for AI Resume Builder and create the perfect resume for your dream job
                     </p>
-                    
+
                     {/* Search Bar */}
                     <div className="max-w-2xl mx-auto">
                         <div className="relative">
@@ -1136,7 +1140,7 @@ function HelpCenter() {
                     <h2 className="text-2xl font-bold text-gray-900 mb-8">
                         Search results for "{searchQuery}"
                     </h2>
-                    
+
                     {filteredResults.length > 0 ? (
                         <div className="space-y-4">
                             {filteredResults.map((Guides) => (
@@ -1220,12 +1224,14 @@ function HelpCenter() {
                             <h2 className="text-3xl font-bold text-gray-900 mb-4">Browse Help Topics</h2>
                             <p className="text-lg text-gray-600">Find answers to your questions about our AI Resume Builder</p>
                         </div>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {collections.map((collection) => (
                                 <div
                                     key={collection.id}
                                     className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-xl hover:border-blue-300 transition-all duration-300 cursor-pointer group overflow-hidden hover:-translate-y-2 animate-fade-in"
+
+
                                 >
                                     <div className={`h-2 bg-gradient-to-r ${collection.color}`}></div>
                                     <div className="p-6">
@@ -1245,8 +1251,8 @@ function HelpCenter() {
                                         </p>
                                         <div className="space-y-2">
                                             {collection.Guides.slice(0, 3).map((Guides) => (
-                                                <div 
-                                                    key={Guides.id} 
+                                                <div
+                                                    key={Guides.id}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setSelectedGuide(Guides);
@@ -1258,7 +1264,7 @@ function HelpCenter() {
                                                 </div>
                                             ))}
                                             {collection.Guides.length > 3 && (
-                                                <div 
+                                                <div
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setSelectedCollection(collection);
@@ -1283,7 +1289,7 @@ function HelpCenter() {
                                 <h2 className="text-3xl font-bold text-gray-900 mb-4">Popular Guides</h2>
                                 <p className="text-lg text-gray-600">Most viewed help Guides by our users</p>
                             </div>
-                            
+
                             <div className="space-y-4">
                                 {popularGuides.map((Guides, index) => {
                                     const guide = getAllGuides().find(g => g.title === Guides.title);
@@ -1298,21 +1304,21 @@ function HelpCenter() {
                                             }}
                                             className="flex items-center justify-between p-6 bg-gray-50 rounded-xl hover:bg-blue-50 hover:shadow-md transition-all duration-300 cursor-pointer group hover:-translate-y-1 transform"
                                         >
-                                        <div className="flex items-center">
-                                            <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4 font-bold text-sm group-hover:scale-110 transition-transform">
-                                                {index + 1}
-                                            </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                                                    {Guides.title}
-                                                </h3>
-                                                <div className="flex items-center text-sm text-gray-500 mt-1">
-                                                    <span>{Guides.category}</span>
+                                            <div className="flex items-center">
+                                                <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-4 font-bold text-sm group-hover:scale-110 transition-transform">
+                                                    {index + 1}
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                                        {Guides.title}
+                                                    </h3>
+                                                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                                                        <span>{Guides.category}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <i className="fas fa-chevron-right text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
                                         </div>
-                                        <i className="fas fa-chevron-right text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
-                                    </div>
                                     );
                                 })}
                             </div>
@@ -1326,7 +1332,7 @@ function HelpCenter() {
                                 <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
                                 <p className="text-lg text-gray-600">Quick answers to common questions</p>
                             </div>
-                            
+
                             <div className="space-y-4">
                                 {faqs.map((faq) => (
                                     <div
@@ -1347,6 +1353,10 @@ function HelpCenter() {
                                                 <p className="text-gray-600 leading-relaxed pt-4">
                                                     {faq.answer}
                                                 </p>
+
+
+
+
                                             </div>
                                         )}
                                     </div>
@@ -1381,8 +1391,9 @@ function HelpCenter() {
                 </>
             )}
 
+
             <Footer />
-            
+
             <style jsx>{`
                 @keyframes fade-in {
                     from { opacity: 0; transform: translateY(20px); }
