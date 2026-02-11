@@ -4,7 +4,6 @@ const ProjectsForm = ({ formData, setFormData }) => {
   const addProject = () => {
     setFormData(prev => ({
       ...prev,
-<<<<<<< Updated upstream
       projects: [...prev.projects, {
         id: Date.now(),
         name: '',
@@ -12,29 +11,13 @@ const ProjectsForm = ({ formData, setFormData }) => {
         technologies: '',
         link: ''
       }]
-=======
-      projects: [
-        ...prev.projects,
-        {
-          id: Date.now(),
-          name: "",
-          description: "",
-          technologies: "",
-          link: "",
-        },
-      ],
->>>>>>> Stashed changes
     }));
   };
 
   const removeProject = (id) => {
     setFormData(prev => ({
       ...prev,
-<<<<<<< Updated upstream
       projects: prev.projects.filter(p => p.id !== id)
-=======
-      projects: prev.projects.filter((p) => p.id !== id),
->>>>>>> Stashed changes
     }));
   };
 
@@ -42,11 +25,7 @@ const ProjectsForm = ({ formData, setFormData }) => {
     <div className="form-section">
       <h3 className="form-section-title">Projects</h3>
       {formData.projects.map((project, index) => (
-<<<<<<< Updated upstream
         <div key={project.id} className="entry-card">
-=======
-        <div key={project.id} className="entry-card break-inside-avoid">
->>>>>>> Stashed changes
           <div className="entry-header">
             <span className="">Project {index + 1}</span>
             {formData.projects.length > 1 && (

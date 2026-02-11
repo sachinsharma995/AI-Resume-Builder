@@ -2,7 +2,6 @@ import { Trash2 } from 'lucide-react';
 
 const ExperienceForm = ({ formData, setFormData }) => {
   const addExperience = () => {
-<<<<<<< Updated upstream
     setFormData(prev => ({
       ...prev,
       experience: [...prev.experience, {
@@ -14,44 +13,20 @@ const ExperienceForm = ({ formData, setFormData }) => {
         endDate: '',
         description: ''
       }]
-=======
-    setFormData((prev) => ({
-      ...prev,
-      experience: [
-        ...prev.experience,
-        {
-          id: Date.now(),
-          title: "",
-          company: "",
-          location: "",
-          startDate: "",
-          endDate: "",
-          description: "",
-        },
-      ],
->>>>>>> Stashed changes
     }));
   };
 
   const removeExperience = (id) => {
     setFormData(prev => ({
       ...prev,
-<<<<<<< Updated upstream
       experience: prev.experience.filter(e => e.id !== id)
-=======
-      experience: prev.experience.filter((e) => e.id !== id),
->>>>>>> Stashed changes
     }));
   };
 
   return (
     <div className="form-section">
       {formData.experience.map((exp, index) => (
-<<<<<<< Updated upstream
         <div key={exp.id} className="entry-card">
-=======
-        <div key={exp.id} className="entry-card break-inside-avoid">
->>>>>>> Stashed changes
           <div className="entry-header">
             <span className="">Experience {index + 1}</span>
             {formData.experience.length > 1 && (

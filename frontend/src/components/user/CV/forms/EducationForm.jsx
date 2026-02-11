@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { Trash2 } from 'lucide-react';
 
 const EducationForm = ({ formData, setFormData }) => {
@@ -13,47 +12,20 @@ const EducationForm = ({ formData, setFormData }) => {
         graduationDate: '',
         gpa: ''
       }]
-=======
-import { Trash2 } from "lucide-react";
-
-const EducationForm = ({ formData, setFormData }) => {
-  const addEducation = () => {
-    setFormData((prev) => ({
-      ...prev,
-      education: [
-        ...prev.education,
-        {
-          id: Date.now(),
-          degree: "",
-          school: "",
-          location: "",
-          graduationDate: "",
-          gpa: "",
-        },
-      ],
->>>>>>> Stashed changes
     }));
   };
 
   const removeEducation = (id) => {
     setFormData(prev => ({
       ...prev,
-<<<<<<< Updated upstream
       education: prev.education.filter(e => e.id !== id)
-=======
-      education: prev.education.filter((e) => e.id !== id),
->>>>>>> Stashed changes
     }));
   };
 
   return (
     <div className="form-section">
       {formData.education.map((edu, index) => (
-<<<<<<< Updated upstream
         <div key={edu.id} className="entry-card">
-=======
-        <div key={edu.id} className="entry-card break-inside-avoid">
->>>>>>> Stashed changes
           <div className="entry-header">
             <span className="">Education {index + 1}</span>
             {formData.education.length > 1 && (
