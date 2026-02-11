@@ -4,6 +4,7 @@ const CertificationsForm = ({ formData, setFormData }) => {
   const addCertification = () => {
     setFormData(prev => ({
       ...prev,
+<<<<<<< Updated upstream
       certifications: [...prev.certifications, {
         id: Date.now(),
         name: '',
@@ -11,29 +12,57 @@ const CertificationsForm = ({ formData, setFormData }) => {
         date: '',
         link: ''
       }]
+=======
+      certifications: [
+        ...prev.certifications,
+        {
+          id: Date.now(),
+          name: "",
+          issuer: "",
+          date: "",
+          link: "",
+        },
+      ],
+>>>>>>> Stashed changes
     }));
   };
 
   const removeCertification = (id) => {
     setFormData(prev => ({
       ...prev,
+<<<<<<< Updated upstream
       certifications: prev.certifications.filter(c => c.id !== id)
+=======
+      certifications: prev.certifications.filter((c) => c.id !== id),
+>>>>>>> Stashed changes
     }));
   };
 
   const handleChange = (id, field, value) => {
+<<<<<<< Updated upstream
     setFormData(prev => ({
       ...prev,
       certifications: prev.certifications.map(c =>
         c.id === id ? { ...c, [field]: value } : c
       )
+=======
+    setFormData((prev) => ({
+      ...prev,
+      certifications: prev.certifications.map((c) =>
+        c.id === id ? { ...c, [field]: value } : c,
+      ),
+>>>>>>> Stashed changes
     }));
   };
 
   return (
     <div className="form-section">
       {formData.certifications.map((cert, index) => (
+<<<<<<< Updated upstream
         <div key={cert.id} className="entry-card">
+=======
+        <div key={cert.id} className="entry-card break-inside-avoid">
+>>>>>>> Stashed changes
           <div className="entry-header">
             <span className=" ">Certification {index + 1}</span>
             {formData.certifications.length > 1 && (
@@ -52,7 +81,11 @@ const CertificationsForm = ({ formData, setFormData }) => {
                 type="text"
                 placeholder="AWS Solutions Architect"
                 value={cert.name}
+<<<<<<< Updated upstream
                 onChange={(e) => handleChange(cert.id, 'name', e.target.value)}
+=======
+                onChange={(e) => handleChange(cert.id, "name", e.target.value)}
+>>>>>>> Stashed changes
               />
             </div>
             <div className="form-group">
@@ -61,7 +94,13 @@ const CertificationsForm = ({ formData, setFormData }) => {
                 type="text"
                 placeholder="Amazon Web Services"
                 value={cert.issuer}
+<<<<<<< Updated upstream
                 onChange={(e) => handleChange(cert.id, 'issuer', e.target.value)}
+=======
+                onChange={(e) =>
+                  handleChange(cert.id, "issuer", e.target.value)
+                }
+>>>>>>> Stashed changes
               />
             </div>
             <div className="form-group">
@@ -69,7 +108,11 @@ const CertificationsForm = ({ formData, setFormData }) => {
               <input
                 type="month"
                 value={cert.date}
+<<<<<<< Updated upstream
                 onChange={(e) => handleChange(cert.id, 'date', e.target.value)}
+=======
+                onChange={(e) => handleChange(cert.id, "date", e.target.value)}
+>>>>>>> Stashed changes
               />
             </div>
             <div className="form-group">
@@ -78,7 +121,11 @@ const CertificationsForm = ({ formData, setFormData }) => {
                 type="text"
                 placeholder="https://credential.url"
                 value={cert.link}
+<<<<<<< Updated upstream
                 onChange={(e) => handleChange(cert.id, 'link', e.target.value)}
+=======
+                onChange={(e) => handleChange(cert.id, "link", e.target.value)}
+>>>>>>> Stashed changes
               />
             </div>
           </div>

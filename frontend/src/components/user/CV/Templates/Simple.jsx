@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React from "react";
 
 const Simple = () => {
@@ -199,3 +200,14 @@ const Simple = () => {
 };
 
 export default Simple;
+=======
+import React from 'react'
+
+const Simple = () => {
+  return (
+    <div>Simple</div>
+  )
+}
+
+export default Simple
+>>>>>>> Stashed changes

@@ -234,10 +234,17 @@ const CVBuilder = () => {
       {/* MAIN CONTENT */}
       <div className="flex-1 px-4 pb-8">
         {activeTab === "builder" && (
+<<<<<<< Updated upstream
           <div className="flex h-[calc(100vh-180px)] gap-6">
             {/* LEFT: FORM PANEL */}
             {!isPreviewMaximized && (
               <div className="w-full max-w-[520px] flex flex-col h-[calc(100vh-180px)] sticky top-[180px]">
+=======
+          <div className="flex min-h-[calc(100vh-120px)] gap-6">
+            {/* LEFT: FORM PANEL */}
+            {!isPreviewMaximized && (
+              <div className="w-full max-w-[520px] flex flex-col min-h-[calc(100vh-120px)] sticky top-[120px]">
+>>>>>>> Stashed changes
                 <div className="flex flex-col bg-white rounded-xl shadow-sm h-full">
                   {/* Sticky Tabs */}
                   <div className="sticky top-0 z-10 bg-white border-b px-4 py-3 rounded-t-xl">
@@ -251,7 +258,11 @@ const CVBuilder = () => {
                   <div
                     ref={formContainerRef}
                     className="flex-1 overflow-y-auto p-6"
+<<<<<<< Updated upstream
                     style={{ maxHeight: "calc(100vh - 180px - 60px)" }}
+=======
+                    style={{ maxHeight: "calc(100vh - 120px - 60px)" }}
+>>>>>>> Stashed changes
                   >
                     {renderFormContent()}
 
