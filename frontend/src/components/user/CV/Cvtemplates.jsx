@@ -6,6 +6,7 @@ import TwoColumnATS from "./Templates/ModernTable";
 import ModernTemplate from "./Templates/ModernTemplate";
 import ProfessionalTemplate from "./Templates/ProfessionalTemplate";
 import Simple from "./Templates/Simple";
+import AcademicSidebarTemplate from "./Templates/AcademicSidebarTemplate";
 
 const CVTemplates = {
   professional: ProfessionalTemplate,
@@ -16,6 +17,7 @@ const CVTemplates = {
   academic: AcademicTemplate,
   twoColumn: TwoColumnATS,
   simple: Simple,
+  academicSidebar: AcademicSidebarTemplate,
 };
 
 export default CVTemplates;

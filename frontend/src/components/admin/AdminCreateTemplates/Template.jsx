@@ -19,6 +19,7 @@ const UserCvTemplates = [
   { id: "academic", name: "Academic", category: "Academic", description: "Perfect for academic CVs", thumbnail: "/templates/chronological.png" },
   { id: "twoColumn", name: "Two Column", category: "Academic", description: "Two column layout", thumbnail: "/templates/functional.png" },
   { id: "simple", name: "Simple", category: "Traditional", description: "Simple and straightforward", thumbnail: "/templates/minimalist.png" },
+  { id: "academicSidebar", name: "Academic Sidebar", category: "Academic", description: "Academic CV with sidebar layout", thumbnail: "/templates/chronological.png" },
 ];
 
 export default function AdminTemplates() {

@@ -16,6 +16,7 @@ const allTemplates = [
   { id: "academic", name: "Academic", category: "Academic" },
   { id: "twoColumn", name: "Two Column", category: "Academic" },
   { id: "simple", name: "Simple", category: "Traditional" },
+  { id: "academicSidebar", name: "Academic Sidebar", category: "Academic" },
 ];
 
 const TemplatesGallery = ({ selectedTemplate, onSelectTemplate, formData }) => {
