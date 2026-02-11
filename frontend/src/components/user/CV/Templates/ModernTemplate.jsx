@@ -1,5 +1,6 @@
 import React from "react";
 
+<<<<<<< Updated upstream
 const ModernTemplate = ({ formData }) => (
   <div
     className="bg-white resume-root space-y-6 w-full border border-slate-300 min-h-[1400px] max-w-[820px]"
@@ -230,4 +231,155 @@ const ModernTemplate = ({ formData }) => (
   </div>
 );
 
+=======
+// Section wrapper
+const Section = ({ id, children }) => (
+  <section data-cv-section={id} className="mb-6 last:mb-0 break-inside-avoid">
+    {children}
+  </section>
+);
+
+const ModernTemplate = ({ formData, onlySections }) => {
+  // Check if a section should render
+  const shouldRender = (id) => !onlySections || onlySections.includes(id);
+
+  // REQUIRED fields
+  if (!formData.fullName || !formData.email) {
+    return (
+      <div className="text-red-500 font-bold p-4 border border-red-300 rounded">
+        Error: Full name and Email are required to generate this CV.
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="resume-root bg-gray-50 mx-auto text-gray-900 shadow-lg"
+      style={{
+        width: "794px",
+        minHeight: "1123px",
+        padding: "48px",
+        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+        boxSizing: "border-box",
+      }}
+    >
+      {/* ===== HEADER ===== */}
+      {shouldRender("header") && (
+        <Section id="header">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-extrabold tracking-tight mb-2">
+              {formData.fullName}
+            </h1>
+            <div className="text-sm text-gray-600 flex flex-wrap justify-center gap-x-3 gap-y-1">
+              {[
+                formData.email,
+                formData.phone,
+                formData.location,
+                formData.linkedin,
+                formData.github,
+                formData.website,
+              ]
+                .filter(Boolean)
+                .map((item, index, arr) => (
+                  <span key={index} className="flex items-center">
+                    {item}
+                    {index < arr.length - 1 && <span className="mx-2">|</span>}
+                  </span>
+                ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      {/* ===== SUMMARY ===== */}
+      {shouldRender("summary") && formData.summary && (
+        <Section id="summary">
+          <h2 className="text-xl font-semibold mb-2 border-b-2 border-gray-300 inline-block">
+            SUMMARY
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {formData.summary}
+          </p>
+        </Section>
+      )}
+
+      {/* ===== EXPERIENCE ===== */}
+      {shouldRender("experience") && formData.experience?.length > 0 && (
+        <Section id="experience">
+          <h2 className="text-xl font-semibold mb-2 border-b-2 border-gray-300 inline-block">
+            EXPERIENCE
+          </h2>
+          {formData.experience.map((exp, idx) => (
+            <div key={idx} className="mb-4 last:mb-0">
+              <div className="flex justify-between items-baseline">
+                <h3 className="font-bold">{exp.company}</h3>
+                {exp.startDate || exp.endDate ? (
+                  <span className="italic text-sm">
+                    {exp.startDate} – {exp.endDate || "Present"}
+                  </span>
+                ) : null}
+              </div>
+              <div className="italic mb-1">{exp.title}</div>
+              {exp.description && (
+                <p className="text-sm text-gray-700 whitespace-pre-line">
+                  {exp.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* ===== EDUCATION ===== */}
+      {shouldRender("education") && formData.education?.length > 0 && (
+        <Section id="education">
+          <h2 className="text-xl font-semibold mb-2 border-b-2 border-gray-300 inline-block">
+            EDUCATION
+          </h2>
+          {formData.education.map((edu, idx) => (
+            <div key={idx} className="mb-4 last:mb-0">
+              <div className="flex justify-between items-baseline">
+                <h3 className="font-bold">{edu.school}</h3>
+                {edu.graduationDate && (
+                  <span className="italic text-sm">{edu.graduationDate}</span>
+                )}
+              </div>
+              {edu.degree && <div className="italic mb-1">{edu.degree}</div>}
+              {edu.gpa && (
+                <div className="text-sm text-gray-700">GPA: {edu.gpa}</div>
+              )}
+            </div>
+          ))}
+        </Section>
+      )}
+
+      {/* ===== SKILLS ===== */}
+      {shouldRender("skills") &&
+        (formData.skills?.technical?.length > 0 ||
+          formData.skills?.soft?.length > 0) && (
+          <Section id="skills">
+            <h2 className="text-xl font-semibold mb-2 border-b-2 border-gray-300 inline-block">
+              SKILLS
+            </h2>
+            <div className="text-sm text-gray-700">
+              {formData.skills.technical?.length > 0 && (
+                <div className="mb-1">
+                  <span className="font-semibold">Technical:</span>{" "}
+                  {formData.skills.technical.join(", ")}
+                </div>
+              )}
+              {formData.skills.soft?.length > 0 && (
+                <div>
+                  <span className="font-semibold">Soft Skills:</span>{" "}
+                  {formData.skills.soft.join(", ")}
+                </div>
+              )}
+            </div>
+          </Section>
+        )}
+    </div>
+  );
+};
+
+>>>>>>> Stashed changes
 export default ModernTemplate;

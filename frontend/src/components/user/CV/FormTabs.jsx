@@ -7,6 +7,7 @@ import {
   Award,
 } from "lucide-react";
 import { useRef } from "react";
+import ResumeCompletionBanner from "./ResumeCompletionBanner";
 
 const tabs = [
   { id: "personal", label: "Personal", icon: User },
@@ -16,7 +17,17 @@ const tabs = [
   { id: "projects", label: "Projects", icon: FolderKanban },
   { id: "certifications", label: "Certifications", icon: Award },
 ];
+<<<<<<< Updated upstream
 
+=======
+// const completion = getCompletionStatus(formData);
+
+// <ResumeCompletionBanner
+//   isComplete={completion.isComplete}
+//   missingSections={completion.missingSections}
+// />;
+
+>>>>>>> Stashed changes
 export default function FormTabs({ activeSection, setActiveSection }) {
   const tabsRef = useRef(null);
   const currentIdx = tabs.findIndex((tab) => tab.id === activeSection);

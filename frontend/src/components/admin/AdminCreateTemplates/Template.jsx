@@ -1,13 +1,20 @@
 import React from "react";
+<<<<<<< Updated upstream
 import { Filter, Plus, Eye, X, Power, PowerOff, Loader2 } from "lucide-react";
 import { TEMPLATES } from "../../user/Templates/TemplateRegistry";
 import { CvTemplates } from "../../user/Templates/CvTemplates";
+=======
+import { Filter, Plus, Eye, X, Power, PowerOff } from "lucide-react";
+import { TEMPLATES } from "../../user/Templates/TemplateRegistry";
+// import { CvTemplates } from "../../user/Templates/CvTemplates";
+>>>>>>> Stashed changes
 import {
   toggleTemplateStatus,
   getAllTemplateStatuses,
 } from "../../../utils/templateVisibility";
 import TemplateTypeSwitch from "./TemplateTypeSwitch";
 import axiosInstance from "../../../api/axios";
+import CVTemplates from "../../user/CV/CVTemplates";
 
 // User-side CV templates (from Templatesgallery.jsx - these are shown to users in CV Builder)
 const UserCvTemplates = [
@@ -35,6 +42,7 @@ export default function AdminTemplates() {
 
   const refreshData = async (currentType = type) => {
     try {
+<<<<<<< Updated upstream
       setIsLoading(true);
       // Fetch statuses from backend API
       const fetchedStatuses = await getAllTemplateStatuses();
@@ -95,6 +103,39 @@ export default function AdminTemplates() {
           "Academic Templates": mapCvTemplatesToAdminFormat(academic),
         });
       }
+=======
+      setStatuses(getAllTemplateStatuses());
+
+      const SOURCE = currentType === "resume" ? TEMPLATES : CVTemplates;
+
+      const modern = SOURCE.filter((t) =>
+        ["modern", "Modern", "Modern Templates"].includes(t.category),
+      );
+      const creative = SOURCE.filter((t) =>
+        ["creative", "Creative", "Creative Templates"].includes(t.category),
+      );
+      const professional = SOURCE.filter((t) =>
+        ["professional", "Professional", "Professional Templates"].includes(
+          t.category,
+        ),
+      );
+
+      const mapToAdminFormat = (list) =>
+        list.map((tpl) => ({
+          _id: tpl.id,
+          name: tpl.name,
+          used: 0,
+          previewText: tpl.description,
+          image: tpl.thumbnail,
+          isStatic: false,
+        }));
+
+      setApprovedTemplates({
+        "Modern Templates": mapToAdminFormat(modern),
+        "Creative Templates": mapToAdminFormat(creative),
+        "Professional Templates": mapToAdminFormat(professional),
+      });
+>>>>>>> Stashed changes
 
       setPendingTemplates([]);
     } catch (err) {
@@ -108,6 +149,7 @@ export default function AdminTemplates() {
     refreshData(type);
   }, [type]);
 
+<<<<<<< Updated upstream
   const handleToggleStatus = async (id) => {
     try {
       setTogglingId(id);
@@ -119,6 +161,11 @@ export default function AdminTemplates() {
     } finally {
       setTogglingId(null);
     }
+=======
+  const handleToggleStatus = (id) => {
+    const newStatus = toggleTemplateStatus(id);
+    setStatuses((prev) => ({ ...prev, [id]: newStatus }));
+>>>>>>> Stashed changes
   };
 
   const handlePreview = (imageUrl) => {
@@ -230,6 +277,7 @@ export default function AdminTemplates() {
                     return (
                       <div
                         key={index}
+<<<<<<< Updated upstream
                         className={`bg-white border rounded-xl p-3 transition relative ${active
                           ? "border-slate-200 hover:shadow-lg"
                           : "border-slate-100 opacity-75 grayscale-[0.5]"
@@ -241,6 +289,21 @@ export default function AdminTemplates() {
                             ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                             : "bg-slate-100 text-slate-500 border-slate-200"
                             }`}
+=======
+                        className={`bg-white border rounded-xl p-3 transition relative ${
+                          active
+                            ? "border-slate-200 hover:shadow-lg"
+                            : "border-slate-100 opacity-75 grayscale-[0.5]"
+                        }`}
+                      >
+                        {/* Status Badge */}
+                        <div
+                          className={`absolute top-5 right-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ${
+                            active
+                              ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                              : "bg-slate-100 text-slate-500 border-slate-200"
+                          }`}
+>>>>>>> Stashed changes
                         >
                           {active ? "Active" : "Inactive"}
                         </div>
@@ -248,6 +311,7 @@ export default function AdminTemplates() {
                         {/* Preview */}
                         <div
                           className="relative w-full aspect-[210/297] bg-slate-100 rounded-lg overflow-hidden cursor-pointer"
+<<<<<<< Updated upstream
                           onClick={() => tpl.image && handlePreview(tpl.image)}
                         >
                           {tpl.image ? (
@@ -264,6 +328,15 @@ export default function AdminTemplates() {
                               </div>
                             </div>
                           )}
+=======
+                          onClick={() => handlePreview(tpl.image)}
+                        >
+                          <img
+                            src={tpl.image}
+                            alt={tpl.name}
+                            className="w-full h-full object-cover"
+                          />
+>>>>>>> Stashed changes
                           <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
                             <Eye
                               className="text-white drop-shadow-md"
@@ -303,6 +376,7 @@ export default function AdminTemplates() {
                           </button>
                           <button
                             onClick={() => handleToggleStatus(tpl._id)}
+<<<<<<< Updated upstream
                             disabled={togglingId === tpl._id}
                             className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${active
                               ? "bg-red-50 text-red-600 hover:bg-red-100"
@@ -312,11 +386,24 @@ export default function AdminTemplates() {
                             {togglingId === tpl._id ? (
                               <Loader2 size={14} className="animate-spin" />
                             ) : active ? (
+=======
+                            className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${
+                              active
+                                ? "bg-red-50 text-red-600 hover:bg-red-100"
+                                : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
+                            }`}
+                          >
+                            {active ? (
+>>>>>>> Stashed changes
                               <PowerOff size={14} />
                             ) : (
                               <Power size={14} />
                             )}
+<<<<<<< Updated upstream
                             {togglingId === tpl._id ? "Updating..." : active ? "Disable" : "Enable"}
+=======
+                            {active ? "Disable" : "Enable"}
+>>>>>>> Stashed changes
                           </button>
                         </div>
                       </div>
