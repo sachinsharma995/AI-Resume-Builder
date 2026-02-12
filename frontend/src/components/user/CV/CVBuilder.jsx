@@ -136,6 +136,7 @@ const handleDownloadCV = () => {
 
   const [isPreviewMaximized, setIsPreviewMaximized] = useState(false);
   const [isPreviewHidden, setIsPreviewHidden] = useState(false);
+const [warning, setWarning] = useState(false);
 
   /* -------------------- LOAD DATA -------------------- */
   useEffect(() => {
@@ -167,14 +168,94 @@ const handleDownloadCV = () => {
     }
   }, [activeSection]);
 
+//   useEffect(() => {
+//   setWarning(false);
+// }, [activeSection]);
+
   /* -------------------- HELPERS -------------------- */
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    setWarning(false);
   };
+
+const validateSection = () => {
+  switch (activeSection) {
+    case "personal":
+      return (
+        formData.fullName.trim() !== "" &&
+        formData.email.trim() !== "" &&
+        formData.phone.trim() !== ""
+      );
+
+    case "education":
+  const validEducation = formData.education.filter(
+    (edu) => edu.school.trim() !== "" || edu.degree.trim() !== ""
+  );
+
+  return (
+    validEducation.length > 0 &&
+    validEducation.every(
+      (edu) =>
+        edu.school.trim() !== "" &&
+        edu.degree.trim() !== ""
+    )
+  );
+
+
+   case "work":
+  const validExperience = formData.experience.filter(
+    (exp) => exp.title.trim() !== "" || exp.company.trim() !== ""
+  );
+
+  return (
+    validExperience.length > 0 &&
+    validExperience.every(
+      (exp) =>
+        exp.title.trim() !== "" &&
+        exp.company.trim() !== ""
+    )
+  );
+
+
+    case "projects":
+      return formData.projects.every(
+        (proj) =>
+          proj.name.trim() !== "" &&
+          proj.description.trim() !== ""
+      );
+
+    case "certs":
+      return formData.certifications.every(
+        (cert) =>
+          cert.name.trim() !== "" &&
+          cert.issuer.trim() !== ""
+      );
+
+    case "skills":
+      return (
+        formData.skills.technical.length > 0 ||
+        formData.skills.soft.length > 0
+      );
+
+    default:
+      return true;
+  }
+};
+
 
   /* ---------- STEP NAVIGATION ---------- */
   const currentIndex = sections.indexOf(activeSection);
   const isLastStep = currentIndex === sections.length - 1;
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+
+  if (formContainerRef.current) {
+    formContainerRef.current.scrollTop = 0;
+  }
+};
 
 
   const goNext = () => {
@@ -255,9 +336,7 @@ const handleDownloadCV = () => {
     {/* Download */}
     <button
   onClick={handleDownloadCV}
-  // disabled={!isLastStep}
-  // for testing
-  disabled={false}
+  disabled={!isLastStep}
   className={`
     flex items-center justify-center gap-2
     h-10 w-10 md:w-auto
@@ -335,6 +414,11 @@ const handleDownloadCV = () => {
               />
               {/* form-content */}
               <div className="w-full mt-5 overflow-auto cv-form-content-scrollable">
+{warning && (
+  <div className="text-sm text-red-700 bg-yellow-100 border border-yellow-300 px-4 py-2 my-2.5 rounded-lg">
+    Please fill in all required fields to continue.
+  </div>
+)}
 
                 {renderFormContent()}
               </div>
@@ -352,7 +436,16 @@ const handleDownloadCV = () => {
                   <span>Previous</span>
                 </button>
                 <button
-                  onClick={goNext}
+  onClick={() => {
+    if (!validateSection()) {
+      setWarning(true);
+      scrollToTop();  
+      return;
+    }
+    setWarning(false);
+    goNext();
+  }}
+
                   disabled={currentIndex === sections.length - 1}
                   className="flex gap-1 items-center text-sm bg-black text-white px-4 py-2 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition"
                 >
