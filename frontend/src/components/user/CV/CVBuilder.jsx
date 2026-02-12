@@ -217,6 +217,7 @@ const CVBuilder = () => {
         setActiveTab={setActiveTab}
         onSave={handleSave}
         isSaving={isSaving}
+        formData={formData}
       />
 
       {/* ✅ Always visible across tabs */}

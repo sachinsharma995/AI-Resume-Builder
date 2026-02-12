@@ -30,6 +30,15 @@ const CVPreview = ({
   const displayData = useMemo(() => mergeWithSampleData(formData), [formData]);
   const showingUserData = useMemo(() => hasAnyUserData(formData), [formData]);
 
+  // Check if essential fields are filled to enable download
+  const isFormComplete = useMemo(() => {
+    return !!(
+      formData.fullName?.trim() &&
+      formData.email?.trim() &&
+      formData.phone?.trim()
+    );
+  }, [formData]);
+
   const PreviewContent = () => (
     <div className="flex justify-center">
       <PaginatedPreview zoom={zoom}>
@@ -99,8 +108,20 @@ const CVPreview = ({
             >
               <Minimize2 size={18} />
             </button>
-            <button className="p-1 hover:bg-slate-100 rounded">
-              <Download size={18} />
+            <button
+              disabled={!isFormComplete}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium transition-all ${isFormComplete
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-slate-200 text-slate-400 cursor-not-allowed"
+                }`}
+              title={
+                isFormComplete
+                  ? "Download your resume"
+                  : "Please fill in Name, Email, and Phone to download"
+              }
+            >
+              <Download size={16} />
+              Download
             </button>
           </div>
         </div>
