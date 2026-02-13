@@ -18,15 +18,8 @@
     "jsonwebtoken": "^9.0.3",
     "mammoth": "^1.11.0",
     "mongoose": "^7.0.0",
-<<<<<<< Updated upstream
     "multer": "^2.0.2",
     "nodemon": "^3.1.11",
     "puppeteer": "^24.37.2"
-=======
-    "multer": "^2.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.11"
->>>>>>> Stashed changes
   }
 }
