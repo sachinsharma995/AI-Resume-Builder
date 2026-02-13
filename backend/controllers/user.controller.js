@@ -64,6 +64,29 @@ export const getDashboardData = async (req, res) => {
   }
 };
 
+// ------------------------USER: Username ---------------------
+export const getUserName = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id).select("-password");
+
+    if (!user.username) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      username: user.username,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+}
+
 // -------------------- ADMIN: GET ALL USERS --------------------
 export const getAllUsers = async (req, res) => {
   try {
@@ -164,8 +187,8 @@ export const getAnalyticsStats = async (req, res) => {
     const mostUsedTemplates = mostUsedTemplatesAgg.map((item) => ({
       templateId: item._id,
       count: item.count,
-      percentage: totalTemplateUsage > 0 
-        ? Math.round((item.count / totalTemplateUsage) * 100) 
+      percentage: totalTemplateUsage > 0
+        ? Math.round((item.count / totalTemplateUsage) * 100)
         : 0,
     }));
 
@@ -187,19 +210,19 @@ export const getAnalyticsStats = async (req, res) => {
       { $limit: 6 },
     ]);
 
-    const revenueTrend = revenueByMonth.length > 0 
+    const revenueTrend = revenueByMonth.length > 0
       ? revenueByMonth.map((item) => ({
-          month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
-          revenue: item.revenue,
-        }))
+        month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
+        revenue: item.revenue,
+      }))
       : [
-          { month: "Aug", revenue: 1200 },
-          { month: "Sep", revenue: 1850 },
-          { month: "Oct", revenue: 2300 },
-          { month: "Nov", revenue: 2800 },
-          { month: "Dec", revenue: 3500 },
-          { month: "Jan", revenue: 4200 },
-        ];
+        { month: "Aug", revenue: 1200 },
+        { month: "Sep", revenue: 1850 },
+        { month: "Oct", revenue: 2300 },
+        { month: "Nov", revenue: 2800 },
+        { month: "Dec", revenue: 3500 },
+        { month: "Jan", revenue: 4200 },
+      ];
 
     // ---------- SUBSCRIPTION TREND (LAST 6 MONTHS) ----------
     const subscriptionsByMonth = await Subscription.aggregate([
@@ -221,17 +244,17 @@ export const getAnalyticsStats = async (req, res) => {
 
     const subscriptionTrend = subscriptionsByMonth.length > 0
       ? subscriptionsByMonth.map((item) => ({
-          month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
-          subscriptions: item.count,
-        }))
+        month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
+        subscriptions: item.count,
+      }))
       : [
-          { month: "Aug", subscriptions: 15 },
-          { month: "Sep", subscriptions: 28 },
-          { month: "Oct", subscriptions: 42 },
-          { month: "Nov", subscriptions: 58 },
-          { month: "Dec", subscriptions: 75 },
-          { month: "Jan", subscriptions: 92 },
-        ];
+        { month: "Aug", subscriptions: 15 },
+        { month: "Sep", subscriptions: 28 },
+        { month: "Oct", subscriptions: 42 },
+        { month: "Nov", subscriptions: 58 },
+        { month: "Dec", subscriptions: 75 },
+        { month: "Jan", subscriptions: 92 },
+      ];
 
     // ---------- FINAL RESPONSE ----------
     res.status(200).json({
