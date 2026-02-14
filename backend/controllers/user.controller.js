@@ -1,6 +1,5 @@
 import Notification from "../Models/notification.js";
 import AtsScans from "../Models/atsScan.js";
-import ResumeProfile from "../Models/resumeProfile.js";
 import User from "../Models/User.js";
 import bcrypt from "bcryptjs";
 import Payment from "../Models/payment.js";
@@ -24,9 +23,9 @@ export const getDashboardData = async (req, res) => {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-    const totalResumes = await ResumeProfile.countDocuments({ userId });
-    const resumesThisWeek = await ResumeProfile.countDocuments({
-      userId,
+    const totalResumes = await Resume.countDocuments({ user: userId });
+    const resumesThisWeek = await Resume.countDocuments({
+      user: userId,
       createdAt: { $gte: oneWeekAgo },
     });
 
@@ -37,7 +36,7 @@ export const getDashboardData = async (req, res) => {
     const latestAts = atsScans[0]?.overallScore || 0;
     const previousAts = atsScans[1]?.overallScore || latestAts;
 
-    const recentResumes = await ResumeProfile.find({ userId })
+    const recentResumes = await Resume.find({ user: userId })
       .sort({ createdAt: -1 })
       .limit(5);
 
@@ -160,13 +159,7 @@ export const changePassword = async (req, res) => {
 
     res.status(200).json({ message: "Password updated successfully" });
   } catch (error) {
-    console.error("Change password error:", error);
-    res.status(500).json({ message: "Failed to change password" });
-
-    res
-      .status(500)
-      .json({ message: "Something went wrong", error: error.message });
-
+    res.status(500).json({ message: "Failed to change password", error: error.message });
   }
 };
 
@@ -180,7 +173,7 @@ export const updateUser = async (req, res) => {
 
     if (email && email !== user.email) {
       const exists = await User.findOne({ email });
-      if (existingUser)
+      if (exists)
         return res.status(400).json({ message: "Email already exists" });
     }
 
@@ -203,9 +196,8 @@ export const updateUser = async (req, res) => {
       // 🔔 USER
       await Notification.create({
         type: "ACCOUNT_STATUS",
-        message: `Your account was ${
-          isActive ? "activated" : "deactivated"
-        } by admin`,
+        message: `Your account was ${isActive ? "activated" : "deactivated"
+          } by admin`,
         userId: user._id,
         actor: "system",
       });
@@ -213,9 +205,8 @@ export const updateUser = async (req, res) => {
       // 🔔 ADMIN
       await Notification.create({
         type: "USER_STATUS",
-        message: `${user.username} was ${
-          isActive ? "activated" : "deactivated"
-        }`,
+        message: `${user.username} was ${isActive ? "activated" : "deactivated"
+          }`,
         userId: req.userId,
         actor: "user",
         fromAdmin: true,
@@ -336,20 +327,20 @@ export const getAnalyticsStats = async (req, res) => {
     const revenueTrend =
       revenueByMonth.length > 0
         ? revenueByMonth.map((item) => ({
-            month: new Date(item._id.year, item._id.month - 1).toLocaleString(
-              "default",
-              { month: "short" },
-            ),
-            revenue: item.revenue,
-          }))
+          month: new Date(item._id.year, item._id.month - 1).toLocaleString(
+            "default",
+            { month: "short" },
+          ),
+          revenue: item.revenue,
+        }))
         : [
-            { month: "Aug", revenue: 1200 },
-            { month: "Sep", revenue: 1850 },
-            { month: "Oct", revenue: 2300 },
-            { month: "Nov", revenue: 2800 },
-            { month: "Dec", revenue: 3500 },
-            { month: "Jan", revenue: 4200 },
-          ];
+          { month: "Aug", revenue: 1200 },
+          { month: "Sep", revenue: 1850 },
+          { month: "Oct", revenue: 2300 },
+          { month: "Nov", revenue: 2800 },
+          { month: "Dec", revenue: 3500 },
+          { month: "Jan", revenue: 4200 },
+        ];
 
     // ---------- SUBSCRIPTION TREND (LAST 6 MONTHS) ----------
     const subscriptionsByMonth = await Subscription.aggregate([
@@ -372,20 +363,20 @@ export const getAnalyticsStats = async (req, res) => {
     const subscriptionTrend =
       subscriptionsByMonth.length > 0
         ? subscriptionsByMonth.map((item) => ({
-            month: new Date(item._id.year, item._id.month - 1).toLocaleString(
-              "default",
-              { month: "short" },
-            ),
-            subscriptions: item.count,
-          }))
+          month: new Date(item._id.year, item._id.month - 1).toLocaleString(
+            "default",
+            { month: "short" },
+          ),
+          subscriptions: item.count,
+        }))
         : [
-            { month: "Aug", subscriptions: 15 },
-            { month: "Sep", subscriptions: 28 },
-            { month: "Oct", subscriptions: 42 },
-            { month: "Nov", subscriptions: 58 },
-            { month: "Dec", subscriptions: 75 },
-            { month: "Jan", subscriptions: 92 },
-          ];
+          { month: "Aug", subscriptions: 15 },
+          { month: "Sep", subscriptions: 28 },
+          { month: "Oct", subscriptions: 42 },
+          { month: "Nov", subscriptions: 58 },
+          { month: "Dec", subscriptions: 75 },
+          { month: "Jan", subscriptions: 92 },
+        ];
 
     res.status(200).json({
       userGrowth: {
@@ -434,9 +425,9 @@ export const getAdminDashboardStats = async (req, res) => {
 
     // SUBSCRIPTIONS
     const totalActiveSubs = await Subscription.countDocuments({ status: "active" });
-    const lastMonthActiveSubs = await Subscription.countDocuments({ 
-      status: "active", 
-      createdAt: { $lt: lastMonth } 
+    const lastMonthActiveSubs = await Subscription.countDocuments({
+      status: "active",
+      createdAt: { $lt: lastMonth }
     });
     const subsChange = lastMonthActiveSubs === 0 ? 0 : ((totalActiveSubs - lastMonthActiveSubs) / lastMonthActiveSubs) * 100;
 
@@ -477,17 +468,17 @@ export const getAdminDashboardStats = async (req, res) => {
 
     const resumeChart = resumeGraph.length > 0
       ? resumeGraph.map((item) => ({
-          month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
-          resumes: item.total,
-        }))
+        month: new Date(item._id.year, item._id.month - 1).toLocaleString("default", { month: "short" }),
+        resumes: item.total,
+      }))
       : [
-          { month: "Aug", resumes: 5 },
-          { month: "Sep", resumes: 12 },
-          { month: "Oct", resumes: 20 },
-          { month: "Jan", resumes: 50 },
-          { month: "Feb", resumes: 120 },
-          { month: "Mar", resumes: 2 },
-        ];
+        { month: "Aug", resumes: 5 },
+        { month: "Sep", resumes: 12 },
+        { month: "Oct", resumes: 20 },
+        { month: "Jan", resumes: 50 },
+        { month: "Feb", resumes: 120 },
+        { month: "Mar", resumes: 2 },
+      ];
 
     // SUBSCRIPTION DISTRIBUTION
     const subscriptionDistribution = await Subscription.aggregate([
@@ -502,14 +493,14 @@ export const getAdminDashboardStats = async (req, res) => {
 
     const subscriptionSplit = subscriptionDistribution.length > 0
       ? subscriptionDistribution.map((item) => ({
-          name: (item._id || "Free").charAt(0).toUpperCase() + (item._id || "Free").slice(1),
-          value: item.count,
-        }))
+        name: (item._id || "Free").charAt(0).toUpperCase() + (item._id || "Free").slice(1),
+        value: item.count,
+      }))
       : [
-          { name: "Free", value: 80 },
-          { name: "Basic", value: 20 },
-          { name: "Pro", value: 20 },
-        ];
+        { name: "Free", value: 80 },
+        { name: "Basic", value: 20 },
+        { name: "Pro", value: 20 },
+      ];
 
     // USER GROWTH (LAST 6 MONTHS)
     const userGrowthAgg = await User.aggregate([
@@ -583,3 +574,4 @@ export const getAdminDashboardStats = async (req, res) => {
     res.status(500).json({ message: "Dashboard stats fetch failed", error: error.message });
   }
 };
+
