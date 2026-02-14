@@ -5,14 +5,11 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 
-
 // Routers
 import authRouter from "./routers/auth.router.js";
 import userRouter from "./routers/user.router.js";
 import templateRouter from "./routers/template.router.js";
 import resumeRouter from "./routers/resume.router.js";
-import templateVisibilityRouter from "./routers/templateVisibility.router.js";
-import planRouter from "./routers/plan.router.js";
 
 // Config
 import connectDB from "./config/db.js";
@@ -48,8 +45,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/template", templateRouter);
 app.use("/api/resume", resumeRouter);
-app.use("/api/template-visibility", templateVisibilityRouter);
-app.use("/api/plans", planRouter);
 
 // Serve uploads directory (for images/resumes)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axiosInstance from '../api/axios';
 
-const NotificationContext = createContext();
+const UserNotificationContext = createContext();
 
-export const useNotifications = () => {
-    const context = useContext(NotificationContext);
+export const useUserNotifications = () => {
+    const context = useContext(UserNotificationContext);
     if (!context) {
-        throw new Error('useNotifications must be used within NotificationProvider');
+        throw new Error('useUserNotifications must be used within UserNotificationProvider');
     }
     return context;
 };
 
-export const NotificationProvider = ({ children }) => {
+export const UserNotificationProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,10 +21,10 @@ export const NotificationProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            console.log('Fetching notifications from /api/notifications/admin');
-            const response = await axiosInstance.get('/api/notifications/admin');
+            console.log('Fetching user notifications from /api/notifications/user');
+            const response = await axiosInstance.get('/api/notifications/user');
             
-            console.log('Notification response:', response.data);
+            console.log('User notification response:', response.data);
             
             if (response.data.success && response.data.data) {
                 // Transform backend data to UI format
@@ -50,45 +50,41 @@ export const NotificationProvider = ({ children }) => {
 
                     // Map notification type
                     const typeMap = {
-                        'ACCOUNT_STATUS': 'security_alert',
-                        'USER_STATUS': 'security_alert',
-                        'USER_DELETED': 'system_alert',
-                        'TEMPLATE_APPROVED': 'template_approved',
-                        'TEMPLATE_SUBMITTED': 'template_submitted',
-                        'SUBSCRIPTION_RENEWED': 'subscription_renewed',
-                        'SUBSCRIPTION_CANCELLED': 'subscription_cancelled',
-                        'PREMIUM_ACTIVATED': 'premium_activated',
-                        'PAYMENT_RECEIVED': 'payment_received',
-                        'NEW_USER': 'new_user',
+                        'ACCOUNT_STATUS': 'info',
+                        'PAYMENT_RECEIVED': 'success',
+                        'SUBSCRIPTION_RENEWED': 'success',
+                        'SECURITY_ALERT': 'warning',
+                        'SYSTEM_ALERT': 'warning',
+                        'TEMPLATE_APPROVED': 'success',
                     };
 
-                    // Get username from userId object
+                    // Get username
                     const username = typeof notif.userId === 'object' 
                         ? notif.userId?.username 
-                        : notif.userId;
+                        : 'System';
 
                     return {
                         id: notif._id,
-                        type: typeMap[notif.type] || 'system_alert',
+                        type: typeMap[notif.type] || 'info',
                         title: notif.type ? notif.type.replace(/_/g, ' ') : 'Notification',
                         description: notif.message,
-                        user: username || 'System',
+                        user: username,
                         time: timeString,
                         category: category,
                         isUnread: !notif.isRead,
-                        priority: (notif.type === 'ACCOUNT_STATUS' || notif.type === 'SECURITY_ALERT') ? 'high' : 'normal',
+                        priority: notif.type === 'SECURITY_ALERT' ? 'high' : 'normal',
                         createdAt: notif.createdAt,
                     };
                 });
 
-                console.log('Transformed notifications:', transformedNotifications);
+                console.log('Transformed user notifications:', transformedNotifications);
                 setNotifications(transformedNotifications);
             } else {
                 console.warn('No data in response or success is false');
                 setNotifications([]);
             }
         } catch (err) {
-            console.error('Failed to fetch notifications:', err);
+            console.error('Failed to fetch user notifications:', err);
             setError(err.message);
             setNotifications([]);
         } finally {
@@ -117,7 +113,7 @@ export const NotificationProvider = ({ children }) => {
         );
 
         // API call (optional - for persistence)
-        axiosInstance.post('/api/notifications/admin/mark-all-read').catch(err => {
+        axiosInstance.put('/api/notifications/user/read-all').catch(err => {
             console.error('Failed to mark all as read:', err);
         });
     }, []);
@@ -170,10 +166,10 @@ export const NotificationProvider = ({ children }) => {
     };
 
     return (
-        <NotificationContext.Provider value={value}>
+        <UserNotificationContext.Provider value={value}>
             {children}
-        </NotificationContext.Provider>
+        </UserNotificationContext.Provider>
     );
 };
 
-export default NotificationContext;
+export default UserNotificationContext;
