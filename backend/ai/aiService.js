@@ -59,8 +59,9 @@ export async function generateResumeAI(data) {
     
     return response.choices[0].message.content;
   } catch (error) {
-    console.error("AI SERVICE ERROR:", error);
-    throw error;
+    console.error("❌ AI SERVICE ERROR:", error);
+    // Return a fallback message instead of crashing the request
+    return "AI generation failed. Please try again later or check server logs.";
   }
 }
 
