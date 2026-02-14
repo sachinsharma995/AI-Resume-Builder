@@ -1,14 +1,12 @@
 import React from "react";
 import { Filter, Plus, Eye, X, Power, PowerOff } from "lucide-react";
 import { TEMPLATES } from "../../user/Templates/TemplateRegistry";
-// import { CvTemplates } from "../../user/Templates/CvTemplates";
-import {
-  toggleTemplateStatus,
-  getAllTemplateStatuses,
-} from "../../../utils/templateVisibility";
-import TemplateTypeSwitch from "./TemplateTypeSwitch";
+import { templates as CV_LIST } from "../../user/CV/Templatesgallery";
 import axiosInstance from "../../../api/axios";
-import CVTemplates from "../../user/CV/Cvtemplates";
+import TemplateTypeSwitch from "./TemplateTypeSwitch";
+
+// Placeholder for CV thumbnails since they are dynamic components
+const CV_PLACEHOLDER = "https://via.placeholder.com/210x297.png?text=CV+Template";
 
 export default function AdminTemplates() {
   const [type, setType] = React.useState("resume");
@@ -20,20 +18,26 @@ export default function AdminTemplates() {
   const [approvedTemplates, setApprovedTemplates] = React.useState({});
   const [statuses, setStatuses] = React.useState({});
 
+  const isTemplateActive = (id) => statuses[id] !== false;
+
   const refreshData = async (currentType = type) => {
     try {
-      setStatuses(getAllTemplateStatuses());
+      // Fetch statuses from backend (API Logic)
+      const statusRes = await axiosInstance.get('/api/template-visibility');
+      setStatuses(statusRes.data || {});
 
-      const SOURCE = currentType === "resume" ? TEMPLATES : CVTemplates;
+      // Switch Source based on Type
+      const SOURCE = currentType === "resume" ? TEMPLATES : CV_LIST;
 
+      // Filter Logic
       const modern = SOURCE.filter((t) =>
-        ["modern", "Modern", "Modern Templates"].includes(t.category),
+        ["modern", "Modern", "Modern Templates", "Contemporary"].includes(t.category),
       );
       const creative = SOURCE.filter((t) =>
         ["creative", "Creative", "Creative Templates"].includes(t.category),
       );
       const professional = SOURCE.filter((t) =>
-        ["professional", "Professional", "Professional Templates"].includes(
+        ["professional", "Professional", "Professional Templates", "Traditional", "Academic"].includes(
           t.category,
         ),
       );
@@ -43,9 +47,9 @@ export default function AdminTemplates() {
           _id: tpl.id,
           name: tpl.name,
           used: 0,
-          previewText: tpl.description,
-          image: tpl.thumbnail,
-          isStatic: false,
+          previewText: tpl.description || tpl.category,
+          image: tpl.thumbnail || CV_PLACEHOLDER,
+          isStatic: !!tpl.thumbnail,
         }));
 
       setApprovedTemplates({
@@ -56,7 +60,7 @@ export default function AdminTemplates() {
 
       setPendingTemplates([]);
     } catch (err) {
-      console.error("Failed to fetch templates", err);
+      console.error("Failed to fetch templates or statuses", err);
     }
   };
 
@@ -64,9 +68,25 @@ export default function AdminTemplates() {
     refreshData(type);
   }, [type]);
 
-  const handleToggleStatus = (id) => {
-    const newStatus = toggleTemplateStatus(id);
-    setStatuses((prev) => ({ ...prev, [id]: newStatus }));
+  const handleToggleStatus = async (id) => {
+    try {
+      // Optimistic update
+      setStatuses(prev => {
+        const isActive = prev[id] !== false;
+        return { ...prev, [id]: !isActive };
+      });
+
+      await axiosInstance.post('/api/template-visibility/toggle', { templateId: id });
+
+      // Optionally refetch to be sure
+      // refreshData();
+    } catch (error) {
+      console.error("Failed to toggle status", error);
+      // Revert on error
+      setStatuses(prev => ({ ...prev, [id]: prev[id] !== false })); // Revert to previous (approximate)
+      alert("Failed to update status");
+      refreshData(type);
+    }
   };
 
   const handlePreview = (imageUrl) => {
@@ -81,8 +101,6 @@ export default function AdminTemplates() {
         : "Create New CV Template feature coming soon!",
     );
   };
-
-  const isTemplateActive = (id) => statuses[id] !== false;
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -178,19 +196,17 @@ export default function AdminTemplates() {
                     return (
                       <div
                         key={index}
-                        className={`bg-white border rounded-xl p-3 transition relative ${
-                          active
-                            ? "border-slate-200 hover:shadow-lg"
-                            : "border-slate-100 opacity-75 grayscale-[0.5]"
-                        }`}
+                        className={`bg-white border rounded-xl p-3 transition relative ${active
+                          ? "border-slate-200 hover:shadow-lg"
+                          : "border-slate-100 opacity-75 grayscale-[0.5]"
+                          }`}
                       >
                         {/* Status Badge */}
                         <div
-                          className={`absolute top-5 right-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ${
-                            active
-                              ? "bg-emerald-100 text-emerald-700 border-emerald-200"
-                              : "bg-slate-100 text-slate-500 border-slate-200"
-                          }`}
+                          className={`absolute top-5 right-5 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide border shadow-sm ${active
+                            ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                            : "bg-slate-100 text-slate-500 border-slate-200"
+                            }`}
                         >
                           {active ? "Active" : "Inactive"}
                         </div>
@@ -244,11 +260,10 @@ export default function AdminTemplates() {
                           </button>
                           <button
                             onClick={() => handleToggleStatus(tpl._id)}
-                            className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${
-                              active
-                                ? "bg-red-50 text-red-600 hover:bg-red-100"
-                                : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
-                            }`}
+                            className={`flex-1 py-1.5 flex items-center justify-center gap-1 rounded text-xs font-medium transition ${active
+                              ? "bg-red-50 text-red-600 hover:bg-red-100"
+                              : "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
+                              }`}
                           >
                             {active ? (
                               <PowerOff size={14} />
