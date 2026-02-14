@@ -5,7 +5,7 @@ import Resume from "../Models/resume.js";
 import AtsScans from "../Models/atsScan.js";
 
 // AI Service
-import generateResumeAI from "../ai/aiService.js";
+import { generateResumeAI } from "../ai/aiService.js";
 
 // Resume Parsing Services
 import {
@@ -22,13 +22,14 @@ import {
 
 // File Storage Services
 import {
-  saveFileMetadata, // (kept for future use)
+  saveFileMetadata, // for future use
   deleteFile,
   getFile,
 } from "../service/FileStorage.service.js";
 
 /* =====================================================
    SAVE NORMAL RESUME (Manual Save)
+   Saves a resume document to MongoDB
 ===================================================== */
 export const saveResume = async (req, res) => {
   try {
@@ -49,17 +50,17 @@ export const saveResume = async (req, res) => {
 
 /* =====================================================
    GENERATE AI RESUME + OPTIONAL SAVE TO DB
+   Uses AI to generate a resume summary and optionally saves it
 ===================================================== */
 export const generateAIResume = async (req, res) => {
   try {
     console.log("📥 AI Resume request received");
 
-    // 1. Generate AI summary
+    // Generate AI summary
     const aiText = await generateResumeAI(req.body);
-
     console.log("✅ AI Summary generated");
 
-    // 2. Save to MongoDB (optional)
+    // Save AI-generated resume to DB (optional)
     try {
       const resume = new Resume({
         ...req.body,
@@ -71,7 +72,7 @@ export const generateAIResume = async (req, res) => {
       console.log("⚠️ DB save skipped (MongoDB not connected)");
     }
 
-    // 3. Send response
+    // Send response
     res.json({
       success: true,
       message: "AI Resume generated successfully",
@@ -87,7 +88,9 @@ export const generateAIResume = async (req, res) => {
 };
 
 /* =====================================================
-   UPLOAD & ANALYZE RESUME (ATS SCAN)
+   UPLOAD & ANALYZE RESUME (ATS Scan)
+   Uploads a resume, parses it, analyzes ATS compatibility,
+   saves results to MongoDB
 ===================================================== */
 export const uploadAndAnalyzeResume = async (req, res) => {
   try {
@@ -101,9 +104,8 @@ export const uploadAndAnalyzeResume = async (req, res) => {
     const userId = req.userId;
     const file = req.file;
 
-    // Parse resume
+    // Parse resume text
     const parseResult = await parseResume(file);
-
     if (!parseResult?.success || !parseResult?.text) {
       deleteFile(file.path);
       return res.status(400).json({
@@ -118,27 +120,55 @@ export const uploadAndAnalyzeResume = async (req, res) => {
     const extractedData = extractResumeData(resumeText);
 
     // ATS analysis
-    const analysis = analyzeATSCompatibility(resumeText, extractedData);
+const {  jobTitle, templateId, resumeprofileId } = req.body;
+    const jobDescription =
+  typeof req.body.jobDescription === "string"
+    ? req.body.jobDescription.trim()
+    : "";
+
+    const analysis = analyzeATSCompatibility(
+      resumeText, extractedData , 
+       jobDescription ,
+        file.originalname.split(".").pop()); 
     const passes = passesATSThreshold(analysis.overallScore);
     const recommendations = generateRecommendations(analysis);
+
+    
+    // Validate required fields from frontend
+    
+    if (!jobTitle  || !templateId || !resumeprofileId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Missing required fields" 
+      });
+    }
 
     // Save ATS scan
     const atsScan = new AtsScans({
       userId,
       filename: file.filename,
       originalName: file.originalname,
-      filePath: file.path,
+     filePath: `/uploads/resumes/${file.filename}`,
       fileSize: file.size,
       fileType: file.mimetype,
       overallScore: analysis.overallScore,
       sectionScores: analysis.sectionScores,
+      metrics: analysis.metrics,
       matchedKeywords: analysis.matchedKeywords,
       missingKeywords: analysis.missingKeywords,
       suggestions: analysis.suggestions,
       extractedText: resumeText,
       extractedData,
       passThreshold: passes,
+      templateId: new mongoose.Types.ObjectId(templateId),
+      resumeprofileId: new mongoose.Types.ObjectId(resumeprofileId),
+      jobTitle,
+      jobDescription: jobDescription || "",
     });
+    console.log("✅ ATS RESPONSE DATA:", {
+  overallScore: analysis.overallScore,
+  sectionScores: analysis.sectionScores.length,
+});
 
     await atsScan.save();
 
@@ -147,8 +177,12 @@ export const uploadAndAnalyzeResume = async (req, res) => {
       message: "Resume uploaded and analyzed successfully",
       data: {
         scanId: atsScan._id,
+        filename: file.filename,
+        originalName: file.originalname,
+        filePath: atsScan.filePath,
         overallScore: analysis.overallScore,
         sectionScores: analysis.sectionScores,
+        metrics: analysis.metrics,
         matchedKeywords: analysis.matchedKeywords,
         missingKeywords: analysis.missingKeywords,
         suggestions: analysis.suggestions,
@@ -156,6 +190,8 @@ export const uploadAndAnalyzeResume = async (req, res) => {
         passThreshold: passes,
         extractedData,
         metrics: analysis.metrics,
+        jobDescription: atsScan.jobDescription,
+     
       },
     });
   } catch (error) {
@@ -170,6 +206,7 @@ export const uploadAndAnalyzeResume = async (req, res) => {
 
 /* =====================================================
    GET ALL USER SCANS
+   Fetches all ATS scans for a specific user
 ===================================================== */
 export const getUserScans = async (req, res) => {
   try {
@@ -181,7 +218,7 @@ export const getUserScans = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      count: scans.length,
+      // count: scans.length,
       data: scans,
     });
   } catch (error) {
@@ -195,6 +232,7 @@ export const getUserScans = async (req, res) => {
 
 /* =====================================================
    GET SCAN BY ID
+   Fetches one ATS scan by its ID
 ===================================================== */
 export const getScanById = async (req, res) => {
   try {
@@ -225,6 +263,7 @@ export const getScanById = async (req, res) => {
 
 /* =====================================================
    DELETE SCAN
+   Deletes an ATS scan and its uploaded file
 ===================================================== */
 export const deleteScan = async (req, res) => {
   try {
@@ -240,7 +279,10 @@ export const deleteScan = async (req, res) => {
       });
     }
 
+    // Delete file from storage
     deleteFile(scan.filePath);
+
+    // Delete database record
     await AtsScans.findByIdAndDelete(scan._id);
 
     res.status(200).json({
@@ -258,6 +300,7 @@ export const deleteScan = async (req, res) => {
 
 /* =====================================================
    DOWNLOAD RESUME FILE
+   Sends the resume file for download
 ===================================================== */
 export const downloadResume = async (req, res) => {
   try {
@@ -299,6 +342,7 @@ export const downloadResume = async (req, res) => {
 
 /* =====================================================
    SCAN STATISTICS
+   Aggregates user scan stats like average score, pass rate
 ===================================================== */
 export const getScanStatistics = async (req, res) => {
   try {
@@ -342,3 +386,47 @@ export const getScanStatistics = async (req, res) => {
     });
   }
 };
+
+// Get the latest scan uploaded by the user
+export const getLatestScan = async (req, res) => {
+  try {
+    const latestScan = await AtsScans.findOne({ userId: req.userId })
+      .sort({ createdAt: -1 });
+
+    if (!latestScan) {
+      return res.status(404).json({
+        success: false,
+        message: "No scans found for this user",
+      });
+    }
+
+    // Generate full file URL
+    const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
+
+    const responseData = {
+      filename: latestScan.filename,
+      originalName: latestScan.originalName,
+      fileUrl: `${process.env.SERVER_URL || 'http://localhost:5000'}${latestScan.filePath}`,
+      overallScore: latestScan.overallScore,
+      sectionScores: latestScan.sectionScores,
+      matchedKeywords: latestScan.matchedKeywords,
+      missingKeywords: latestScan.missingKeywords,
+      suggestions: latestScan.suggestions,
+      passThreshold: latestScan.passThreshold,
+      createdAt: latestScan.createdAt,
+    };
+
+    res.status(200).json({
+      success: true,
+      data: responseData,
+    });
+  } catch (error) {
+    console.error("❌ Failed to fetch latest scan:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch latest scan",
+      error: error.message,
+    });
+  }
+};
+

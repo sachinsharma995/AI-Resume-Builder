@@ -6,6 +6,7 @@ import {
   deleteScan,
   downloadResume,
   getScanStatistics,
+  getLatestScan
 }
 from "../controllers/Resume.controller.js";
 import isAuth from "../middlewares/isAuth.js";
@@ -39,5 +40,8 @@ resumeRouter.delete("/scans/:id", isAuth, deleteScan);
 
 // Download resume file
 resumeRouter.get("/download/:filename", isAuth, downloadResume);
+
+// Get latest scan after refreshing the page
+resumeRouter.get("/latest", isAuth, getLatestScan);
 
 export default resumeRouter;
