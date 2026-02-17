@@ -144,7 +144,7 @@ function LandingPage() {
 
   const handleTemplateClick = (templateId) => {
     if (isLoggedIn) {
-      navigate(`/templates/${templateId}`);
+      navigate(`../user/resume-builder/`);
     } else {
       navigate("/login");
     }
