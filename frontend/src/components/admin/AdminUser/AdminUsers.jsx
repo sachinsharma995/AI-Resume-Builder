@@ -280,11 +280,9 @@ export default function AdminUsers({ head = "Manage Users" }) {
           )}
         </div>
 
-        {/* Desktop Table View */}
-        <div className="hidden md:block bg-white border rounded-xl overflow-hidden shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-gray-500">
+        <div className="bg-white border rounded-xl overflow-hidden shadow-sm">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-500">
               <tr>
                 <th className="px-6 py-4 text-left">User Details</th>
                 <th className="px-6 py-4 text-center">Role</th>
@@ -369,7 +367,7 @@ export default function AdminUsers({ head = "Manage Users" }) {
                     </td>
 
                     <td className="px-6 py-4 text-center text-gray-500">
-                      {u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : "N/A"}
+                      {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "N/A"}
                     </td>
 
                     <td className="px-6 py-4">
@@ -400,12 +398,11 @@ export default function AdminUsers({ head = "Manage Users" }) {
                 </tr>
               )}
             </tbody>
-            </table>
-          </div>
+          </table>
         </div>
 
         {/* Mobile Card Grid */}
-        <div className="md:hidden">
+        <div className="md:hidden p-4">
           {users.length === 0 ? (
             <div className="text-center text-gray-500 py-4">No users found.</div>
           ) : (

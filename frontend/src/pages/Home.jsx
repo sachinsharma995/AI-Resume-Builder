@@ -19,7 +19,6 @@ import template5 from "../assets/template_thumnail/JessicaClaire5.png";
 import template6 from "../assets/template_thumnail/JessicaClaire6.png";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
-import Aichat from "./Aichat";
 import {
   ArrowRight,
   BarChart3,
@@ -143,9 +142,9 @@ function LandingPage() {
     return () => clearInterval(interval);
   }, [templates.length]);
 
-  const handleTemplateClick = () => {
+  const handleTemplateClick = (templateId) => {
     if (isLoggedIn) {
-      navigate(`/user/resume-builder`);
+      navigate(`/templates/${templateId}`);
     } else {
       navigate("/login");
     }
@@ -178,7 +177,7 @@ function LandingPage() {
   const location = useLocation();
   useEffect(() => {
     // Handle State Navigation (From Back to Home button)
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
     if (location.state?.scrollTo === "features") {
       const el = document.getElementById("features");
       if (el) {
@@ -573,7 +572,6 @@ function LandingPage() {
         </div>
       </section>
 
-      <Aichat />
       <Footer />
     </div>
   );
