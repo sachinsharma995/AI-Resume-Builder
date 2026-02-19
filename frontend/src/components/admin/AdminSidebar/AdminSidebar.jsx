@@ -50,7 +50,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
         id: "create",
         icon: Plus,
         label: "Templates",
-        path: "/admin/create-templates",
+        path: "/admin/manage-templates",
       },
       {
         id: "subscription",
