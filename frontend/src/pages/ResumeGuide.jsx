@@ -73,7 +73,7 @@ const ResumeGuide = () => {
       <NavBar />
 
       {/* --- 1. HERO SECTION (REDUCED SPACING) --- */}
-<section className="relative px-8 pt-4 pb-20 overflow-hidden bg-white"> {/* Changed pt-24 to pt-8 */}
+<section className="relative px-8 pt-4 md:pt-10 lg:pt-20 xl:pt-4 pb-20 overflow-hidden bg-white"> {/* Changed pt-24 to pt-8 */}
   <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50" />
   <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50" />
   

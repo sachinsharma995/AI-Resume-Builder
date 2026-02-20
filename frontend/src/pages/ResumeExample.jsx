@@ -66,12 +66,12 @@ const ResumeExamplesPage = () => {
       <NavBar />
 
       {/* --- HERO SECTION --- */}
-<section className="relative pt-12 pb-16 bg-white border-b lg:pt-16 border-gray-50">
-  <div className="flex flex-col items-center gap-12 px-8 mx-auto max-w-7xl lg:flex-row">
+<section className="relative pt-24 md:pt-28 lg:pt-32 pb-16 bg-white border-b border-gray-50">
+  <div className="flex flex-col items-center gap-12 px-8 mx-auto max-w-7xl xl:flex-row">
     
     {/* Left Side: Content */}
     <div className="flex-1 text-left">
-      <h1 className="text-5xl lg:text-7xl font-[1000] tracking-tight font-jakarta mb-6 leading-[1.1]">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[1000] tracking-tight font-jakarta mb-6 leading-[1.15]">
         The <span className="text-[#0077cc]">Blueprints</span> of <br/>Great Careers.
       </h1>
       
