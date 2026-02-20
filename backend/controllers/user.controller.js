@@ -18,23 +18,30 @@ export const getDashboardData = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const user = await User.findById(userId).select("username email");
+    const user = await User.findById(userId).select("username email profileViews");
 
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
+    // Total and Weekly Resumes
     const totalResumes = await Resume.countDocuments({ user: userId });
     const resumesThisWeek = await Resume.countDocuments({
       user: userId,
       createdAt: { $gte: oneWeekAgo },
     });
 
-    const atsScans = await AtsScans.find({ userId })
-      .sort({ createdAt: -1 })
-      .limit(2);
+    // ATS Scores logic
+    const allAtsScans = await AtsScans.find({ userId }).sort({ createdAt: -1 });
 
-    const latestAts = atsScans[0]?.overallScore || 0;
-    const previousAts = atsScans[1]?.overallScore || latestAts;
+    let avgAtsScore = 0;
+    if (allAtsScans.length > 0) {
+      const sum = allAtsScans.reduce((s, scan) => s + scan.overallScore, 0);
+      avgAtsScore = Math.round(sum / allAtsScans.length);
+    }
+
+    const latestAts = allAtsScans[0]?.overallScore || 0;
+    const previousAts = allAtsScans[1]?.overallScore || latestAts;
+    const atsDelta = latestAts - previousAts;
 
     const recentResumes = await Resume.find({ user: userId })
       .sort({ createdAt: -1 })
@@ -48,14 +55,16 @@ export const getDashboardData = async (req, res) => {
       stats: {
         resumesCreated: totalResumes,
         resumesThisWeek,
-        avgAtsScore: latestAts,
-        atsDelta: latestAts - previousAts,
-        profileViews: 0,
+        avgAtsScore: avgAtsScore,
+        latestAts: latestAts,
+        atsDelta: atsDelta,
+        profileViews: user?.profileViews || 0,
       },
       recentResumes: recentResumes.map((r) => ({
         id: r._id,
         name: r.title,
         date: r.createdAt,
+        // Include ATS score for each resume if available
       })),
     });
   } catch (error) {
@@ -402,8 +411,8 @@ export const getAnalyticsStats = async (req, res) => {
       },
       deletedUsers: {
         count: deletedUsersCount,
-        note: deletedUsersLast30Days > 0 
-          ? `${deletedUsersLast30Days} deleted in last 30 days` 
+        note: deletedUsersLast30Days > 0
+          ? `${deletedUsersLast30Days} deleted in last 30 days`
           : "Total deleted accounts",
       },
       churnRate: {
