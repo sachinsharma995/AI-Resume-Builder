@@ -133,7 +133,7 @@ const ScoreChecker = () => {
             </div>
 
             {/* RIGHT: IMAGE */}
-            <div className="relative flex justify-center lg:justify-end">
+            <div className="relative hidden md:flex justify-center lg:justify-end">
               <img
                 src={write}
                 alt="Resume scoring illustration"

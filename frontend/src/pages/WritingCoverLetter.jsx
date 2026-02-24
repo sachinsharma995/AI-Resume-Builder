@@ -3,16 +3,24 @@ import { HiArrowRight } from "react-icons/hi";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
 import WriteCover from "../assets/WriteCover.png";
-import StepsLady from "../assets/StepsLady.png"
-import RightGuy from "../assets/RightGuy.png"
-import DoNot from "../assets/Screenshot_2026-01-24_201207-removebg-preview.png"
+import StepsLady from "../assets/StepsLady.png";
+import RightGuy from "../assets/RightGuy.png";
+import DoNot from "../assets/Screenshot_2026-01-24_201207-removebg-preview.png";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-
 // --- Custom React SVG Icons (Replacing Lucide) ---
 const IconFile = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
     <polyline points="14 2 14 8 20 8"></polyline>
     <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -22,13 +30,31 @@ const IconFile = () => (
 );
 
 const IconCheck = () => (
-  <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    stroke="currentColor"
+    strokeWidth="3"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
 );
 
 const IconAlert = () => (
-  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="12" cy="12" r="10"></circle>
     <line x1="12" y1="8" x2="12" y2="12"></line>
     <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -36,20 +62,47 @@ const IconAlert = () => (
 );
 
 const IconCopy = () => (
-  <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
   </svg>
 );
 
 const IconZap = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
   </svg>
 );
 
 const IconTarget = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="12" cy="12" r="10"></circle>
     <circle cx="12" cy="12" r="6"></circle>
     <circle cx="12" cy="12" r="2"></circle>
@@ -57,7 +110,16 @@ const IconTarget = () => (
 );
 
 const IconBriefcase = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    stroke="currentColor"
+    strokeWidth="2"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
   </svg>
@@ -66,12 +128,12 @@ const IconBriefcase = () => (
 // Animations
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } }
+  show: { transition: { staggerChildren: 0.12 } },
 };
 
 const App = () => {
@@ -79,7 +141,6 @@ const App = () => {
   const [copied, setCopied] = useState(false);
   const [exampleCopied, setExampleCopied] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
-
 
   const handleCopyExample = async (text) => {
     try {
@@ -122,7 +183,7 @@ What interests me about [Company Name] is [specific reason: product/mission]. I�
 Thank you for your time. I’d be happy to connect for an interview.
 
 Sincerely,
-[Your Name]`
+[Your Name]`,
     },
     experienced: {
       title: "Experienced",
@@ -141,7 +202,7 @@ At [Previous Company], I developed and optimized [feature/module], improving [me
 I’m excited about [Company Name] because [reason]. I’d welcome the opportunity to discuss how my experience can support your roadmap.
 
 Sincerely,
-[Your Name]`
+[Your Name]`,
     },
     switch: {
       title: "Career Switch",
@@ -160,8 +221,8 @@ To prepare, I completed [course] and built projects like [project], where I lear
 I’d love the opportunity to discuss how my unique background can support your team.
 
 Warm regards,
-[Your Name]`
-    }
+[Your Name]`,
+    },
   };
 
   const navigate = useNavigate();
@@ -175,22 +236,41 @@ Warm regards,
         <div className="max-w-6xl mx-auto px-6 pt-6 pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* LEFT */}
-            <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.25 }} className="text-left">
-              <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="text-center lg:text-left">
+              <motion.div
+                variants={fadeUp}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
                 <IconZap />
                 Cover Letter
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
-                Write a Cover Letter that <span className="text-blue-600">actually</span> gets read.
+              <motion.h1
+                variants={fadeUp}
+                className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight"
+              >
+                Write a Cover Letter that{" "}
+                <span className="text-blue-600">actually</span> gets read.
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="text-lg text-slate-500 max-w-xl leading-relaxed mb-8">
-                While your resume shows <span className="italic">what</span> you can do, your cover letter shows{" "}
-                <span className="italic">why</span> you should be the one to do it. Learn the ideal structure to land your dream role.
+              <motion.p
+                variants={fadeUp}
+                className="text-lg text-slate-500 max-w-xl leading-relaxed mb-8 mx-auto lg:mx-0"
+              >
+                While your resume shows <span className="italic">what</span> you
+                can do, your cover letter shows{" "}
+                <span className="italic">why</span> you should be the one to do
+                it. Learn the ideal structure to land your dream role.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3">
+              <motion.div
+                variants={fadeUp}
+                className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+              >
                 <button
                   onClick={() => navigate("/login")}
                   className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
@@ -204,10 +284,9 @@ Warm regards,
                 >
                   View Examples
                 </button>
-
               </motion.div>
             </motion.div>
-
+            
             {/* RIGHT: Image (Keep clean + no over effect) */}
             <motion.div
               variants={fadeUp}
@@ -230,7 +309,13 @@ Warm regards,
 
       {/* What & Why */}
       <section className="max-w-6xl mx-auto px-6 mb-24">
-        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} className="grid md:grid-cols-2 gap-8">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid md:grid-cols-2 gap-8"
+        >
           <motion.div
             variants={fadeUp}
             className="bg-slate-50 p-10 rounded-3xl border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-200/60 hover:border-blue-200"
@@ -242,16 +327,21 @@ Warm regards,
               What is a Cover Letter?
             </h2>
             <p className="text-slate-600 mb-6 leading-relaxed">
-              It is a one-page narrative that gives recruiters context that a resume cannot fully provide. Think of it as your professional introduction before the interview.
+              It is a one-page narrative that gives recruiters context that a
+              resume cannot fully provide. Think of it as your professional
+              introduction before the interview.
             </p>
             <ul className="space-y-4">
               {[
                 "Why you're applying for this specific role",
                 "Why you're a strong match based on experience",
                 "Why you want this specific company mission",
-                "How your story connects to the job needs"
+                "How your story connects to the job needs",
               ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
+                <li
+                  key={idx}
+                  className="flex items-start gap-3 text-sm text-slate-700 font-medium"
+                >
                   <span className="mt-0.5 text-green-500 shrink-0">
                     <IconCheck />
                   </span>
@@ -272,20 +362,23 @@ Warm regards,
               Why It Matters
             </h2>
             <p className="text-slate-400 mb-8 leading-relaxed">
-              Even when optional, a letter sets you apart from candidates who only submit a resume. Recruiters use it to judge:
+              Even when optional, a letter sets you apart from candidates who
+              only submit a resume. Recruiters use it to judge:
             </p>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: "Communication", desc: "Clarity of thought" },
                 { label: "Motivation", desc: "Seriousness & interest" },
                 { label: "Culture Fit", desc: "Personality & values" },
-                { label: "Storytelling", desc: "Confidence & impact" }
+                { label: "Storytelling", desc: "Confidence & impact" },
               ].map((item, idx) => (
                 <div
                   key={idx}
                   className="bg-white/5 border border-white/10 p-4 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1"
                 >
-                  <div className="text-blue-400 font-bold text-xs md:text-sm mb-0 md:mb-1">{item.label}</div>
+                  <div className="text-blue-400 font-bold text-xs md:text-sm mb-0 md:mb-1">
+                    {item.label}
+                  </div>
                   <div className="text-xs text-slate-400">{item.desc}</div>
                 </div>
               ))}
@@ -295,33 +388,30 @@ Warm regards,
       </section>
 
       {/* Step-by-Step Structure */}
-<section className="relative bg-slate-50 py-12 overflow-hidden">
-{/* Left Side Character */}
-<motion.img
-  src={StepsLady}
-  alt="Guide illustration"
-  variants={fadeUp}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.2 }}
-  className="hidden md:block absolute left-1 top-10 h-[420px] sm:h-[480px] md:h-[560px] lg:h-[620px] xl:h-[680px] w-[450px] pointer-events-none select-none"
-/>
+      <section className="relative bg-slate-50 py-12 overflow-hidden">
+        {/* Left Side Character */}
+        <motion.img
+          src={StepsLady}
+          alt="Guide illustration"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+         className="block md:hidden xl:block absolute left-1 top-10 h-[420px] sm:h-[480px] md:h-[560px] lg:h-[620px] xl:h-[680px] w-[450px] pointer-events-none select-none"
+        />
 
-{/* Bottom Right Background Character */}
-<motion.img
-  src={RightGuy}
-  alt=""
-  variants={fadeUp}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true, amount: 0.2 }}
-  className="hidden md:block absolute -right-24 bottom-0 h-[320px] sm:h-[380px] md:h-[440px] lg:h-[500px] xl:h-[560px] w-[440px] pointer-events-none select-none"
-/>
+        {/* Bottom Right Background Character */}
+        <motion.img
+          src={RightGuy}
+          alt=""
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="block md:hidden xl:block absolute -right-24 bottom-0 h-[320px] sm:h-[380px] md:h-[440px] lg:h-[500px] xl:h-[560px] w-[440px] pointer-events-none select-none"
+        />
 
-
-
-<div className="relative max-w-4xl mx-auto px-6 z-10">
-
+        <div className="relative max-w-4xl mx-auto px-6 z-10">
           <motion.h2
             variants={fadeUp}
             initial="hidden"
@@ -344,41 +434,42 @@ Warm regards,
                 step: "01",
                 title: "Professional Header",
                 desc: "Include Full Name, Phone, Email, LinkedIn, and Location. Keep it clean and aligned to your resume header style.",
-                code: "Nensi Thummar | +91 XXXX | nensi@email.com | Ahmedabad, India"
+                code: "Nensi Thummar | +91 XXXX | nensi@email.com | Ahmedabad, India",
               },
               {
                 step: "02",
                 title: "Personalized Greeting",
                 desc: "Always aim for a specific name. If not known, use 'Dear Hiring Team' or 'Dear [Company] Recruitment Team'.",
-                bad: "❌ Avoid: 'To whom it may concern'"
+                bad: "❌ Avoid: 'To whom it may concern'",
               },
               {
                 step: "03",
                 title: "The Opening Hook",
                 desc: "The first 2–3 lines decide if they keep reading. Mention the role, the company, and one high-impact proof line.",
-                example: "✅ 'I’m excited to apply for the Frontend position at [Company]. I recently built a quiz app using React...'"
+                example:
+                  "✅ 'I’m excited to apply for the Frontend position at [Company]. I recently built a quiz app using React...'",
               },
               {
                 step: "04",
                 title: "Proof of Match",
                 desc: "The main body. Answer 'Why should we hire you?'. Use metrics if possible (speed improved, bugs fixed).",
-                tip: "Avoid claiming adjectives like 'I am hardworking'. Instead, show it via projects."
+                tip: "Avoid claiming adjectives like 'I am hardworking'. Instead, show it via projects.",
               },
               {
                 step: "05",
                 title: "Company Alignment",
-                desc: "Why this company specifically? Mention their product, mission, tech stack, or unique domain values."
+                desc: "Why this company specifically? Mention their product, mission, tech stack, or unique domain values.",
               },
               {
                 step: "06",
                 title: "Closing & CTA",
-                desc: "Show enthusiasm, offer a discussion, and keep it short. Use 'Sincerely' followed by your name."
+                desc: "Show enthusiasm, offer a discussion, and keep it short. Use 'Sincerely' followed by your name.",
               },
               {
                 step: "07",
                 title: "Format & Length",
-                desc: "Keep it to 250–400 words (3–4 short paragraphs). Use professional fonts and readable spacing."
-              }
+                desc: "Keep it to 250–400 words (3–4 short paragraphs). Use professional fonts and readable spacing.",
+              },
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -391,16 +482,30 @@ Warm regards,
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                    <p className="text-slate-500 mb-4 leading-relaxed">{item.desc}</p>
+                    <p className="text-slate-500 mb-4 leading-relaxed">
+                      {item.desc}
+                    </p>
 
                     {item.code && (
                       <div className="bg-slate-50 p-3 rounded-xl font-mono text-xs border border-slate-100 group-hover:border-blue-200 transition">
                         {item.code}
                       </div>
                     )}
-                    {item.bad && <div className="text-sm font-bold text-red-500">{item.bad}</div>}
-                    {item.example && <div className="text-sm font-bold text-green-600">{item.example}</div>}
-                    {item.tip && <div className="text-sm font-bold text-amber-600">{item.tip}</div>}
+                    {item.bad && (
+                      <div className="text-sm font-bold text-red-500">
+                        {item.bad}
+                      </div>
+                    )}
+                    {item.example && (
+                      <div className="text-sm font-bold text-green-600">
+                        {item.example}
+                      </div>
+                    )}
+                    {item.tip && (
+                      <div className="text-sm font-bold text-amber-600">
+                        {item.tip}
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -408,7 +513,6 @@ Warm regards,
           </motion.div>
         </div>
       </section>
-
 
       {/* Real-World Examples (Full Width) */}
       <section className="max-w-5xl mx-auto px-6 py-12">
@@ -422,10 +526,11 @@ Warm regards,
             <button
               key={key}
               onClick={() => setActiveExample(key)}
-              className={`py-3 px-5 rounded-xl text-sm font-bold transition-all duration-300 ${activeExample === key
-                ? "bg-white shadow-sm text-blue-600"
-                : "text-slate-500 hover:text-slate-800 hover:bg-white/50"
-                }`}
+              className={`py-3 px-5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                activeExample === key
+                  ? "bg-white shadow-sm text-blue-600"
+                  : "text-slate-500 hover:text-slate-800 hover:bg-white/50"
+              }`}
             >
               {examples[key].title}
             </button>
@@ -434,13 +539,13 @@ Warm regards,
 
         {/* Example Card */}
         <div className="bg-white border border-slate-200 p-8 md:p-10 rounded-[32px] shadow-sm relative group hover:shadow-xl hover:shadow-slate-200/60 transition-all min-h-[520px]">
-
           <button
             onClick={() => handleCopyExample(examples[activeExample].content)}
-            className={`absolute top-6 right-6 p-2 rounded-lg border transition-colors ${exampleCopied
-              ? "bg-green-50 border-green-200 text-green-600"
-              : "bg-slate-50 border-slate-100 text-slate-400 hover:text-blue-600 hover:bg-blue-50"
-              }`}
+            className={`absolute top-6 right-6 p-2 rounded-lg border transition-colors ${
+              exampleCopied
+                ? "bg-green-50 border-green-200 text-green-600"
+                : "bg-slate-50 border-slate-100 text-slate-400 hover:text-blue-600 hover:bg-blue-50"
+            }`}
             title="Copy example"
           >
             {exampleCopied ? <IconCheck /> : <IconCopy />}
@@ -451,7 +556,6 @@ Warm regards,
           </div>
         </div>
       </section>
-
 
       {/* Mistakes (Premium + Neutral) */}
       <section className="max-w-6xl mx-auto px-6 mb-28">
@@ -481,8 +585,9 @@ Warm regards,
             variants={fadeUp}
             className="text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed"
           >
-            Most cover letters fail because they feel generic, too long, or lack proof.
-            Use these fixes to make your letter clear, confident, and recruiter-friendly.
+            Most cover letters fail because they feel generic, too long, or lack
+            proof. Use these fixes to make your letter clear, confident, and
+            recruiter-friendly.
           </motion.p>
         </motion.div>
 
@@ -499,30 +604,26 @@ Warm regards,
               title: "Too long / boring to scan",
               mistake:
                 "Writing long paragraphs with too much detail makes recruiters skip your letter.",
-              fix:
-                "Keep it 250–400 words. Use 3–4 short paragraphs and focus on only your best 1–2 proofs."
+              fix: "Keep it 250–400 words. Use 3–4 short paragraphs and focus on only your best 1–2 proofs.",
             },
             {
               title: "Repeating your resume",
               mistake:
                 "Copy-pasting resume bullet points line-by-line adds no extra value.",
-              fix:
-                "Explain the story behind your strongest achievement and why it matters for this job."
+              fix: "Explain the story behind your strongest achievement and why it matters for this job.",
             },
             {
               title: "Generic letter for every company",
               mistake:
                 "If your cover letter can be sent to any company, it feels low-effort.",
-              fix:
-                "Add 1–2 specific company facts (product, mission, domain, values) and connect your interest to them."
+              fix: "Add 1–2 specific company facts (product, mission, domain, values) and connect your interest to them.",
             },
             {
               title: "No proof (only adjectives)",
               mistake:
                 "Phrases like “hardworking” or “passionate” don’t convince recruiters without evidence.",
-              fix:
-                "Add results: metrics, impact, outcomes, or measurable improvements from projects or internships."
-            }
+              fix: "Add results: metrics, impact, outcomes, or measurable improvements from projects or internships.",
+            },
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -559,14 +660,12 @@ Warm regards,
                 </div>
               </div>
             </motion.div>
-
           ))}
         </motion.div>
 
         {/* AI phrases improvement section */}
         <section className="mt-20">
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-
             {/* LEFT: Content */}
             <motion.div
               variants={fadeUp}
@@ -584,8 +683,9 @@ Warm regards,
               </h3>
 
               <p className="text-slate-600 leading-relaxed mb-6">
-                Recruiters skim fast. Instead of emotional filler, show real proof —
-                projects you built, results you achieved, and why you fit this company.
+                Recruiters skim fast. Instead of emotional filler, show real
+                proof — projects you built, results you achieved, and why you
+                fit this company.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -594,7 +694,7 @@ Warm regards,
                   "I am passionate...",
                   "Perfect fit...",
                   "Delighted to share...",
-                  "Excited to apply..."
+                  "Excited to apply...",
                 ].map((word, i) => (
                   <span
                     key={i}
@@ -626,7 +726,6 @@ Warm regards,
 
       {/*CTA Section */}
       <section className="relative py-12 bg-blue-600 text-white overflow-hidden">
-
         <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
 
@@ -636,7 +735,8 @@ Warm regards,
           </h2>
 
           <p className="text-white/80 max-w-2xl mx-auto mb-8 text-lg leading-relaxed">
-            Stop guessing what recruiters want. Build a professional, tailored cover letter in minutes and apply with confidence.
+            Stop guessing what recruiters want. Build a professional, tailored
+            cover letter in minutes and apply with confidence.
           </p>
 
           <button
@@ -646,7 +746,6 @@ Warm regards,
             <span>Create Now</span>
             <HiArrowRight className="text-2xl transition-transform duration-300 group-hover:translate-x-1" />
           </button>
-
         </div>
       </section>
 

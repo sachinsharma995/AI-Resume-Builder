@@ -30,14 +30,14 @@ const SimpleCoverLetterPage = () => {
       <NavBar />
 
       {/* --- 1. HERO SECTION --- */}
-      <section className="relative px-8 pt-4 pb-12 overflow-hidden bg-white">
+     <section className="relative px-8 pt-4 md:pt-20 lg:pt-28 pb-12 overflow-hidden bg-white">
         {/* Brand Decorative Blurs */}
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50" />
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50" />
 
         <div className="relative z-10 mx-auto max-w-7xl">
           {/* Back To Home Button */}
-          <div className="pt-2 pb-6">
+          <div className="hidden">
             <button
               onClick={handleBackHome}
               className="group inline-flex items-center gap-2 text-sm font-bold text-[#0077cc] transition-all duration-200"
@@ -75,7 +75,7 @@ const SimpleCoverLetterPage = () => {
               </button>
             </div>
 
-            <div className="relative flex-1 w-full max-w-[550px]">
+           <div className="relative hidden md:flex flex-1 w-full max-w-[550px]">
               <img
                 src={cover}
                 alt="AI Cover Letter Preview"

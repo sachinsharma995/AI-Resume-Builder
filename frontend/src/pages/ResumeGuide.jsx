@@ -68,7 +68,7 @@ const ResumeGuide = () => {
       <NavBar />
 
       {/* --- 1. HERO SECTION (REDUCED SPACING) --- */}
-<section className="relative px-8 pt-4 md:pt-10 lg:pt-20 xl:pt-4 pb-20 overflow-hidden bg-white"> {/* Changed pt-24 to pt-8 */}
+<section className="relative px-4 sm:px-6 lg:px-8 pt-4 md:pt-10 lg:pt-20 xl:pt-4 pb-20 overflow-hidden bg-white"> {/* Changed pt-24 to pt-8 */}
   <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50" />
   <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50" />
   
@@ -102,16 +102,15 @@ const ResumeGuide = () => {
         </button>
       </div>
 
-      <div className="relative flex-1 w-full max-w-[550px]">
-          
-                  <img src={TemplateFeature} alt="Resume Mastery" className="w-full h-auto" />
+      <div className="relative hidden md:flex flex-1 w-full max-w-[550px]">
+        <img src={TemplateFeature} alt="Resume Mastery" className="w-full h-auto" />
       </div>
     </div>
   </div>
 </section>
 
       {/* --- 2. THE BLUEPRINT (STEP-BY-STEP WHITE THEME) --- */}
-<section className="px-8 py-24 bg-white font-['Outfit']">
+<section className="px-4 sm:px-6 lg:px-8 py-24 bg-white font-['Outfit']">
   <div className="mx-auto max-w-7xl">
     <div className="mb-20 text-center">
       <h2 className="text-4xl md:text-5xl font-black text-[#1a2e52] tracking-tight mb-4 font-jakarta">
@@ -132,7 +131,7 @@ const ResumeGuide = () => {
             onMouseEnter={() => setActiveStep(idx)}
             className={`group p-8 rounded-[2.5rem] border-2 transition-all duration-500 cursor-pointer ${
               activeStep === idx 
-                ? "border-[#0077cc] bg-blue-50/30 shadow-xl shadow-blue-900/5 translate-x-4" 
+                ? "border-[#0077cc] bg-blue-50/30 shadow-xl shadow-blue-900/5 2xl:translate-x-4" 
                 : "border-gray-50 bg-white hover:border-gray-200"
             }`}
           >
@@ -210,7 +209,7 @@ const ResumeGuide = () => {
 </section>
 
       {/* --- CONTENT TRANSFORMATION (BEFORE & AFTER) --- */}
-      <section className="px-8 py-24 bg-gray-50/50">
+      <section className="px-4 sm:px-6 lg:px-8 py-24 bg-gray-50/50">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-4xl font-black text-[#1a2e52] mb-4">From Tasks to Achievements</h2>
           <p className="mb-16 text-gray-500">Don't just list what you did—show how well you did it.</p>
@@ -240,7 +239,7 @@ const ResumeGuide = () => {
       </section>
     
       {/* --- RESUME FORMATS: THE BLUEPRINT SELECTION --- */}
-<section className="px-8 py-24 bg-slate-50/50">
+<section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-50/50">
   <div className="mx-auto max-w-7xl">
     <div className="mb-16 text-center">
       <h2 className="text-4xl font-black text-[#1a2e52] tracking-tighter">Choose Your Architecture.</h2>
@@ -280,7 +279,7 @@ const ResumeGuide = () => {
 </section>
 
        {/* --- HEADER COMPLIANCE: THE MODERN STANDARD --- */}
-<section className="px-8 py-24 bg-white">
+<section className="px-4 sm:px-6 lg:px-8 py-24 bg-white">
   <div className="mx-auto max-w-5xl bg-[#1a2e52] rounded-[4rem] overflow-hidden relative">
     <div className="absolute top-0 right-0 w-64 h-64 -mt-32 -mr-32 rounded-full bg-blue-500/10 blur-3xl" />
     
@@ -314,7 +313,7 @@ const ResumeGuide = () => {
 </section>
    
        {/* --- SKILL ZONING: BENTO GRID --- */}
-<section className="px-8 py-24 bg-white">
+<section className="px-4 sm:px-6 lg:px-8 py-24 bg-white">
   <div className="mx-auto max-w-7xl">
     <div className="flex flex-col items-end justify-between gap-6 mb-16 lg:flex-row">
       <div className="max-w-xl">
@@ -357,7 +356,7 @@ const ResumeGuide = () => {
 
 
       {/* --- 6. FINAL CTA --- */}
-      <section className="relative px-8 pt-12 pb-24 overflow-hidden bg-white">
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-12 pb-24 overflow-hidden bg-white">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-orange-50 rounded-full blur-[120px] -z-10 opacity-60" />
         <div className="absolute bottom-0 left-0 w-1/3 h-full bg-blue-50 rounded-full blur-[120px] -z-10 opacity-60" />
         
