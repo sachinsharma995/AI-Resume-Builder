@@ -1,18 +1,19 @@
-import React from 'react';
-import { 
-  Sparkles, 
-  FileCheck, 
-  Zap, 
-  History, 
-  ArrowRight, 
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Sparkles,
+  FileCheck,
+  Zap,
+  History,
+  ArrowRight,
   CheckCircle2,
   MousePointerClick,
-  UploadCloud, 
-  Link2, 
-  FileDown, 
+  UploadCloud,
+  Link2,
+  FileDown,
   MousePointer2,
-  ArrowLeft
-} from 'lucide-react';
+  ArrowLeft,
+} from "lucide-react";
 import NavBar from "../components/NavBar";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
@@ -25,30 +26,35 @@ const SimpleCoverLetterPage = () => {
     navigate("/?scrollTo=features");
   };
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 22 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-white font-['Outfit'] text-[#1a2e52] selection:bg-blue-100 overflow-x-hidden">
       <NavBar />
 
       {/* --- 1. HERO SECTION --- */}
-     <section className="relative px-8 pt-4 md:pt-20 lg:pt-28 pb-12 overflow-hidden bg-white">
+      <section className="relative px-8 pt-4 md:pt-20 lg:pt-28 pb-12 overflow-hidden bg-white">
         {/* Brand Decorative Blurs */}
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-orange-50 rounded-full blur-[120px] -z-10 opacity-50" />
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-blue-50 rounded-full blur-[120px] -z-10 opacity-50" />
 
         <div className="relative z-10 mx-auto max-w-7xl">
-          {/* Back To Home Button */}
-          <div className="hidden">
-            <button
-              onClick={handleBackHome}
-              className="group inline-flex items-center gap-2 text-sm font-bold text-[#0077cc] transition-all duration-200"
-            >
-              <ArrowLeft size={16} className="transition-transform duration-200 group-hover:-translate-x-1" />
-              <span>Back to home</span>
-            </button>
-          </div>
-
           <div className="flex flex-col items-center gap-16 lg:flex-row lg:text-left">
-            <div className="flex-1 text-center lg:text-left">
+            {/* LEFT */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="flex-1 text-center lg:text-left"
+            >
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-blue-50">
                 <Sparkles size={16} className="text-[#0077cc]" />
                 <span className="text-xs font-black tracking-widest text-[#0077cc] uppercase">
@@ -62,8 +68,8 @@ const SimpleCoverLetterPage = () => {
               </h1>
 
               <p className="max-w-xl mx-auto mb-10 text-xl font-medium text-gray-500 lg:mx-0">
-                Stop staring at a blank page. Our AI reads your resume and job description to write a
-                perfect letter that gets you hired.
+                Stop staring at a blank page. Our AI reads your resume and job
+                description to write a perfect letter that gets you hired.
               </p>
 
               <button
@@ -71,17 +77,27 @@ const SimpleCoverLetterPage = () => {
                 className="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[#e65100] to-[#f4511e] text-white rounded-xl font-bold text-lg transition-all duration-300 shadow-[0_10px_25px_rgba(230,81,0,0.3)] hover:shadow-[0_15px_35px_rgba(230,81,0,0.45)] hover:-translate-y-1 active:scale-95 mx-auto lg:mx-0"
               >
                 <span>Generate Now — It's Free</span>
-                <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-2" />
+                <ArrowRight
+                  size={22}
+                  className="transition-transform duration-300 group-hover:translate-x-2"
+                />
               </button>
-            </div>
+            </motion.div>
 
-           <div className="relative hidden md:flex flex-1 w-full max-w-[550px]">
+            {/* RIGHT */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              className="relative hidden md:flex flex-1 w-full max-w-[550px]"
+            >
               <img
                 src={cover}
                 alt="AI Cover Letter Preview"
                 className="w-full h-auto rounded-[2rem]"
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -95,31 +111,50 @@ const SimpleCoverLetterPage = () => {
 
           <div className="mb-12 space-y-6 text-lg text-gray-600">
             <p>
-              A cover letter is a professional document that accompanies your resume to provide a
-              detailed introduction of your skills, experiences, and interest in a specific job role.
-              It acts as a bridge between your technical qualifications and the unique value you bring
-              to a potential employer.
+              A cover letter is a professional document that accompanies your
+              resume to provide a detailed introduction of your skills,
+              experiences, and interest in a specific job role. It acts as a
+              bridge between your technical qualifications and the unique value
+              you bring to a potential employer.
             </p>
             <p>
-              Our AI Cover Letter builder analyzes the job description and your resume to create a
-              narrative that highlights your most relevant achievements. A well-crafted letter
-              increases your chances of getting noticed by recruiters by showing that you've done your
+              Our AI Cover Letter builder analyzes the job description and your
+              resume to create a narrative that highlights your most relevant
+              achievements. A well-crafted letter increases your chances of
+              getting noticed by recruiters by showing that you've done your
               research and are genuinely interested in the position.
             </p>
           </div>
 
           {/* Featured Blue Box */}
           <div className="bg-[#f0f7ff] border-l-4 border-[#0077cc] rounded-2xl p-8 shadow-sm">
-            <h3 className="text-xl font-bold text-[#1a2e52] mb-6">Our AI Cover Letter Scans for:</h3>
+            <h3 className="text-xl font-bold text-[#1a2e52] mb-6">
+              Our AI Cover Letter Scans for:
+            </h3>
             <ul className="space-y-4">
               {[
-                { title: "Personalized Narrative", desc: "Tailors your story to match the company culture." },
-                { title: "Role-Specific Keywords", desc: "Identifies and includes crucial industry terms." },
-                { title: "Professional Formatting", desc: "Ensures the layout is clean and recruiter-ready." },
-                { title: "Direct Value Alignment", desc: "Connects your past results to future job requirements." }
+                {
+                  title: "Personalized Narrative",
+                  desc: "Tailors your story to match the company culture.",
+                },
+                {
+                  title: "Role-Specific Keywords",
+                  desc: "Identifies and includes crucial industry terms.",
+                },
+                {
+                  title: "Professional Formatting",
+                  desc: "Ensures the layout is clean and recruiter-ready.",
+                },
+                {
+                  title: "Direct Value Alignment",
+                  desc: "Connects your past results to future job requirements.",
+                },
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle2 size={20} className="text-[#0077cc] mt-1 shrink-0" />
+                  <CheckCircle2
+                    size={20}
+                    className="text-[#0077cc] mt-1 shrink-0"
+                  />
                   <p className="text-gray-700">
                     <span className="font-bold">{item.title}:</span> {item.desc}
                   </p>
@@ -137,23 +172,28 @@ const SimpleCoverLetterPage = () => {
             The AI Difference
           </h2>
           <div className="grid items-center gap-10 md:grid-cols-2">
-            <div className="p-10 bg-gray-50 rounded-[40px] border border-gray-100 opacity-60 transition-all duration-500 hover:opacity-100 hover:bg-white hover:shadow-xl group/old">
+            <div className="p-10 bg-white rounded-[40px] border-2 border-blue-600 shadow-2xl transition-all duration-500 hover:-translate-y-3 group/old">
               <span className="block mb-4 text-xs font-black tracking-widest text-gray-400 uppercase">
                 The Old Way
               </span>
+
               <h3 className="mb-6 text-2xl font-bold">Manual Writing</h3>
+
               <ul className="space-y-4">
-                {["Generic Greetings", "Hours of editing", "Zero Keyword Optimization"].map(
-                  (text, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-3 text-sm font-medium text-gray-500"
-                    >
-                      <span className="w-2 h-2 transition-colors bg-gray-300 rounded-full group-hover/old:bg-red-400" />{" "}
-                      {text}
-                    </li>
-                  )
-                )}
+                {[
+                  "Generic Greetings",
+                  "Hours of editing",
+                  "Zero Keyword Optimization",
+                ].map((text, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 text-sm font-medium text-gray-600 transition-all duration-300 group-hover/old:translate-x-2"
+                    style={{ transitionDelay: `${i * 100}ms` }}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-gray-400 transition-colors duration-300 group-hover/old:bg-red-500" />
+                    {text}
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -169,7 +209,7 @@ const SimpleCoverLetterPage = () => {
                 {[
                   "Tailored to specific Job Role",
                   "Finished in under 10 seconds",
-                  "Guaranteed ATS compatibility"
+                  "Guaranteed ATS compatibility",
                 ].map((text, i) => (
                   <li
                     key={i}
@@ -213,11 +253,15 @@ const SimpleCoverLetterPage = () => {
                 icon: FileDown,
                 t: "Export PDF",
                 d: "Instantly download a polished, recruiter-ready document that lands interviews.",
-              }
+              },
             ].map((step, i) => (
               <div
                 key={i}
-                className="relative p-10 bg-white rounded-[32px] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group flex flex-col items-center text-center"
+                className="relative p-10 bg-white rounded-[32px] 
+                border border-gray-100 shadow-sm 
+                transition-all duration-500 ease-out 
+                hover:shadow-2xl hover:-translate-y-2 
+                group flex flex-col items-center text-center"
               >
                 {/* Step Number Badge */}
                 <div className="absolute top-6 left-6 w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-xs font-bold text-gray-400 group-hover:bg-[#1a2e52] group-hover:text-white transition-colors">
@@ -250,9 +294,24 @@ const SimpleCoverLetterPage = () => {
       <section className="px-8 pt-4 mx-auto pb-14 max-w-7xl">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {[
-            { icon: Zap, color: "blue", title: "Instant Generation", desc: "Drafts ready in seconds, not hours." },
-            { icon: History, color: "indigo", title: "Infinite Edits", desc: "One click to rewrite any section." },
-            { icon: FileCheck, color: "cyan", title: "Recruiter Approved", desc: "Designed to pass every ATS screen." }
+            {
+              icon: Zap,
+              color: "blue",
+              title: "Instant Generation",
+              desc: "Drafts ready in seconds, not hours.",
+            },
+            {
+              icon: History,
+              color: "indigo",
+              title: "Infinite Edits",
+              desc: "One click to rewrite any section.",
+            },
+            {
+              icon: FileCheck,
+              color: "cyan",
+              title: "Recruiter Approved",
+              desc: "Designed to pass every ATS screen.",
+            },
           ].map((feature, i) => (
             <div
               key={i}
@@ -282,15 +341,18 @@ const SimpleCoverLetterPage = () => {
             <span className="text-[#0077cc]">in 10 Seconds.</span>
           </h2>
           <p className="mb-10 text-xl font-medium text-gray-500">
-            Our AI reads your resume and job description to write a perfect letter that gets you
-            hired.
+            Our AI reads your resume and job description to write a perfect
+            letter that gets you hired.
           </p>
           <button
             onClick={() => navigate("/register")}
             className="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[#e65100] to-[#f4511e] text-white rounded-xl font-bold text-lg transition-all duration-300 shadow-[0_10px_25px_rgba(230,81,0,0.3)] hover:shadow-[0_15px_35px_rgba(230,81,0,0.45)] hover:-translate-y-1 active:scale-95"
           >
             <span>Generate Now — It's Free</span>
-            <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-2" />
+            <ArrowRight
+              size={22}
+              className="transition-transform duration-300 group-hover:translate-x-2"
+            />
           </button>
         </div>
       </section>

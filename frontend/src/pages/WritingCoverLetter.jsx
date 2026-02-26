@@ -241,10 +241,12 @@ Warm regards,
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
-              className="text-center lg:text-left">
+              className="text-center lg:text-left"
+            >
               <motion.div
                 variants={fadeUp}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6">
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6"
+              >
                 <IconZap />
                 Cover Letter
               </motion.div>
@@ -286,7 +288,7 @@ Warm regards,
                 </button>
               </motion.div>
             </motion.div>
-            
+
             {/* RIGHT: Image (Keep clean + no over effect) */}
             <motion.div
               variants={fadeUp}
@@ -316,9 +318,17 @@ Warm regards,
           viewport={{ once: true, amount: 0.2 }}
           className="grid md:grid-cols-2 gap-8"
         >
+          {/* LEFT BOX */}
           <motion.div
             variants={fadeUp}
-            className="bg-slate-50 p-10 rounded-3xl border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-200/60 hover:border-blue-200"
+            whileHover={{ scale: 1.015, y: -5 }}
+            transition={{
+              type: "spring",
+              stiffness: 170,
+              damping: 20,
+            }}
+            className="bg-slate-50 p-10 rounded-3xl border border-slate-100
+            shadow-sm hover:border-blue-300 hover:shadow-lg hover:shadow-slate-200/50"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
               <span className="p-2 bg-blue-100 rounded-lg text-blue-600">
@@ -326,11 +336,13 @@ Warm regards,
               </span>
               What is a Cover Letter?
             </h2>
+
             <p className="text-slate-600 mb-6 leading-relaxed">
               It is a one-page narrative that gives recruiters context that a
               resume cannot fully provide. Think of it as your professional
               introduction before the interview.
             </p>
+
             <ul className="space-y-4">
               {[
                 "Why you're applying for this specific role",
@@ -351,9 +363,17 @@ Warm regards,
             </ul>
           </motion.div>
 
+          {/* RIGHT BOX */}
           <motion.div
             variants={fadeUp}
-            className="bg-slate-900 p-10 rounded-3xl text-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10"
+            whileHover={{ scale: 1.015, y: -5 }}
+            transition={{
+              type: "spring",
+              stiffness: 170,
+              damping: 20,
+            }}
+            className="bg-slate-900 p-10 rounded-3xl text-white
+           shadow-sm hover:shadow-lg hover:shadow-blue-500/20"
           >
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
               <span className="p-2 bg-white/10 rounded-lg text-blue-400">
@@ -361,10 +381,12 @@ Warm regards,
               </span>
               Why It Matters
             </h2>
+
             <p className="text-slate-400 mb-8 leading-relaxed">
               Even when optional, a letter sets you apart from candidates who
               only submit a resume. Recruiters use it to judge:
             </p>
+
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: "Communication", desc: "Clarity of thought" },
@@ -397,7 +419,9 @@ Warm regards,
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-         className="block md:hidden xl:block absolute left-1 top-10 h-[420px] sm:h-[480px] md:h-[560px] lg:h-[620px] xl:h-[680px] w-[450px] pointer-events-none select-none"
+          className="block md:hidden xl:block absolute left-1 top-10 
+    h-[420px] sm:h-[480px] md:h-[560px] lg:h-[620px] xl:h-[680px] 
+    w-[450px] pointer-events-none select-none"
         />
 
         {/* Bottom Right Background Character */}
@@ -408,7 +432,9 @@ Warm regards,
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="block md:hidden xl:block absolute -right-24 bottom-0 h-[320px] sm:h-[380px] md:h-[440px] lg:h-[500px] xl:h-[560px] w-[440px] pointer-events-none select-none"
+          className="block md:hidden xl:block absolute -right-24 bottom-0 
+    h-[320px] sm:h-[380px] md:h-[440px] lg:h-[500px] xl:h-[560px] 
+    w-[440px] pointer-events-none select-none"
         />
 
         <div className="relative max-w-4xl mx-auto px-6 z-10">
@@ -474,14 +500,23 @@ Warm regards,
               <motion.div
                 key={idx}
                 variants={fadeUp}
-                className="bg-white p-8 rounded-3xl border border-slate-200 group hover:border-blue-400 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-200/70"
+                whileHover={{ scale: 1.02, y: -6 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 18,
+                }}
+                className="bg-white p-8 rounded-3xl border border-slate-200 group
+          hover:border-blue-400 hover:shadow-xl hover:shadow-slate-200/70"
               >
                 <div className="flex items-start gap-6">
                   <div className="text-3xl font-black text-slate-200 group-hover:text-blue-200 transition-colors">
                     {item.step}
                   </div>
+
                   <div className="flex-1">
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+
                     <p className="text-slate-500 mb-4 leading-relaxed">
                       {item.desc}
                     </p>
@@ -491,16 +526,19 @@ Warm regards,
                         {item.code}
                       </div>
                     )}
+
                     {item.bad && (
                       <div className="text-sm font-bold text-red-500">
                         {item.bad}
                       </div>
                     )}
+
                     {item.example && (
                       <div className="text-sm font-bold text-green-600">
                         {item.example}
                       </div>
                     )}
+
                     {item.tip && (
                       <div className="text-sm font-bold text-amber-600">
                         {item.tip}
@@ -628,7 +666,13 @@ Warm regards,
             <motion.div
               key={i}
               variants={fadeUp}
-              className="group bg-white border border-slate-200 rounded-3xl p-7 transition-all duration-300 ease-out hover:-translate-y-2 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/60"
+              whileHover={{ scale: 1.015, y: -5 }}
+              transition={{
+                type: "spring",
+                stiffness: 170,
+                damping: 20,
+              }}
+              className="group bg-white border border-slate-200 rounded-3xl p-7 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50"
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <h3 className="text-lg font-black text-slate-900 leading-snug">
@@ -672,7 +716,15 @@ Warm regards,
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="group bg-slate-50 border border-slate-200 rounded-[32px] p-10 md:p-12 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/70 hover:border-slate-300"
+              whileHover={{ scale: 1.015, y: -5 }}
+              transition={{
+                type: "spring",
+                stiffness: 170,
+                damping: 20,
+              }}
+              className="group bg-slate-50 border border-slate-200 rounded-[32px] 
+  p-10 md:p-12 hover:shadow-lg hover:shadow-slate-200/50 
+  hover:border-slate-300"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold mb-5">
                 ⚠ Writing Tip
