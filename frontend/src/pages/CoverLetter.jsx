@@ -103,7 +103,7 @@ const SimpleCoverLetterPage = () => {
       </section>
 
       {/* --- WHAT IS A COVER LETTER --- */}
-      <section className="px-8 py-20 bg-white font-['Outfit']">
+      <section className="px-8 py-20 pt-2 bg-white font-['Outfit']">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center text-[#1a2e52] mb-12">
             What is a Cover Letter?

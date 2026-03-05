@@ -161,7 +161,7 @@ const ResumeExamplesPage = () => {
     <div className="min-h-screen bg-[#fcfcfd] font-['Outfit'] text-[#1a2e52]">
       <NavBar />
 
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION ---- */}
       <section className="relative pt-24 md:pt-28 lg:pt-32 pb-16 bg-white border-b border-gray-50">
        <div className="flex flex-col items-center gap-12 px-8 mx-auto max-w-7xl lg:flex-row lg:items-start">
           {/* Left Side: Content */}
