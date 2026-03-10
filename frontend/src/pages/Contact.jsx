@@ -27,9 +27,8 @@ function Contact() {
     <div className="min-h-screen bg-white font-['Outfit'] overflow-hidden">
       {/* NAVIGATION */}
     <NavBar />
-    <div className="h-12" />
       {/* HERO SECTION - MATCHING REFERENCE IMAGE */}
-     <section className="relative px-8 pt-32 pb-16 overflow-hidden bg-white isolate">
+     <section className="relative px-8 pt-24 pb-16 overflow-hidden bg-white isolate">
   
   {/* BLUR CIRCLES - Using more saturated colors for visibility */}
   <BlurCircle 
@@ -177,7 +176,7 @@ function Contact() {
 </div>
   </div>
 </section>
-<section className="relative px-6 py-20 overflow-hidden bg-white lg:px-8">
+<section className="relative px-6 -mt-12 pb-4 overflow-hidden bg-white lg:px-8">
   {/* Background Decorative Element */}
   <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-50/50 blur-[100px] rounded-full -z-10" />
   
@@ -306,7 +305,7 @@ function Contact() {
 </section>
 
 {/* MODERN CONTACT INFO BAR */}
-<section className="relative px-6 pb-24 lg:px-8">
+<section className="relative px-6 pb-16 lg:px-8">
   <div className="max-w-[1200px] mx-auto">
     {/* Inner Container with subtle glow and glass effect */}
     <div className="relative overflow-hidden bg-white border border-gray-100 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] p-2">

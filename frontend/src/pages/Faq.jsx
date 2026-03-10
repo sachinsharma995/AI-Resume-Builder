@@ -72,8 +72,8 @@ const FAQ = () => {
       {/* HERO SECTION */}
       <section
         ref={heroRef}
-        className="relative px-6 pt-16 pb-24 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50"
-      >
+        className="relative px-6 pt-24 pb-24 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50"
+        >
         {/* Glow blobs */}
         <div className="absolute rounded-full -top-24 -left-24 w-72 h-72 bg-blue-200/30 blur-3xl animate-pulse" />
         <div className="absolute rounded-full -bottom-24 -right-24 w-72 h-72 bg-indigo-200/30 blur-3xl animate-pulse" />
