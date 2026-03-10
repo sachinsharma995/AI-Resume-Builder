@@ -68,10 +68,7 @@ const TemplatesFeature = () => {
 
   <div className="mx-auto max-w-7xl">
     {/* HERO GRID */}
-    <div className="grid items-center min-h-[85vh] gap-12 pt-20 pb-16 lg:grid-cols-2">
-
-      {/* LEFT CONTENT */}
-      <div
+      <div className="grid items-center gap-10 pt-20 pb-10 lg:pt-24 lg:pb-12 lg:grid-cols-2">      <div
         className={`transition-all duration-700 ${
           heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}

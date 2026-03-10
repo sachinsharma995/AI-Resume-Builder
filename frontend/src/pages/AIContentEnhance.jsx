@@ -28,9 +28,7 @@ const AIEnhancementPage = () => {
       <NavBar />
       
       {/* --- 1. HERO SECTION --- */}
-     <section className="relative px-6 pt-16 overflow-hidden bg-white">
-
-  {/* Soft background glow */}
+<section className="relative px-6 pt-20 md:pt-20 lg:pt-24 xl:pt-24 bg-white">  
   <div className="absolute top-0 right-0 w-[40%] h-[60%] bg-blue-50 rounded-full blur-[140px] -z-10 opacity-60" />
   <div className="absolute bottom-0 left-0 w-[40%] h-[60%] bg-orange-50 rounded-full blur-[140px] -z-10 opacity-60" />
 
@@ -38,16 +36,13 @@ const AIEnhancementPage = () => {
     
 
     {/* HERO GRID */}
-    <div className="grid items-center min-h-[80vh] gap-4 pb-16 lg:grid-cols-[1fr_1.2fr] xl:grid-cols-[1fr_1.4fr]">
-
-      {/* LEFT CONTENT */}
-      <div className="text-center lg:text-left">
-        <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-blue-50">
-          <Cpu size={16} className="text-[#0077cc]" />
-          <span className="text-xs font-bold tracking-widest text-[#0077cc] uppercase">
-            Smart Content Optimization
-          </span>
-        </div>
+<div className="grid items-start gap-6 pt-2 pb-0 lg:pt-0 lg:pb-4 lg:grid-cols-[1fr_1.2fr] xl:grid-cols-[1fr_1.4fr]">   
+   <div className="text-center lg:text-left">
+<div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-blue-50">  
+  <span className="text-xs font-bold tracking-widest text-[#0077cc] uppercase">
+    Smart Content Optimization
+  </span>
+</div>
 
         <h1 className="mb-5 text-4xl font-black tracking-tight md:text-6xl lg:text-7xl leading-[1.1] font-jakarta">
           Turn Weak Points into <br />
@@ -75,18 +70,15 @@ const AIEnhancementPage = () => {
     className="w-full max-w-[820px] xl:max-w-[950px] drop-shadow-2xl"
   />
 </div>
-
-
-
     </div>
   </div>
 </section>
 
 
       {/* --- 2. WHAT IS AI ENHANCEMENT (THEME BOX) --- */}
-      <section className="px-8 py-20 bg-white font-['Outfit']">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-[#1a2e52] mb-12">What is AI Enhancement?</h2>
+<section className="px-8 pt-4 pb-10 lg:pt-8 bg-white font-['Outfit']">  
+  <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-center text-[#1a2e52] mb-6">What is AI Enhancement?</h2>
           
           <div className="mb-12 space-y-6 text-lg text-center text-gray-600 md:text-left">
             <p>

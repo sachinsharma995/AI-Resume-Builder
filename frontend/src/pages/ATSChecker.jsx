@@ -177,7 +177,7 @@ const ATSCheckerFeature = () => {
       <NavBar />
 
       {/* 1) HERO SECTION */}
-      <section ref={heroRef} className="relative px-6 pt-16 pb-20 overflow-hidden bg-white">
+      <section ref={heroRef} className="relative px-6 pt-20 pb-20 overflow-hidden bg-white">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-3xl -z-10 opacity-60" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-50/50 rounded-full blur-3xl -z-10 opacity-60" />
 

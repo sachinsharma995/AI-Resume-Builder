@@ -69,13 +69,8 @@ const AIResumeChecker = () => {
   return (
     <div className="min-h-screen bg-slate-50 font-jakarta text-[#1a2e52] select-none">
       <NavBar />
-      <div className="h-12" />
-      {/* --- HERO SECTION: FULL WIDTH/HEIGHT --- */}
-      <section className="relative min-h-[85vh] flex items-center px-8 py-16 overflow-hidden bg-white border-b border-gray-50">
-        {/* Soft Background Blurs */}
-        <div className="absolute top-0 right-0 w-[40%] h-full -translate-y-1/4 translate-x-1/4 opacity-20 bg-gradient-to-bl from-blue-200 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 bg-blue-100 rounded-full w-72 h-72 -translate-x-1/3 opacity-10 blur-3xl"></div>
-
+      <div className="h-6 md:h-8 lg:h-12" />      {/* --- HERO SECTION: FULL WIDTH/HEIGHT --- */}
+       <section className="relative flex items-start px-8 pt-14 pb-6 lg:pt-16 lg:pb-12 overflow-hidden bg-white border-b border-gray-50">
         <div className="relative z-10 w-full max-w-[1400px] mx-auto">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             {/* LEFT SIDE: THE CONTENT (Text & Matter) */}
